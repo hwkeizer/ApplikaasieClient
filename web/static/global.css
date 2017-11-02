@@ -1,0 +1,28 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2-nov-2017, 14:05:31
+    Author     : hwkei
+*/
+
+/* Layout for menu buttons */
+.menu_button {
+    background-color: #4CAF50;
+    width: 125px;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.menu_container {
+    background-color: #4CAF50;
+}

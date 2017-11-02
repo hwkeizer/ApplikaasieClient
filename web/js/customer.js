@@ -7,37 +7,36 @@
 var baseURL = "http://localhost:8080/Workshop3/webresources";
 
 $(document).ready(function(){
-    showAllAccounts();
+    showAllCustomers();
 });
 
-function showAllAccounts() {
-    $.ajaxSetup({ cache: false });
+function showAllCustomers() {
     $.ajax({
-        url:baseURL + "/account",
+        url:baseURL + "/customer",
         method: "GET",
         dataType: "json",
-        cache: false,
         error: function() {
             console.log("Error in function showAllAccounts");
         },
         success: function(data) {
             console.log(data);
-            $("#accounts").empty();
-            $("#accounts").tabulator({
-//                height:205,
+            $("#customers").empty();
+            $("#customers").tabulator({
+                height:205,
                 layout:"fitColumns",
                 columns:[
-                    {title:"Gebruikersnaam", field:"username", headerFilter:"input"},
-                    {title:"Wachtwoord", field:"password"},
-                    {title:"Type", field:"accountType", headerFilter:"input"}
+                    {title:"Voornaam", field:"firstName"},
+                    {title:"Tussenvoegsel", field:"lastNamePrefix"},
+                    {title:"Achternaam", field:"lastName"},
+                    {title:"Account", field:"accountId.username"}
                 ],
                 rowClick:function(e, row){
                     console.log("Data retour na klik " + row.toString());
                     alert("Op gebruiker " + row.getData().username + " geklikt!!!");
                 }
             });
-            $("#accounts").tabulator("setData", data);
+            $("#customers").tabulator("setData", data);
         }       
     });
 }
- 
+

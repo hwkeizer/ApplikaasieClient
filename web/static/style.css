@@ -4,11 +4,104 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
 /* 
-    Created on : 30-okt-2017, 12:07:49
+    Created on : 28-sep-2017, 21:18:27
     Author     : hwkei
 */
 
-/* Testing */
-.blue {color:blue;}
+/* standard table view */
 
-.sortUsername {color:blue;}
+
+table {
+	width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+	border: 1px solid #4CAF50;
+	text-align: left;
+        border-collapse: collapse; }
+
+th {
+	font-weight: bold;
+	background-color: #4CAF50;
+	border-bottom: 1px solid #4CAF50; }
+      
+td,th  {
+	padding: 4px 5px; }
+
+table, th, td {
+   border: 1px solid #4CAF50;
+}
+
+/* default button */
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+/* home page image and tittle */
+.homepage-img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.center {
+    text-align: center;
+}
+
+.button {
+    width: 150px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.formfields {
+    display: block;
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.formfields input {
+    display: block;
+    display: inline-block;
+    float: left;
+}
+
+.formfields label {
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 150px;
+    text-align: left;
+}
+
+.error, .errors {
+    color: red;
+}
+
+.red {
+    background-color: lightcoral;
+}
+
+.small {
+    width: 32px;
+}
+
+/* Tabellen details */
+.customers {
+
+    width: 600px;
+}
+
+.firstcol {
+    width: 300px;
+}
