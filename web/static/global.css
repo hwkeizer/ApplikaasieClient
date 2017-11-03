@@ -8,21 +8,36 @@ and open the template in the editor.
     Author     : hwkei
 */
 
-/* Layout for menu buttons */
-.menu_button {
-    background-color: #4CAF50;
-    width: 125px;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
+/* Layout for menu */
+
+#menu {
+    height: 35px;
     font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-weight: bold;
+    text-shadow: 3px 2px 3px #333333;
+    background-color: #4CAF50;
+    border-radius: 8px;    
 }
 
-.menu_container {
-    background-color: #4CAF50;
+#menu ul {
+    height: auto;
+    padding: 8px 0px;
+    margin: 0px;
+}
+
+#menu li {
+    display: inline;
+    padding: 20px;
+}
+
+#menu a {
+    text-decoration: none;
+    color: white;
+    padding: 8px 8px 8px 8px;
+}
+
+#menu a:hover {
+    color: #F90;
+
 }

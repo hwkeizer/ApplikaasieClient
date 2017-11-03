@@ -32,7 +32,9 @@ function showAllCustomers() {
                 ],
                 rowClick:function(e, row){
                     console.log("Data retour na klik " + row.toString());
-                    alert("Op gebruiker " + row.getData().username + " geklikt!!!");
+                    alert("Op gebruiker " + row.getData().firstName +
+                            " " + row.getData().lastNamePrefix +
+                            " " + row.getData().lastName + " geklikt!!!");
                 }
             });
             $("#customers").tabulator("setData", data);
