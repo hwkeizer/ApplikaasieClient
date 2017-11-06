@@ -22,9 +22,7 @@ function showAllAccounts() {
         },
         success: function(data) {
             console.log(data);
-            $("#accounts").empty();
             $("#accounts").tabulator({
-//                height:205,
                 layout:"fitColumns",
                 columns:[
                     {title:"Gebruikersnaam", field:"username", headerFilter:"input"},

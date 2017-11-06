@@ -19,26 +19,52 @@ function showAllCustomers() {
             console.log("Error in function showAllAccounts");
         },
         success: function(data) {
-            console.log(data);
-            $("#customers").empty();
             $("#customers").tabulator({
-                height:205,
                 layout:"fitColumns",
                 columns:[
-                    {title:"Voornaam", field:"firstName"},
-                    {title:"Tussenvoegsel", field:"lastNamePrefix"},
-                    {title:"Achternaam", field:"lastName"},
-                    {title:"Account", field:"accountId.username"}
+                    {title:"Voornaam", field:"firstName", headerFilter:"input"},
+                    {title:"Tussenvoegsel", field:"lastNamePrefix", headerFilter:"input"},
+                    {title:"Achternaam", field:"lastName", headerFilter:"input"},
+                    {title:"Account", field:"accountId.username", headerFilter:"input"}
                 ],
                 rowClick:function(e, row){
-                    console.log("Data retour na klik " + row.toString());
-                    alert("Op gebruiker " + row.getData().firstName +
-                            " " + row.getData().lastNamePrefix +
-                            " " + row.getData().lastName + " geklikt!!!");
+                    // TODO moet edit functie worden!
+                    $("#newCustomer").show();
                 }
             });
             $("#customers").tabulator("setData", data);
         }       
+    });   
+}
+
+function addCustomer() {
+    $("#newCustomer").show();
+}
+
+$(document).on("submit", "form#newCustomer", function(event) {
+    event.preventDefault();
+    var customer = {"firstName":$("#firstName").val(),
+        "lastNamePrefix":$("#lastNamePrefix").val(),
+        "lastName":$("#lastName").val()        
+    };
+    console.log(customer.firstName);
+    var customerJson = JSON.stringify(customer);
+    console.log(customerJson);
+    createCustomer(customerJson);
+});
+
+function createCustomer(customer) {
+    $.ajax({
+        url:baseURL + "/customer",
+        method: "POST",
+        data: customer,
+        contentType: "application/json",
+        error: function() {
+            console.log("Error in function createCustomer");
+        },
+        success: function() {
+//            window.location.href=baseURL + "/customer";
+        }
     });
 }
 

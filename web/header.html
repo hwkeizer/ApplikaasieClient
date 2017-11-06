@@ -10,13 +10,59 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div id="menu">
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="customer.html">Klant overzicht</a></li>
-                <li><a href="account.html">Account overzicht</a></li>
-            </ul>
+        <div class="navbar">
+            <a href="index.html">Home</a>
+            <div class="dropdown">
+                <button class="dropbtn" onclick="toggleCustomerDropdown()">Klanten
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content" id="customerDropdown">
+                    <a href="customer.html">Klant overzicht</a>
+                    <a class="addCustomer" href="#">Klant toevoegen</a>
+                    <a href="#">Klant verwijderen</a>
+                    <a href="#">Klant wijzigen</a>
+                </div>
+            </div> 
+            <div class="dropdown">
+                <button class="dropbtn" onclick="toggleAccountDropdown()">Accounts
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content" id="accountDropdown">
+                    <a href="account.html">Account overzicht</a>
+                    <a href="#">Account toevoegen</a>
+                    <a href="#">Account verwijderen</a>
+                    <a href="#">Account wijzigen</a>
+                </div>
+            </div>
         </div>
         <br/>
+        <script>
+            
+        function toggleCustomerDropdown() {
+            document.getElementById("customerDropdown").classList.toggle("show");
+        }
+        
+        function toggleAccountDropdown() {
+            document.getElementById("accountDropdown").classList.toggle("show");
+        }
+        
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(e) {
+            if (e.target.matches('.addCustomer')) {
+                addCustomer();
+            }
+            if (!e.target.matches('.dropbtn')) {
+                var myDropdown = document.getElementById("customerDropdown");
+                if (myDropdown.classList.contains('show')) {
+                    myDropdown.classList.remove('show');
+                }
+                var myDropdown = document.getElementById("accountDropdown");
+                if (myDropdown.classList.contains('show')) {
+                    myDropdown.classList.remove('show');
+                }
+            }
+        }
+    
+        </script>
     </body>
 </html>

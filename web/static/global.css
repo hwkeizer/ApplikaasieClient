@@ -9,35 +9,107 @@ and open the template in the editor.
 */
 
 /* Layout for menu */
-
-#menu {
-    height: 35px;
-    font-size: 16px;
-    font-family: Tahoma, Geneva, sans-serif;
-    font-weight: bold;
-    text-shadow: 3px 2px 3px #333333;
+.navbar {
+    overflow: hidden;
     background-color: #4CAF50;
-    border-radius: 8px;    
+    font-family: Arial;
 }
 
-#menu ul {
-    height: auto;
-    padding: 8px 0px;
-    margin: 0px;
-}
-
-#menu li {
-    display: inline;
-    padding: 20px;
-}
-
-#menu a {
-    text-decoration: none;
+.navbar a {
+    float: left;
+    font-size: 16px;
     color: white;
-    padding: 8px 8px 8px 8px;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
 }
 
-#menu a:hover {
-    color: #F90;
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
 
+.dropdown .dropbtn {
+    cursor: pointer;
+    font-size: 16px;    
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+    background-color: #3c893f;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.show {
+    display: block;
+}
+
+/* Layout for formfields */
+
+.formfields {
+    display: block;
+    width: 340px;
+    margin: 4px;
+}
+
+.formfields input {
+    display: inline-block;
+    float: right;
+    margin: 4px;
+}
+
+.formfields label {
+    display: inline-block;
+    float: left;
+    width: 150px;
+    text-align: left;
+    margin: 4px;
+}
+
+.formfields .button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 2px 2px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 25px 5px;
+    float: right;
+    cursor: pointer;
+}
+
+/* layout for content */
+#content {
+    clear: both;
+}
+
+#center {
+    text-align: center;
 }
