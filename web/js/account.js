@@ -38,4 +38,20 @@ function showAllAccounts() {
         }       
     });
 }
+
+function findAccountById(id) { 
+        $.ajax({
+        url:baseURL + "/account/" + id,
+        method: "GET",
+        dataType: "json",
+        error: function() {
+            console.log("Error in function createCustomer");
+        },
+        success: function(data) { 
+            alert("TESTEN WIJZIGEN KLANT in aanroep findAccountById met data:" + JSON.stringify(data));
+            return data;
+        }
+    });
+
+}
  

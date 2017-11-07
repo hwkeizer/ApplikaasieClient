@@ -19,8 +19,6 @@ and open the template in the editor.
         <!-- css files -->
         <link rel="stylesheet" type="text/css" href="static/global.css"/>
         <link rel="stylesheet" type="text/css" href="static/style.css"/>
-                <!-- local scripts -->
-        <script type="text/javascript" src="js/customer.js"></script>
 
     </head>
     <body>
@@ -32,6 +30,20 @@ and open the template in the editor.
                 <label>Tussenvoegsel:</label><input type="text" id="lastNamePrefix"/>
                 <label>Achternaam:</label><input type="text" id="lastName"/>
                 <input class="button" type="submit" value="Klant toevoegen" />
+            </div>             
+        </form>
+        
+        <form hidden id="editCustomer">
+            <div class="formfields">
+                <input type="hidden" id="id"/>
+                <input type="hidden" id="accountId"/>
+                <label>Voornaam:</label><input type="text" id="firstName"/>
+                <label>Tussenvoegsel:</label><input type="text" id="lastNamePrefix"/>
+                <label>Achternaam:</label><input type="text" id="lastName"/>
+                <div class="button_panel">
+                <input id="edit" class="button" type="submit" value="Klant wijzigen" />
+                <input id="remove" class="button" type="submit" value="Klant verwijderen" />
+                </div>
             </div>             
         </form>
         

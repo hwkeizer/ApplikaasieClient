@@ -93,16 +93,21 @@ and open the template in the editor.
 
 .formfields .button {
     background-color: #4CAF50;
+    width: 145px;
     border: none;
     color: white;
     padding: 2px 2px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
+    display: block;
+    float: left;
     font-size: 16px;
-    margin: 25px 5px;
+}
+
+.formfields .button_panel {
+    display: block;
+    margin-top: 10px;
     float: right;
-    cursor: pointer;
 }
 
 /* layout for content */

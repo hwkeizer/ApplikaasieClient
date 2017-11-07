@@ -8,19 +8,23 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Online icon for caret down in menu -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!-- local scripts -->
+        <script type="text/javascript" src="js/account.js"></script>
+        <script type="text/javascript" src="js/customer.js"></script>
+        
     </head>
     <body>
         <div class="navbar">
             <a href="index.html">Home</a>
             <div class="dropdown">
-                <button class="dropbtn" onclick="toggleCustomerDropdown()">Klanten
+                <button class="dropbtn" onclick=toggleCustomerDropdown()>Klanten
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content" id="customerDropdown">
                     <a href="customer.html">Klant overzicht</a>
                     <a class="addCustomer" href="#">Klant toevoegen</a>
-                    <a href="#">Klant verwijderen</a>
-                    <a href="#">Klant wijzigen</a>
                 </div>
             </div> 
             <div class="dropdown">
@@ -30,8 +34,6 @@ and open the template in the editor.
                 <div class="dropdown-content" id="accountDropdown">
                     <a href="account.html">Account overzicht</a>
                     <a href="#">Account toevoegen</a>
-                    <a href="#">Account verwijderen</a>
-                    <a href="#">Account wijzigen</a>
                 </div>
             </div>
         </div>
