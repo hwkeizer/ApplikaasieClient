@@ -58,27 +58,54 @@ function addCustomer() {
 // Process the forms
 $(document).on("click", ":submit", function(event) {
     event.preventDefault();
+    let customer;
     switch($(this).val()) {
         case "Klant wijzigen":
-            alert("TESTEN WIJZIGEN KLANT voor aanroep findAccountById");
-            var account = findAccountById($("#editCustomer #accountId").val());
-            alert("TESTEN WIJZIGEN KLANT na aanroep findAccountById");
-//            alert("ACCOUNT: " + accountJson);
-            var customer = {"id":$("#editCustomer #id").val(),
-                    "accountId":$("#editCustomer #accountId").val(),
+            console.log("TESTEN WIJZIGEN KLANT voor aanroep findAccountById");            
+            console.log("Account id is: " + $("#editCustomer #accountId").val());
+            if ($("#editCustomer #accountId").val() !== '') {            
+                window.fetch(baseURL + "/account/" + $("#editCustomer #accountId").val(), {
+                    method: "GET",
+                    headers: {
+                        "Accept": "application/json"
+                    }
+                }).then(response => {
+                    console.log("content response header: " + response.headers.get("content-type"));
+                    return response.json();
+                }).then(account => {
+                    console.log("TESTEN WIJZIGEN KLANT na window.fetch aanroep");
+                    console.log("Account: " + JSON.stringify(account));
+                    customer = {
+                        "id": $("#editCustomer #id").val(),
+                        "accountId": account,
+                        "firstName":$("#editCustomer #firstName").val(),
+                        "lastNamePrefix":$("#editCustomer #lastNamePrefix").val(),
+                        "lastName":$("#editCustomer #lastName").val()
+                    };
+                    let customerJson = JSON.stringify(customer);
+                    console.log("ID: " + $("#editCustomer #id").val() + " JSON: " + customerJson);
+                    editCustomer($("#editCustomer #id").val(), customerJson);
+                }).catch((error) => {
+                    console.log("error " + error);
+                });                
+            } else {
+                // Customer has no account so it should not get updated
+                customer = {
+                    "id": $("#editCustomer #id").val(),
                     "firstName":$("#editCustomer #firstName").val(),
                     "lastNamePrefix":$("#editCustomer #lastNamePrefix").val(),
                     "lastName":$("#editCustomer #lastName").val()
-            };
-            var customerJson = JSON.stringify(customer);
-            alert("ID: " + $("#editCustomer #id").val() + " JSON: " + customerJson);
-            editCustomer($("#editCustomer #id").val(), customerJson);
+                    };
+                let customerJson = JSON.stringify(customer);
+                console.log("ID: " + $("#editCustomer #id").val() + " JSON: " + customerJson);
+                editCustomer($("#editCustomer #id").val(), customerJson);
+            }
             break;
         case "Klant verwijderen":
             deleteCustomer($("#editCustomer #id").val());
             break;
         case "Klant toevoegen":
-            var customer = {"firstName":$("#newCustomer #firstName").val(),
+            customer = {"firstName":$("#newCustomer #firstName").val(),
                     "lastNamePrefix":$("#newCustomer #lastNamePrefix").val(),
                     "lastName":$("#newCustomer #lastName").val()        
              };
