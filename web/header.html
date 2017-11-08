@@ -22,6 +22,7 @@ and open the template in the editor.
                 <div class="dropdown-content" id="customerDropdown">
                     <a href="customer.html">Klant overzicht</a>
                     <a class="addCustomer" href="#">Klant toevoegen</a>
+                    <a class="editCustomer" href="#">Klant wijzigen/verwijderen</a>
                 </div>
             </div> 
             <div class="dropdown">
@@ -49,6 +50,9 @@ and open the template in the editor.
         window.onclick = function(e) {
             if (e.target.matches('.addCustomer')) {
                 addCustomer();
+            }
+            if (e.target.matches('.editCustomer')) {
+                $(".edit_instruction").show();
             }
             if (!e.target.matches('.dropbtn')) {
                 var myDropdown = document.getElementById("customerDropdown");

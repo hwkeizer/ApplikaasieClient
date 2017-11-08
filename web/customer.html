@@ -18,14 +18,18 @@ and open the template in the editor.
         <script type="text/javascript" src="js/tabulator/tabulator.min.js"></script>
         <!-- css files -->
         <link rel="stylesheet" type="text/css" href="static/global.css"/>
-        <link rel="stylesheet" type="text/css" href="static/style.css"/>
         <!-- local scripts -->
         <script type="text/javascript" src="js/customer.js"></script>
 
     </head>
     <body>
         <div id="header"></div>        
-       
+        
+        <div id="buttons">
+            <button type="button" id="addCustomer">Klant toevoegen</button>
+            <button type="button" id="editCustomer">Klant wijzigen of verwijderen</button>
+        </div>
+        
         <form hidden id="newCustomer">
             <div class="formfields">
                 <label>Voornaam:</label><input type="text" id="firstName"/>
@@ -35,7 +39,7 @@ and open the template in the editor.
             </div>             
         </form>
         
-        <form hidden id="editCustomer">
+        <form hidden id="editOrRemoveCustomer">
             <div class="formfields">
                 <input type="hidden" id="id"/>
                 <input type="hidden" id="accountId"/>
@@ -48,6 +52,9 @@ and open the template in the editor.
                 </div>
             </div>             
         </form>
+        
+        <br/>
+        <div hidden class="edit_instruction">Selecteer een klant in onderstaande tabel om te wijzigen of te verwijderen</div>
         
         <div id="content">
             <h3 id="center">Klant overzicht</h3>
