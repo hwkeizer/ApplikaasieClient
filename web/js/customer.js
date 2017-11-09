@@ -50,6 +50,7 @@ function showAllCustomers() {
                         });
                     });
                     $("#buttons").hide();
+                    $(".edit_instruction").hide();
                     $("#editOrRemoveCustomer").show();                   
                 }
             });
@@ -67,7 +68,6 @@ function addCustomer() {
 // Process the forms
 $(document).on("click", ":submit", function(event) {
     event.preventDefault();
-    $(".edit_instruction").hide();
     let customer;
     switch($(this).val()) {
         case "Klant wijzigen":

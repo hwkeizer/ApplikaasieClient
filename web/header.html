@@ -8,61 +8,13 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Online icon for caret down in menu -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        
     </head>
     <body>
         <div class="navbar">
             <a href="index.html">Home</a>
-            <div class="dropdown">
-                <button class="dropbtn" onclick=toggleCustomerDropdown()>Klanten
-                </button>
-                <div class="dropdown-content" id="customerDropdown">
-                    <a href="customer.html">Klant overzicht</a>
-                </div>
-            </div> 
-            <div class="dropdown">
-                <button class="dropbtn" onclick="toggleAccountDropdown()">Accounts
-                    <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdown-content" id="accountDropdown">
-                    <a href="account.html">Account overzicht</a>
-                    <a href="#">Account toevoegen</a>
-                </div>
-            </div>
+            <a href="customer.html">Klanten</a>
+            <a href="account.html">Accounts</a>
         </div>
         <br/>
-        <script>
-            
-        function toggleCustomerDropdown() {
-            document.getElementById("customerDropdown").classList.toggle("show");
-        }
-        
-        function toggleAccountDropdown() {
-            document.getElementById("accountDropdown").classList.toggle("show");
-        }
-        
-        // Close the dropdown if the user clicks outside of it
-        window.onclick = function(e) {
-            if (e.target.matches('.addCustomer')) {
-                addCustomer();
-            }
-            if (e.target.matches('.editCustomer')) {
-                $(".edit_instruction").show();
-            }
-            if (!e.target.matches('.dropbtn')) {
-                var myDropdown = document.getElementById("customerDropdown");
-                if (myDropdown.classList.contains('show')) {
-                    myDropdown.classList.remove('show');
-                }
-                var myDropdown = document.getElementById("accountDropdown");
-                if (myDropdown.classList.contains('show')) {
-                    myDropdown.classList.remove('show');
-                }
-            }
-        }
-    
-        </script>
     </body>
 </html>
