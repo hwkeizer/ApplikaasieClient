@@ -4,8 +4,8 @@
  * and open the template in the editor.
  */
 
-var baseURL = "http://localhost:8080/Workshop3/webresources";
-var test;
+const baseURL = "http://localhost:8080/Workshop3/webresources";
+let selectedCustomer;
 
 $(document).ready(function(){
     showAllCustomers();
@@ -36,18 +36,16 @@ function showAllCustomers() {
                 ],
                 rowClick:function(e, row){
                     $(function () {
-                        var input_values = {
+                        selectedCustomer = {
                             'id' : row.getData().id,
                             'accountId' : row.getData().accountId.id,
                             'firstName' : row.getData().firstName,
                             'lastNamePrefix' : row.getData().lastNamePrefix,
-                            'lastName'   : row.getData().lastName,
-                            'remove' : "Klant verwijderen",
-                            'edit' : "Klant wijzigen"                            
-                        };                        
-                        $('#editOrRemoveCustomer').find('input').val(function () {
-                            return input_values[this.id];
-                        });
+                            'lastName'   : row.getData().lastName
+                        };
+                        $('#editOrRemoveCustomer').find('#firstName').val(selectedCustomer.firstName);
+                        $('#editOrRemoveCustomer').find('#lastNamePrefix').val(selectedCustomer.lastNamePrefix);
+                        $('#editOrRemoveCustomer').find('#lastName').val(selectedCustomer.lastName);
                     });
                     $("#buttons").hide();
                     $(".edit_instruction").hide();
@@ -64,17 +62,15 @@ function addCustomer() {
     $("#newCustomer").show();
 }
 
-
 // Process the forms
 $(document).on("click", ":submit", function(event) {
     event.preventDefault();
     let customer;
     switch($(this).val()) {
-        case "Klant wijzigen":
-            console.log("TESTEN WIJZIGEN KLANT voor aanroep findAccountById");            
-            console.log("Account id is: " + $("#editCustomer #accountId").val());
-            if ($("#editOrRemoveCustomer #accountId").val() !== '') {            
-                window.fetch(baseURL + "/account/" + $("#editOrRemoveCustomer #accountId").val(), {
+        case "Klant wijzigen":           
+            console.log("Selected Customer Account id is: " + selectedCustomer.accountId);
+            if (selectedCustomer.accountId !== undefined) {            
+                window.fetch(baseURL + "/account/" + selectedCustomer.accountId, {
                     method: "GET",
                     headers: {
                         "Accept": "application/json"
@@ -83,36 +79,35 @@ $(document).on("click", ":submit", function(event) {
                     console.log("content response header: " + response.headers.get("content-type"));
                     return response.json();
                 }).then(account => {
-                    console.log("TESTEN WIJZIGEN KLANT na window.fetch aanroep");
-                    console.log("Account: " + JSON.stringify(account));
+                    console.log("Selected Customer Account is: " + JSON.stringify(account));
                     customer = {
-                        "id": $("#editOrRemoveCustomer #id").val(),
+                        "id": selectedCustomer.id,
                         "accountId": account,
                         "firstName":$("#editOrRemoveCustomer #firstName").val(),
                         "lastNamePrefix":$("#editOrRemoveCustomer #lastNamePrefix").val(),
                         "lastName":$("#editOrRemoveCustomer #lastName").val()
                     };
                     let customerJson = JSON.stringify(customer);
-                    console.log("ID: " + $("#editOrRemoveCustomer #id").val() + " JSON: " + customerJson);
-                    editCustomer($("#editOrRemoveCustomer #id").val(), customerJson);
+                    console.log("Selected Customer is: " + customerJson);
+                    editCustomer(selectedCustomer.id, customerJson);
                 }).catch((error) => {
                     console.log("error " + error);
                 });                
             } else {
                 // Customer has no account so it should not get updated
                 customer = {
-                    "id": $("#editOrRemoveCustomer #id").val(),
+                    "id": selectedCustomer.id,
                     "firstName":$("#editOrRemoveCustomer #firstName").val(),
                     "lastNamePrefix":$("#editOrRemoveCustomer #lastNamePrefix").val(),
                     "lastName":$("#editOrRemoveCustomer #lastName").val()
                     };
                 let customerJson = JSON.stringify(customer);
-                console.log("ID: " + $("#editOrRemoveCustomer #id").val() + " JSON: " + customerJson);
-                editCustomer($("#editOrRemoveCustomer #id").val(), customerJson);
+                console.log("Selected Customer is: " + customerJson);
+                editCustomer(selectedCustomer.id, customerJson);
             }
             break;
         case "Klant verwijderen":
-            deleteCustomer($("#editOrRemoveCustomer #id").val());
+            deleteCustomer(selectedCustomer.id);
             break;
         case "Klant toevoegen":
             customer = {"firstName":$("#newCustomer #firstName").val(),
