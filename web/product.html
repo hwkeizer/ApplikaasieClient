@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Productpagina</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- jquery scripts -->
+        <script type="text/javascript" src="js/jquery/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>
+        <!-- tabulator script en styling -->
+        <link rel="stylesheet" href="static/tabulator/tabulator.min.css" >
+        <script type="text/javascript" src="js/tabulator/tabulator.min.js"></script>
+        <!-- css files -->
+        <link rel="stylesheet" type="text/css" href="static/global.css"/>
+        <!-- local scripts -->
+        <script type="text/javascript" src="js/product.js"></script>
+        <script src="js/js-cookie.js"></script>
+    </head>
+    <body>
+        <div id="header"></div>
+
+
+        <h3 class="center">Productoverzicht</h3>
+
+        <button id="addNewProductLink">Nieuw product toevoegen</button>
+        <br/><br/>
+
+        <div id="productTable"></div>
+
+        <div id="showOneProduct" style="display:none"></div>
+
+        <!--        <div id="editProduct" class="formfields" style="display:none"></div>-->
+
+        <form hidden id="editProduct">
+            <div class="formfields">
+                <label>Naam:</label><input type="text" id="productName"/>
+                <label>Prijs:</label><input type="text" id="productPrice"/>
+                <label>Voorraad:</label><input type="number" id="productStock"/>
+                <label>Productstatus:</label><input type="text" id="productStatus"/>
+                <div class="button_panel">
+                    <input id="editButton" class="button" type="submit" value="Product wijzigen" />
+                </div>
+            </div>             
+        </form>
+
+        <div id="addNewProduct" style="display:none"></div>
+
+        <script>
+            $("#header").load("header.html");
+            $("#footer").load("footer.html");
+        </script>       
+    </body>
+</html>
