@@ -11,17 +11,18 @@ $(document).ready(function(){
 });
 
 function showAllAccounts() {
-    $.ajaxSetup({ cache: false });
+//    $.ajaxSetup({ cache: false });
     $.ajax({
         url:baseURL + "/account",
         method: "GET",
         dataType: "json",
-        cache: false,
         error: function() {
             console.log("Error in function showAllAccounts");
         },
-        success: function(data) {
-            console.log("DATA: "+ data);
+        success: function(data, textStatus, request) {
+            if (request.getResponseHeader('REQUIRES_AUTH') === '1'){ 
+                window.location.href = 'http://localhost:8080/login.html';
+            }
             $("#accounts").tabulator({
                 layout:"fitColumns",
                 columns:[
@@ -38,19 +39,3 @@ function showAllAccounts() {
         }       
     });
 }
-
-//function findAccountById(id) { 
-//        $.ajax({
-//        url:baseURL + "/account/" + id,
-//        method: "GET",
-//        dataType: "json",
-//        error: function() {
-//            console.log("Error in function createCustomer");
-//        },
-//        success: function(data) { 
-//            alert("TESTEN WIJZIGEN KLANT in aanroep findAccountById met data:" + JSON.stringify(data));
-//            return data;
-//        }
-//    });
-//
-//} 

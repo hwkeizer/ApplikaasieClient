@@ -10,7 +10,8 @@ let selectedCustomer;
 $(document).ready(function(){
     showAllCustomers();
     $("#addCustomer").click(function(){
-        addCustomer();
+        $("#buttons").hide();
+        $("#newCustomer").show();
     });
     $("#editCustomer").click(function(){
         $(".edit_instruction").show();
@@ -23,9 +24,12 @@ function showAllCustomers() {
         method: "GET",
         dataType: "json",
         error: function() {
-            console.log("Error in function showAllAccounts");
+            console.log("Error in function showAllCustomers");
         },
-        success: function(data) {
+        success: function(data, textStatus, request) {
+            if (request.getResponseHeader('REQUIRES_AUTH') === '1'){ 
+                window.location.href = 'http://localhost:8080/login.html';
+            }
             $("#customers").tabulator({
                 layout:"fitColumns",
                 columns:[
@@ -49,17 +53,13 @@ function showAllCustomers() {
                     });
                     $("#buttons").hide();
                     $(".edit_instruction").hide();
+                    $("#newCustomer").hide();
                     $("#editOrRemoveCustomer").show();                   
                 }
             });
             $("#customers").tabulator("setData", data);
         }       
     });   
-}
-
-function addCustomer() {
-    $("#buttons").hide();
-    $("#newCustomer").show();
 }
 
 // Process the forms

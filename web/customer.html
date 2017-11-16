@@ -23,8 +23,9 @@ and open the template in the editor.
 
     </head>
     <body>
-        <div id="header"></div>        
+        <div id="header"></div>  
         
+        <br/>
         <div id="buttons">
             <button type="button" id="addCustomer">Klant toevoegen</button>
             <button type="button" id="editCustomer">Klant wijzigen of verwijderen</button>
@@ -45,8 +46,8 @@ and open the template in the editor.
                 <label>Tussenvoegsel:</label><input type="text" id="lastNamePrefix"/>
                 <label>Achternaam:</label><input type="text" id="lastName"/>
                 <div class="button_panel">
-                <input id="edit" class="button" type="submit" value="Klant wijzigen" />
-                <input id="remove" class="button" type="submit" value="Klant verwijderen" />
+                    <input id="edit" class="button" type="submit" value="Klant wijzigen" />
+                    <input id="remove" class="button" type="submit" value="Klant verwijderen" />
                 </div>
             </div>             
         </form>
@@ -55,7 +56,7 @@ and open the template in the editor.
         <div hidden class="edit_instruction">Selecteer een klant in onderstaande tabel om te wijzigen of te verwijderen</div>
         
         <div id="content">
-            <h3 id="center">Klant overzicht</h3>
+            <h3 class="center">Klant overzicht</h3>
             <div id="customers"></div>
         </div>
         

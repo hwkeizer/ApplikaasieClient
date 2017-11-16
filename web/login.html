@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Login</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- jquery scripts -->
+        <script type="text/javascript" src="js/jquery/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>
+        <!-- css files -->
+        <link rel="stylesheet" type="text/css" href="static/global.css"/>
+        <!-- local scripts -->
+        <script type="text/javascript" src="js/login.js"></script>
+    </head>
+    <body>
+        <div id="header"></div>
+        
+        <div id="content">
+            <h3 class="center">Om deze pagina te bezoeken moet u zich aanmelden
+            </h3>
+            <h4 class="center">Vul uw gebruikersnaam en wachtwoord in om u aan te melden</h4>
+            <br/>
+            
+            <form id="login" >
+                <div class="logincontainer">
+                    <div class="imagecontainer">
+                        <img src="images/koe.jpg" alt="Afbeelding koe">
+                    </div>
+
+                    <div class="container">
+                        <label><b>Gebruikersnaam</b></label>
+                        <input type="text" placeholder="Vul uw gebruikersnaam in" id="username" required>
+
+                        <label><b>Wachtwoord</b></label>
+                        <input type="password" placeholder="Vul uw wachtwoord in" id="password" required>                        
+                    </div>
+
+                    <div class="container" style="background-color:#f1f1f1">
+                        <button type="submit">Aanmelden</button>
+                        <button type="button" class="cancelbtn">Cancel</button>
+                    </div>
+                </div>
+            </form> 
+            
+        </div>
+        
+        <div id="footer"></div>
+        <script>
+            $("#header").load("header.html");
+            $("#footer").load("footer.html");
+        </script>
+    </body>
+    
+    
+</html>
