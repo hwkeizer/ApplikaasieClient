@@ -36,13 +36,13 @@ function showAllCustomers() {
                     {title:"Voornaam", field:"firstName", headerFilter:"input"},
                     {title:"Tussenvoegsel", field:"lastNamePrefix", headerFilter:"input"},
                     {title:"Achternaam", field:"lastName", headerFilter:"input"},
-                    {title:"Account", field:"accountId.username", headerFilter:"input"}
+                    {title:"Account", field:"account.username", headerFilter:"input"}
                 ],
                 rowClick:function(e, row){
                     $(function () {
                         selectedCustomer = {
                             'id' : row.getData().id,
-                            'accountId' : row.getData().accountId.id,
+                            'account' : row.getData().account.id,
                             'firstName' : row.getData().firstName,
                             'lastNamePrefix' : row.getData().lastNamePrefix,
                             'lastName'   : row.getData().lastName
@@ -68,9 +68,9 @@ $(document).on("click", ":submit", function(event) {
     let customer;
     switch($(this).val()) {
         case "Klant wijzigen":           
-            console.log("Selected Customer Account id is: " + selectedCustomer.accountId);
-            if (selectedCustomer.accountId !== undefined) {            
-                window.fetch(baseURL + "/account/" + selectedCustomer.accountId, {
+            console.log("Selected Customer Account id is: " + selectedCustomer.account);
+            if (selectedCustomer.account !== undefined) {            
+                window.fetch(baseURL + "/account/" + selectedCustomer.account, {
                     method: "GET",
                     headers: {
                         "Accept": "application/json"
@@ -82,7 +82,7 @@ $(document).on("click", ":submit", function(event) {
                     console.log("Selected Customer Account is: " + JSON.stringify(account));
                     customer = {
                         "id": selectedCustomer.id,
-                        "accountId": account,
+                        "account": account,
                         "firstName":$("#editOrRemoveCustomer #firstName").val(),
                         "lastNamePrefix":$("#editOrRemoveCustomer #lastNamePrefix").val(),
                         "lastName":$("#editOrRemoveCustomer #lastName").val()
