@@ -36,6 +36,7 @@ function showAllCustomers() {
                     {title:"Voornaam", field:"firstName", headerFilter:"input"},
                     {title:"Tussenvoegsel", field:"lastNamePrefix", headerFilter:"input"},
                     {title:"Achternaam", field:"lastName", headerFilter:"input"},
+                    {title:"Email", field:"email", headerFilter:"input"},
                     {title:"Account", field:"account.username", headerFilter:"input"}
                 ],
                 rowClick:function(e, row){
@@ -45,11 +46,13 @@ function showAllCustomers() {
                             'account' : row.getData().account.id,
                             'firstName' : row.getData().firstName,
                             'lastNamePrefix' : row.getData().lastNamePrefix,
-                            'lastName'   : row.getData().lastName
+                            'lastName' : row.getData().lastName,
+                            'email' : row.getData().email
                         };
                         $('#editOrRemoveCustomer').find('#firstName').val(selectedCustomer.firstName);
                         $('#editOrRemoveCustomer').find('#lastNamePrefix').val(selectedCustomer.lastNamePrefix);
                         $('#editOrRemoveCustomer').find('#lastName').val(selectedCustomer.lastName);
+                        $('#editOrRemoveCustomer').find('#email').val(selectedCustomer.email);
                     });
                     $("#buttons").hide();
                     $(".edit_instruction").hide();
@@ -85,7 +88,8 @@ $(document).on("click", ":submit", function(event) {
                         "account": account,
                         "firstName":$("#editOrRemoveCustomer #firstName").val(),
                         "lastNamePrefix":$("#editOrRemoveCustomer #lastNamePrefix").val(),
-                        "lastName":$("#editOrRemoveCustomer #lastName").val()
+                        "lastName":$("#editOrRemoveCustomer #lastName").val(),
+                        "email":$("#editOrRemoveCustomer #email").val()
                     };
                     let customerJson = JSON.stringify(customer);
                     console.log("Selected Customer is: " + customerJson);
@@ -99,7 +103,8 @@ $(document).on("click", ":submit", function(event) {
                     "id": selectedCustomer.id,
                     "firstName":$("#editOrRemoveCustomer #firstName").val(),
                     "lastNamePrefix":$("#editOrRemoveCustomer #lastNamePrefix").val(),
-                    "lastName":$("#editOrRemoveCustomer #lastName").val()
+                    "lastName":$("#editOrRemoveCustomer #lastName").val(),
+                    "email":$("#editOrRemoveCustomer #email").val()
                     };
                 let customerJson = JSON.stringify(customer);
                 console.log("Selected Customer is: " + customerJson);
@@ -112,7 +117,8 @@ $(document).on("click", ":submit", function(event) {
         case "Klant toevoegen":
             customer = {"firstName":$("#newCustomer #firstName").val(),
                     "lastNamePrefix":$("#newCustomer #lastNamePrefix").val(),
-                    "lastName":$("#newCustomer #lastName").val()        
+                    "lastName":$("#newCustomer #lastName").val(),
+                    "email":$("#newCustomer #email").val()
              };
             var customerJson = JSON.stringify(customer);
             console.log(customerJson);
@@ -155,6 +161,7 @@ function deleteCustomer(customerId) {
 }
 
 function createCustomer(customer) {
+    console.log(customer);
     $.ajax({
         url:baseURL + "/customer",
         method: "POST",
@@ -170,4 +177,3 @@ function createCustomer(customer) {
         }
     });
 }
-
