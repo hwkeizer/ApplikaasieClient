@@ -71,7 +71,6 @@ $(document).on("click", ":submit", function(event) {
     let customer;
     switch($(this).val()) {
         case "Klant wijzigen":           
-            console.log("Selected Customer Account id is: " + selectedCustomer.account);
             if (selectedCustomer.account !== undefined) {            
                 window.fetch(baseURL + "/account/" + selectedCustomer.account, {
                     method: "GET",
@@ -91,9 +90,7 @@ $(document).on("click", ":submit", function(event) {
                         "lastName":$("#editOrRemoveCustomer #lastName").val(),
                         "email":$("#editOrRemoveCustomer #email").val()
                     };
-                    let customerJson = JSON.stringify(customer);
-                    console.log("Selected Customer is: " + customerJson);
-                    editCustomer(selectedCustomer.id, customerJson);
+                    editCustomer(selectedCustomer.id, customer);
                 }).catch((error) => {
                     console.log("error " + error);
                 });                
@@ -106,9 +103,7 @@ $(document).on("click", ":submit", function(event) {
                     "lastName":$("#editOrRemoveCustomer #lastName").val(),
                     "email":$("#editOrRemoveCustomer #email").val()
                     };
-                let customerJson = JSON.stringify(customer);
-                console.log("Selected Customer is: " + customerJson);
-                editCustomer(selectedCustomer.id, customerJson);
+                editCustomer(selectedCustomer.id, customer);
             }
             break;
         case "Klant verwijderen":
@@ -120,9 +115,7 @@ $(document).on("click", ":submit", function(event) {
                     "lastName":$("#newCustomer #lastName").val(),
                     "email":$("#newCustomer #email").val()
              };
-            var customerJson = JSON.stringify(customer);
-            console.log(customerJson);
-            createCustomer(customerJson);
+            createCustomer(customer);
             break;
     } 
 });
@@ -131,7 +124,7 @@ function editCustomer(customerId, customer) {
     $.ajax({
         url:baseURL + "/customer/" + customerId,
         method: "PUT",
-        data: customer,
+        data: JSON.stringify(customer),
         contentType: "application/json",
         error: function() {
             alert("Error in function editCustomer");
@@ -165,7 +158,7 @@ function createCustomer(customer) {
     $.ajax({
         url:baseURL + "/customer",
         method: "POST",
-        data: customer,
+        data: JSON.stringify(customer),
         contentType: "application/json",
         error: function() {
             console.log("Error in function createCustomer");
