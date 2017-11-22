@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Productpagina</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- jquery scripts -->
+        <script type="text/javascript" src="js/jquery/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>
+        <!-- tabulator script en styling -->
+        <link rel="stylesheet" href="static/tabulator/tabulator.min.css" >
+        <script type="text/javascript" src="js/tabulator/tabulator.min.js"></script>
+        <!-- css files -->
+        <link rel="stylesheet" type="text/css" href="static/global.css"/>
+        <!-- local scripts -->
+        <script type="text/javascript" src="js/order.js"></script>
+        <script src="js/js-cookie.js"></script>
+    </head>
+    <body>
+        
+        <div id="header"></div>
+        
+        <h1>Bestellingen</h1>
+        
+
+        <h1>Bestellingenoverzicht</h1>
+
+
+        <a href="/newOrder.html" id="addNewOrderLink">Nieuwe bestelling toevoegen</a>
+        <br/><br/>
+
+
+
+        <div id="orderTable"></div>
+        
+        
+        <script>
+            $("#header").load("header.html");
+            $("#footer").load("footer.html");
+        </script>
+
+        
+    </body>
+</html>

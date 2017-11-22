@@ -25,7 +25,7 @@ function showAllProducts() {
                 layout: "fitColumns",
                 columns: [
                     {title: "Naam", field: "name", headerFilter: "input"},
-                    {formatter: "money", title: "Prijs", field: "price", align: "right"},
+                    {formatter: "money", title: "Prijs/stuk", field: "price", align: "right"},
                     {title: "Voorraad", field: "stock"},
                     {title: "Productstatus", field: "productStatus", headerFilter: "input"}
                 ],
