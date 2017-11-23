@@ -30,6 +30,7 @@ function showAllCustomers() {
             if (request.getResponseHeader('REQUIRES_AUTH') === '1'){ 
                 window.location.href = 'http://localhost:8080/login.html';
             }
+            console.log(data)
             $("#customers").tabulator({
                 layout:"fitColumns",
                 columns:[
@@ -37,9 +38,13 @@ function showAllCustomers() {
                     {title:"Tussenvoegsel", field:"lastNamePrefix", headerFilter:"input"},
                     {title:"Achternaam", field:"lastName", headerFilter:"input"},
                     {title:"Email", field:"email", headerFilter:"input"},
-                    {title:"Account", field:"account.username", headerFilter:"input"}
+                    {title:"Account", field:"account.username", headerFilter:"input"},
                 ],
                 rowClick:function(e, row){
+                    // hide all forms to start with
+                    $("#postAddress").hide();
+                    $("#factuurAddress").hide();
+                    $("#bezorgAddress").hide();
                     $(function () {
                         selectedCustomer = {
                             'id' : row.getData().id,
@@ -48,7 +53,8 @@ function showAllCustomers() {
                             'lastNamePrefix' : row.getData().lastNamePrefix,
                             'lastName' : row.getData().lastName,
                             'email' : row.getData().email
-                        };
+                        };                        
+                        showAddressesCustomer(selectedCustomer.id);                        
                         $('#editOrRemoveCustomer').find('#firstName').val(selectedCustomer.firstName);
                         $('#editOrRemoveCustomer').find('#lastNamePrefix').val(selectedCustomer.lastNamePrefix);
                         $('#editOrRemoveCustomer').find('#lastName').val(selectedCustomer.lastName);
@@ -169,4 +175,48 @@ function createCustomer(customer) {
             
         }
     });
+}
+
+function showAddressesCustomer(customerId) {
+        $.ajax({
+            url:baseURL + "/customer/" + customerId + "/addresses",
+            method: "GET",
+            dataType: "json",
+            error: function() {
+                alert("Error in function showAllCustomers");
+            },
+            success: function(data) {
+                for (i=0; i<data.length; i++) {
+                    switch (data[i].addressType) {
+                        case "POSTADRES": {                                
+                            $('#postAddress').find('#p_streetname').val(data[i].streetname);
+                            $('#postAddress').find('#p_number').val(data[i].number);
+                            $('#postAddress').find('#p_addition').val(data[i].addition);
+                            $('#postAddress').find('#p_city').val(data[i].city);
+                            $('#postAddress').find('#p_postalcode').val(data[i].postalcode);
+                            $("#postAddress").show();
+                            break;
+                        }
+                        case "FACTUURADRES": {
+                            $('#factuurAddress').find('#f_streetname').val(data[i].streetname);
+                            $('#factuurAddress').find('#f_number').val(data[i].number);
+                            $('#factuurAddress').find('#f_addition').val(data[i].addition);
+                            $('#factuurAddress').find('#f_city').val(data[i].city);
+                            $('#factuurAddress').find('#f_postalcode').val(data[i].postalcode);
+                            $("#factuurAddress").show();                                
+                            break;
+                        }
+                        case "BEZORGADRES": {
+                            $('#bezorgAddress').find('#b_streetname').val(data[i].streetname);
+                            $('#bezorgAddress').find('#b_number').val(data[i].number);
+                            $('#bezorgAddress').find('#b_addition').val(data[i].addition);
+                            $('#bezorgAddress').find('#b_city').val(data[i].city);
+                            $('#bezorgAddress').find('#b_postalcode').val(data[i].postalcode);
+                            $("#bezorgAddress").show();                                
+                            break;                            
+                        }
+                    }                                        
+                }
+            }
+        });
 }
