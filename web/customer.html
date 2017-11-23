@@ -33,61 +33,70 @@ and open the template in the editor.
         
         <form hidden id="newCustomer">
             <div class="formfields">
+                <h3 class="center">Nieuwe klant</h3>
                 <label>Voornaam:</label><input type="text" id="firstName"/>
                 <label>Tussenvoegsel:</label><input type="text" id="lastNamePrefix"/>
                 <label>Achternaam:</label><input type="text" id="lastName"/>
                 <label>Email:</label><input type="text" id="email"/>
-                <input class="button" type="submit" value="Klant toevoegen" />
+                <div class="button_panel">
+                    <input class="button" type="submit" value="Klant toevoegen" />
+                </div>
             </div>             
         </form>
         
         <form hidden id="editOrRemoveCustomer">            
             <div class="formfields">
-                <h3>Klantdetails</h3>
+                <h3 class="center">Klant details</h3>
                 <label>Voornaam:</label><input type="text" id="firstName"/>
                 <label>Tussenvoegsel:</label><input type="text" id="lastNamePrefix"/>
                 <label>Achternaam:</label><input type="text" id="lastName"/>
                 <label>Email:</label><input type="text" id="email"/>
-                
+                <div class="button_panel">
                     <input id="edit" class="button" type="submit" value="Klant wijzigen" />
                     <input id="remove" class="button" type="submit" value="Klant verwijderen" />
-                
+                </div>
             </div>             
         </form>
         
         <form hidden id="postAddress">            
             <div class="formfields">
-                <h3>Postadres</h3>
+                <h3 class="center">Postadres</h3>
                 <label>Straatnaam:</label><input type="text" id="p_streetname"/>
                 <label>Nummer:</label><input type="text" id="p_number"/>
                 <label>Toevoeging:</label><input type="text" id="p_addition"/>
                 <label>Plaats:</label><input type="text" id="p_city"/>
                 <label>Postcode:</label><input type="text" id="p_postalcode"/>
-                <input class="button" type="submit" value="Postadres wijzigen" />
+                <div class="button_panel">
+                    <input class="button" type="submit" value="Postadres wijzigen" />
+                </div>
             </div>             
         </form>
         
         <form hidden id="factuurAddress">            
             <div class="formfields">
-                <h3>Factuuradres</h3>
+                <h3 class="center">Factuuradres</h3>
                 <label>Straatnaam:</label><input type="text" id="f_streetname"/>
                 <label>Nummer:</label><input type="text" id="f_number"/>
                 <label>Toevoeging:</label><input type="text" id="f_addition"/>
                 <label>Plaats:</label><input type="text" id="f_city"/>
                 <label>Postcode:</label><input type="text" id="f_postalcode"/>
-                <input class="button" type="submit" value="Factuuradres wijzigen" />
+                <div class="button_panel">
+                    <input class="button" type="submit" value="Factuuradres wijzigen" />
+                </div>
             </div>             
         </form>
         
         <form hidden id="bezorgAddress">            
             <div class="formfields">
-                <h3>Bezorgadres</h3>
+                <h3 class="center">Bezorgadres</h3>
                 <label>Straatnaam:</label><input type="text" id="b_streetname"/>
                 <label>Nummer:</label><input type="text" id="b_number"/>
                 <label>Toevoeging:</label><input type="text" id="b_addition"/>
                 <label>Plaats:</label><input type="text" id="b_city"/>
                 <label>Postcode:</label><input type="text" id="b_postalcode"/>
-                <input class="button" type="submit" value="Bezorgadres wijzigen" />
+                <div class="button_panel">
+                    <input class="button" type="submit" value="Bezorgadres wijzigen" />
+                </div>
             </div>             
         </form>
 

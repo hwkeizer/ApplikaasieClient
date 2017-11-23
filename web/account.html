@@ -33,22 +33,26 @@ and open the template in the editor.
         
         <form hidden id="newAccount">
             <div class="formfields">
+                <h3 class="center">Nieuw account</h3>
                 <label>Gebruikersnaam:</label><input type="text" id="username"/>
                 <label>Wachtwoord:</label><input type="text" id="password"/>                    
                 <label>Account type:</label><input list="accountTypes" id="accountType"/>
                 <datalist id="accountTypes"></datalist>
-                <input class="button" type="submit" value="Account toevoegen" />
+                <div class="button_panel">
+                    <input class="button" type="submit" value="Account toevoegen" />
+                </div>
             </div>             
         </form>
                 
         <form hidden id="removeAccount">
             <div class="formfields">
+                <h3 class="center">Account details</h3>
                 <label>Gebruikersnaam:</label><input type="text" id="username" readonly/>
                 <label>Wachtwoord:</label><input type="text" id="password" readonly/>
                 <label>Account type:</label><input type="text" id="accountType" readonly/>
- 
+                <div class="button_panel">
                     <input id="remove" class="button" type="submit" value="Account verwijderen" />
-
+                </div>
             </div>             
         </form>
         
