@@ -6,6 +6,9 @@
 
 const baseURL = "http://localhost:8080/Workshop3/webresources";
 let selectedCustomer;
+let postAddress = null;
+let factuurAddress = null;
+let bezorgAddress = null;
 
 $(document).ready(function(){
     showAllCustomers();
@@ -45,6 +48,7 @@ function showAllCustomers() {
                     $("#postAddress").hide();
                     $("#factuurAddress").hide();
                     $("#bezorgAddress").hide();
+                    $("#newAddress").hide();
                     $(function () {
                         selectedCustomer = {
                             'id' : row.getData().id,
@@ -55,15 +59,15 @@ function showAllCustomers() {
                             'email' : row.getData().email
                         };                        
                         showAddressesCustomer(selectedCustomer.id);                        
-                        $('#editOrRemoveCustomer').find('#firstName').val(selectedCustomer.firstName);
-                        $('#editOrRemoveCustomer').find('#lastNamePrefix').val(selectedCustomer.lastNamePrefix);
-                        $('#editOrRemoveCustomer').find('#lastName').val(selectedCustomer.lastName);
-                        $('#editOrRemoveCustomer').find('#email').val(selectedCustomer.email);
+                        $('#customerDetails').find('#firstName').val(selectedCustomer.firstName);
+                        $('#customerDetails').find('#lastNamePrefix').val(selectedCustomer.lastNamePrefix);
+                        $('#customerDetails').find('#lastName').val(selectedCustomer.lastName);
+                        $('#customerDetails').find('#email').val(selectedCustomer.email);
                     });
                     $("#buttons").hide();
                     $(".edit_instruction").hide();
                     $("#newCustomer").hide();
-                    $("#editOrRemoveCustomer").show();                   
+                    $("#customerDetails").show();                   
                 }
             });
             $("#customers").tabulator("setData", data);
@@ -94,10 +98,10 @@ $(document).on("click", ":submit", function(event) {
                     customer = {
                         "id": selectedCustomer.id,
                         "account": account,
-                        "firstName":$("#editOrRemoveCustomer #firstName").val(),
-                        "lastNamePrefix":$("#editOrRemoveCustomer #lastNamePrefix").val(),
-                        "lastName":$("#editOrRemoveCustomer #lastName").val(),
-                        "email":$("#editOrRemoveCustomer #email").val()
+                        "firstName":$("#customerDetails #firstName").val(),
+                        "lastNamePrefix":$("#customerDetails #lastNamePrefix").val(),
+                        "lastName":$("#customerDetails #lastName").val(),
+                        "email":$("#customerDetails #email").val()
                     };
                     editCustomer(selectedCustomer.id, customer);
                 }).catch((error) => {
@@ -107,10 +111,10 @@ $(document).on("click", ":submit", function(event) {
                 // Customer has no account so it should not get updated
                 customer = {
                     "id": selectedCustomer.id,
-                    "firstName":$("#editOrRemoveCustomer #firstName").val(),
-                    "lastNamePrefix":$("#editOrRemoveCustomer #lastNamePrefix").val(),
-                    "lastName":$("#editOrRemoveCustomer #lastName").val(),
-                    "email":$("#editOrRemoveCustomer #email").val()
+                    "firstName":$("#customerDetails #firstName").val(),
+                    "lastNamePrefix":$("#customerDetails #lastNamePrefix").val(),
+                    "lastName":$("#customerDetails #lastName").val(),
+                    "email":$("#customerDetails #email").val()
                     };
                 editCustomer(selectedCustomer.id, customer);
             }
@@ -129,6 +133,8 @@ $(document).on("click", ":submit", function(event) {
         case "Postadres wijzigen": changePostAddress(); break;
         case "Factuuradres wijzigen": changeFactuurAddress(); break;
         case "Bezorgadres wijzigen": changeBezorgAddress(); break;
+        case "Adres toevoegen": addAddressPreparation(); break;
+        case "Adres bevestigen" : addNewAddress(); break;
     } 
 });
 
@@ -189,48 +195,53 @@ function showAddressesCustomer(customerId) {
         method: "GET",
         dataType: "json",
         error: function() {
-            alert("Error in function showAllCustomers");
+            alert("Error in function showAddressesCustomer");
         },
         success: function(data) {
+            // No address found, show an empty postAddress form
+            if (data.length === 0) {
+                $("#postAddress")[0].reset();
+                postAddress = null; // clear the global variable
+                $(".postaddress").hide(); // hide the button to change postaddress (because we don't have one)
+                $("#postAddress").show();
+            }
+            // If we have three addresses no more addresses can be added so hide the button
+            if (data.length === 3) {
+                $(".addaddress").hide();
+            } else {
+                $(".addaddress").show();
+            }
             for (i=0; i<data.length; i++) {
                 switch (data[i].addressType) {
-                    case "POSTADRES": {                                
+                    case "POSTADRES": {
+                        $(".postaddress").show(); // we have a postaddress so show the change postaddress button
+                        postAddress = data[i]; // save postAddress globally
                         $('#postAddress').find('#p_streetname').val(data[i].streetname);
                         $('#postAddress').find('#p_number').val(data[i].number);
                         $('#postAddress').find('#p_addition').val(data[i].addition);
                         $('#postAddress').find('#p_city').val(data[i].city);
                         $('#postAddress').find('#p_postalcode').val(data[i].postalcode);
-                        $("#postAddress").find('#p_id').val(data[i].id);
-                        $("#postAddress").find('#p_addressType').val(data[i].addressType);
                         $("#postAddress").show();
-                        $("#postAddress").find('#p_id').hide(); // keep id field hidden
-                        $("#postAddress").find('#p_addressType').hide(); // keep addressType field hidden
                         break;
                     }
                     case "FACTUURADRES": {
+                        factuurAddress = data[i]; // save factuurAddress globally
                         $('#factuurAddress').find('#f_streetname').val(data[i].streetname);
                         $('#factuurAddress').find('#f_number').val(data[i].number);
                         $('#factuurAddress').find('#f_addition').val(data[i].addition);
                         $('#factuurAddress').find('#f_city').val(data[i].city);
                         $('#factuurAddress').find('#f_postalcode').val(data[i].postalcode);
-                        $("#factuurAddress").find('#f_id').val(data[i].id);
-                        $("#factuurAddress").find('#f_addressType').val(data[i].addressType);
                         $("#factuurAddress").show();
-                        $("#factuurAddress").find('#f_id').hide(); // keep id field hidden
-                        $("#factuurAddress").find('#f_addressType').hide(); // keep addressType field hidden
                         break;
                     }
                     case "BEZORGADRES": {
+                        bezorgAddress = data[i]; // save bezorgAddress globally
                         $('#bezorgAddress').find('#b_streetname').val(data[i].streetname);
                         $('#bezorgAddress').find('#b_number').val(data[i].number);
                         $('#bezorgAddress').find('#b_addition').val(data[i].addition);
                         $('#bezorgAddress').find('#b_city').val(data[i].city);
                         $('#bezorgAddress').find('#b_postalcode').val(data[i].postalcode);
-                        $("#bezorgAddress").find('#b_id').val(data[i].id);
-                        $("#bezorgAddress").find('#b_addressType').val(data[i].addressType);
                         $("#bezorgAddress").show(); 
-                        $("#bezorgAddress").find('#b_id').hide(); // keep id field hidden
-                        $("#bezorgAddress").find('#b_addressType').hide(); // keep addressType field hidden
                         break;                            
                     }
                 }                                        
@@ -240,45 +251,30 @@ function showAddressesCustomer(customerId) {
 }
 
 function changePostAddress() {
-    let p_address = {
-        "id":$("#postAddress").find("#p_id").val(),
-        "addressType":$("#postAddress").find("#p_addressType").val(),
-        "streetname":$('#postAddress').find('#p_streetname').val(),
-        "number":$('#postAddress').find('#p_number').val(),
-        "addition":$('#postAddress').find('#p_addition').val(),
-        "city":$('#postAddress').find('#p_city').val(),
-        "postalcode":$('#postAddress').find('#p_postalcode').val(),
-        "customer":selectedCustomer
-    };
-    editAddress($("#postAddress").find("#p_id").val(), p_address);
+    postAddress.streetname = $('#postAddress').find('#p_streetname').val();
+    postAddress.number = $('#postAddress').find('#p_number').val();
+    postAddress.addition = $('#postAddress').find('#p_addition').val();
+    postAddress.city = $('#postAddress').find('#p_city').val();
+    postAddress.postalcode = $('#postAddress').find('#p_postalcode').val();
+    editAddress(postAddress.id, postAddress);
 }
 
 function changeFactuurAddress() {
-    let f_address = {
-        "id":$("#factuurAddress").find("#f_id").val(),
-        "addressType":$("#factuurAddress").find("#f_addressType").val(),
-        "streetname":$('#factuurAddress').find('#f_streetname').val(),
-        "number":$('#factuurAddress').find('#f_number').val(),
-        "addition":$('#factuurAddress').find('#f_addition').val(),
-        "city":$('#factuurAddress').find('#f_city').val(),
-        "postalcode":$('#factuurAddress').find('#f_postalcode').val(),
-        "customer":selectedCustomer
-    };
-    editAddress($("#factuurAddress").find("#f_id").val(), f_address);
+    factuurAddress.streetname = $('#factuurAddress').find('#f_streetname').val();
+    factuurAddress.number = $('#factuurAddress').find('#f_number').val();
+    factuurAddress.addition = $('#factuurAddress').find('#f_addition').val();
+    factuurAddress.city = $('#factuurAddress').find('#f_city').val();
+    factuurAddress.postalcode = $('#factuurAddress').find('#f_postalcode').val();
+    editAddress(factuurAddress.id, factuurAddress);
 }
 
 function changeBezorgAddress() {
-    let b_address = {
-        "id":$("#bezorgAddress").find("#b_id").val(),
-        "addressType":$("#bezorgAddress").find("#b_addressType").val(),
-        "streetname":$('#bezorgAddress').find('#b_streetname').val(),
-        "number":$('#bezorgAddress').find('#b_number').val(),
-        "addition":$('#bezorgAddress').find('#b_addition').val(),
-        "city":$('#bezorgAddress').find('#b_city').val(),
-        "postalcode":$('#bezorgAddress').find('#b_postalcode').val(),
-        "customer":selectedCustomer
-    };
-    editAddress($("#bezorgAddress").find("#b_id").val(), b_address);
+    bezorgAddress.streetname = $('#bezorgAddress').find('#b_streetname').val();
+    bezorgAddress.number = $('#bezorgAddress').find('#b_number').val();
+    bezorgAddress.addition = $('#bezorgAddress').find('#b_addition').val();
+    bezorgAddress.city = $('#bezorgAddress').find('#b_city').val();
+    bezorgAddress.postalcode = $('#bezorgAddress').find('#b_postalcode').val();
+    editAddress(bezorgAddress.id, bezorgAddress);
 }
 
 
@@ -297,4 +293,61 @@ function editAddress(addressId, address) {
             
         }
     });
+}
+
+function addAddress(address) {
+    $.ajax({
+        url:baseURL + "/address",
+        method: "POST",
+        data: JSON.stringify(address),
+        contentType: "application/json",
+        error: function() {
+            alert("Error in function addAddress");
+        },
+        success: function() {
+            window.location.href="http://localhost:8080/customer.html#";
+            location.reload();
+            
+        }
+    });
+}
+
+function addAddressPreparation() {
+    // If there is no postAddress this address will be the postAddress
+    if (postAddress === null) {
+        address = {"addressType": "POSTADRES",
+                    "streetname":$('#postAddress').find('#p_streetname').val(),
+                    "number":$('#postAddress').find('#p_number').val(),
+                    "addition":$('#postAddress').find('#p_addition').val(),
+                    "city":$('#postAddress').find('#p_city').val(),
+                    "postalcode":$('#postAddress').find('#p_postalcode').val(),
+                    "customer": selectedCustomer
+             };
+        alert(JSON.stringify(address))
+        addAddress(address);
+    } else {
+        if (factuurAddress !== null) {addressTypes = ['BEZORGADRES'];}
+        else if (bezorgAddress !== null) {addressTypes = ['FACTUURADRES'];}
+        else addressTypes = ['FACTUURADRES', 'BEZORGADRES'];
+        var list = document.getElementById("addressTypes");
+        addressTypes.forEach(function(item) {
+            var option = document.createElement('option');
+            option.value = item;
+            list.appendChild(option);
+        });
+        $("#newAddress").show();
+    }
+}
+
+function addNewAddress() {
+    address = {"addressType":$('#newAddress').find('#n_addressType').val(),
+                "streetname":$('#newAddress').find('#n_streetname').val(),
+                "number":$('#newAddress').find('#n_number').val(),
+                "addition":$('#newAddress').find('#n_addition').val(),
+                "city":$('#newAddress').find('#n_city').val(),
+                "postalcode":$('#newAddress').find('#n_postalcode').val(),
+                "customer": selectedCustomer
+         };
+        alert(JSON.stringify(address))
+        addAddress(address);
 }

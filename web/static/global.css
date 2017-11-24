@@ -86,12 +86,12 @@ html {
     background-color: #d6f5d6;
     border-width: 1px;
     border-style: solid;
-}
 
+}
 .formfields input {
     display: inline-block;
+    width: 170px;
     float: right;
-    margin: 4px;
 }
 
 .formfields label {
@@ -99,7 +99,6 @@ html {
     float: left;
     width: 150px;
     text-align: left;
-    margin: 4px;
 }
 
 .formfields .button {

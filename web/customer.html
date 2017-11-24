@@ -34,26 +34,30 @@ and open the template in the editor.
         <form hidden id="newCustomer">
             <div class="formfields">
                 <h3 class="center">Nieuwe klant</h3>
-                <label>Voornaam:</label><input type="text" id="firstName"/>
-                <label>Tussenvoegsel:</label><input type="text" id="lastNamePrefix"/>
-                <label>Achternaam:</label><input type="text" id="lastName"/>
-                <label>Email:</label><input type="text" id="email"/>
+                <table>
+                    <tr><td><label>Voornaam:</label></td><td><input type="text" id="firstName"/></td></tr>
+                    <tr><td><label>Tussenvoegsel:</label></td><td><input type="text" id="lastNamePrefix"/></td></tr>
+                    <tr><td><label>Achternaam:</label></td><td><input type="text" id="lastName"/></td></tr>
+                    <tr><td><label>Email:</label></td><td><input type="text" id="email"/></td></tr>
+                </table>
                 <div class="button_panel">
                     <input class="button" type="submit" value="Klant toevoegen" />
                 </div>
             </div>             
         </form>
         
-        <form hidden id="editOrRemoveCustomer">            
+        <form hidden id="customerDetails">            
             <div class="formfields">
                 <h3 class="center">Klant details</h3>
-                <label>Voornaam:</label><input type="text" id="firstName"/>
-                <label>Tussenvoegsel:</label><input type="text" id="lastNamePrefix"/>
-                <label>Achternaam:</label><input type="text" id="lastName"/>
-                <label>Email:</label><input type="text" id="email"/>
+                <table>
+                    <tr><td><label>Voornaam:</label></td><td><input type="text" id="firstName"/></td></tr>
+                    <tr><td><label>Tussenvoegsel:</label></td><td><input type="text" id="lastNamePrefix"/></td></tr>
+                    <tr><td><label>Achternaam:</label></td><td><input type="text" id="lastName"/></td></tr>
+                    <tr><td><label>Email:</label></td><td><input type="text" id="email"/></td></tr>
+                </table>
                 <div class="button_panel">
-                    <input id="edit" class="button" type="submit" value="Klant wijzigen" />
-                    <input id="remove" class="button" type="submit" value="Klant verwijderen" />
+                    <input class="button" type="submit" value="Klant wijzigen" />
+                    <input class="button" type="submit" value="Klant verwijderen" />
                 </div>
             </div>             
         </form>
@@ -61,15 +65,16 @@ and open the template in the editor.
         <form hidden id="postAddress">            
             <div class="formfields">
                 <h3 class="center">Postadres</h3>
-                <label>Straatnaam:</label><input type="text" id="p_streetname"/>
-                <label>Nummer:</label><input type="text" id="p_number"/>
-                <label>Toevoeging:</label><input type="text" id="p_addition"/>
-                <label>Plaats:</label><input type="text" id="p_city"/>
-                <label>Postcode:</label><input type="text" id="p_postalcode"/>
-                <input type="text" id="p_id" hidden/>
-                <input type="text" id="p_addressType" hidden/>
+                <table>
+                    <tr><td><label>Straatnaam:</label></td><td><input type="text" id="p_streetname"/></td></tr>
+                    <tr><td><label>Nummer:</label></td><td><input type="text" id="p_number"/></td></tr>
+                    <tr><td><label>Toevoeging:</label></td><td><input type="text" id="p_addition"/></td></tr>
+                    <tr><td><label>Plaats:</label></td><td><input type="text" id="p_city"/></td></tr>
+                    <tr><td><label>Postcode:</label></td><td><input type="text" id="p_postalcode"/></td></tr>
+                </table>
                 <div class="button_panel">
-                    <input class="button" type="submit" value="Postadres wijzigen" />
+                    <input class="button postaddress" type="submit" value="Postadres wijzigen" />
+                    <input class="button addaddress" type="submit" value="Adres toevoegen"/>
                 </div>
             </div>             
         </form>
@@ -77,13 +82,13 @@ and open the template in the editor.
         <form hidden id="factuurAddress">            
             <div class="formfields">
                 <h3 class="center">Factuuradres</h3>
-                <label>Straatnaam:</label><input type="text" id="f_streetname"/>
-                <label>Nummer:</label><input type="text" id="f_number"/>
-                <label>Toevoeging:</label><input type="text" id="f_addition"/>
-                <label>Plaats:</label><input type="text" id="f_city"/>
-                <label>Postcode:</label><input type="text" id="f_postalcode"/>
-                <input type="text" id="f_id" hidden/>
-                <input type="text" id="f_addressType" hidden/>
+                <table>
+                    <tr><td><label>Straatnaam:</label></td><td><input type="text" id="f_streetname"/></td></tr>
+                    <tr><td><label>Nummer:</label></td><td><input type="text" id="f_number"/></td></tr>
+                    <tr><td><label>Toevoeging:</label></td><td><input type="text" id="f_addition"/></td></tr>
+                    <tr><td><label>Plaats:</label></td><td><input type="text" id="f_city"/></td></tr>
+                    <tr><td><label>Postcode:</label></td><td><input type="text" id="f_postalcode"/></td></tr>
+                </table>
                 <div class="button_panel">
                     <input class="button" type="submit" value="Factuuradres wijzigen" />
                 </div>
@@ -93,15 +98,33 @@ and open the template in the editor.
         <form hidden id="bezorgAddress">            
             <div class="formfields">
                 <h3 class="center">Bezorgadres</h3>
-                <label>Straatnaam:</label><input type="text" id="b_streetname"/>
-                <label>Nummer:</label><input type="text" id="b_number"/>
-                <label>Toevoeging:</label><input type="text" id="b_addition"/>
-                <label>Plaats:</label><input type="text" id="b_city"/>
-                <label>Postcode:</label><input type="text" id="b_postalcode"/>
-                <input type="text" id="b_id" hidden/>
-                <input type="text" id="b_addressType" hidden/>
+                <table>
+                    <tr><td><label>Straatnaam:</label></td><td><input type="text" id="b_streetname"/></td></tr>
+                    <tr><td><label>Nummer:</label></td><td><input type="text" id="b_number"/></td></tr>
+                    <tr><td><label>Toevoeging:</label></td><td><input type="text" id="b_addition"/></td></tr>
+                    <tr><td><label>Plaats:</label></td><td><input type="text" id="b_city"/></td></tr>
+                    <tr><td><label>Postcode:</label></td><td><input type="text" id="b_postalcode"/></td></tr>
+                </table>
                 <div class="button_panel">
                     <input class="button" type="submit" value="Bezorgadres wijzigen" />
+                </div>
+            </div>             
+        </form>
+        
+        <form hidden id="newAddress">            
+            <div class="formfields">
+                <h3 class="center">Nieuw adres</h3>
+                <table>
+                    <tr><td><label>Adres type:</label></td><td><input list="addressTypes" id="n_addressType"/></td></tr>
+                    <tr><td><label>Straatnaam:</label></td><td><input type="text" id="n_streetname"/></td></tr>
+                    <tr><td><label>Nummer:</label></td><td><input type="text" id="n_number"/></td></tr>
+                    <tr><td><label>Toevoeging:</label></td><td><input type="text" id="n_addition"/></td></tr>
+                    <tr><td><label>Plaats:</label></td><td><input type="text" id="n_city"/></td></tr>
+                    <tr><td><label>Postcode:</label></td><td><input type="text" id="n_postalcode"/></td></tr>
+                </table>
+                <datalist id="addressTypes"></datalist>
+                <div class="button_panel">
+                    <input class="button addaddress" type="submit" value="Adres bevestigen"/>
                 </div>
             </div>             
         </form>
