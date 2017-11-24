@@ -38,6 +38,16 @@ and open the template in the editor.
 
         <div id="orderTable"></div>
         
+        <div hidden id="showOneOrder">
+            <button id ="backToOverview">Terug naar overzicht</button>
+            <br/><p>Bestelling: </p>
+            <div id="showOrder"></div>
+            <div id="showOrderItems" style="width:500px">
+                <p>Deze bestelling bevat de volgende producten:</p>
+                <div id="orderItemTable"></div>
+            </div>
+        </div>
+        
         
         <script>
             $("#header").load("header.html");

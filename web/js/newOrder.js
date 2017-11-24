@@ -24,7 +24,6 @@ function showAllProducts() {
         success: function (data) {
             initialProducts = data;
             $("#productTable").tabulator({
-                height: 300,
                 layout: "fitColumns",
                 columns: [
                     {title: "Product", field: "name", headerFilter: "input"},
@@ -72,7 +71,6 @@ function showAllProducts() {
 function addRowToSelected(data) {
 
     $("#selectedProductsTable").tabulator({
-        height: 300,
         layout: "fitColumns",
         columns: [
             {title: "Product", field: "name"},
