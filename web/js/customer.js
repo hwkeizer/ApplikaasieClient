@@ -49,6 +49,10 @@ function showAllCustomers() {
                     $("#factuurAddress").hide();
                     $("#bezorgAddress").hide();
                     $("#newAddress").hide();
+                    $("#newAddress")[0].reset();
+                    postAddress = null;
+                    factuurAddress = null;
+                    bezorgAddress = null;
                     $(function () {
                         selectedCustomer = {
                             'id' : row.getData().id,
@@ -330,6 +334,10 @@ function addAddressPreparation() {
         else if (bezorgAddress !== null) {addressTypes = ['FACTUURADRES'];}
         else addressTypes = ['FACTUURADRES', 'BEZORGADRES'];
         var list = document.getElementById("addressTypes");
+        // Remove previously added elements
+        while (list.firstChild) {
+            list.removeChild(list.firstChild);
+        }
         addressTypes.forEach(function(item) {
             var option = document.createElement('option');
             option.value = item;
