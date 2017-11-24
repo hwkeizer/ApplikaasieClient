@@ -82,7 +82,6 @@ $(document).on("click", ":submit", function(event) {
                 window.fetch(baseURL + "/account/" + selectedCustomer.account, {
                     method: "GET",
                     credentials: 'include',
-                    mode: 'cors',
                     headers: {
                         "Accept": "application/json",
                         "x-requested-with": "XMLHttpRequest"
@@ -127,6 +126,9 @@ $(document).on("click", ":submit", function(event) {
              };
             createCustomer(customer);
             break;
+        case "Postadres wijzigen": changePostAddress(); break;
+        case "Factuuradres wijzigen": changeFactuurAddress(); break;
+        case "Bezorgadres wijzigen": changeBezorgAddress(); break;
     } 
 });
 
@@ -198,7 +200,11 @@ function showAddressesCustomer(customerId) {
                         $('#postAddress').find('#p_addition').val(data[i].addition);
                         $('#postAddress').find('#p_city').val(data[i].city);
                         $('#postAddress').find('#p_postalcode').val(data[i].postalcode);
+                        $("#postAddress").find('#p_id').val(data[i].id);
+                        $("#postAddress").find('#p_addressType').val(data[i].addressType);
                         $("#postAddress").show();
+                        $("#postAddress").find('#p_id').hide(); // keep id field hidden
+                        $("#postAddress").find('#p_addressType').hide(); // keep addressType field hidden
                         break;
                     }
                     case "FACTUURADRES": {
@@ -207,7 +213,11 @@ function showAddressesCustomer(customerId) {
                         $('#factuurAddress').find('#f_addition').val(data[i].addition);
                         $('#factuurAddress').find('#f_city').val(data[i].city);
                         $('#factuurAddress').find('#f_postalcode').val(data[i].postalcode);
-                        $("#factuurAddress").show();                                
+                        $("#factuurAddress").find('#f_id').val(data[i].id);
+                        $("#factuurAddress").find('#f_addressType').val(data[i].addressType);
+                        $("#factuurAddress").show();
+                        $("#factuurAddress").find('#f_id').hide(); // keep id field hidden
+                        $("#factuurAddress").find('#f_addressType').hide(); // keep addressType field hidden
                         break;
                     }
                     case "BEZORGADRES": {
@@ -216,11 +226,75 @@ function showAddressesCustomer(customerId) {
                         $('#bezorgAddress').find('#b_addition').val(data[i].addition);
                         $('#bezorgAddress').find('#b_city').val(data[i].city);
                         $('#bezorgAddress').find('#b_postalcode').val(data[i].postalcode);
-                        $("#bezorgAddress").show();                                
+                        $("#bezorgAddress").find('#b_id').val(data[i].id);
+                        $("#bezorgAddress").find('#b_addressType').val(data[i].addressType);
+                        $("#bezorgAddress").show(); 
+                        $("#bezorgAddress").find('#b_id').hide(); // keep id field hidden
+                        $("#bezorgAddress").find('#b_addressType').hide(); // keep addressType field hidden
                         break;                            
                     }
                 }                                        
             }
+        }
+    });
+}
+
+function changePostAddress() {
+    let p_address = {
+        "id":$("#postAddress").find("#p_id").val(),
+        "addressType":$("#postAddress").find("#p_addressType").val(),
+        "streetname":$('#postAddress').find('#p_streetname').val(),
+        "number":$('#postAddress').find('#p_number').val(),
+        "addition":$('#postAddress').find('#p_addition').val(),
+        "city":$('#postAddress').find('#p_city').val(),
+        "postalcode":$('#postAddress').find('#p_postalcode').val(),
+        "customer":selectedCustomer
+    };
+    editAddress($("#postAddress").find("#p_id").val(), p_address);
+}
+
+function changeFactuurAddress() {
+    let f_address = {
+        "id":$("#factuurAddress").find("#f_id").val(),
+        "addressType":$("#factuurAddress").find("#f_addressType").val(),
+        "streetname":$('#factuurAddress').find('#f_streetname').val(),
+        "number":$('#factuurAddress').find('#f_number').val(),
+        "addition":$('#factuurAddress').find('#f_addition').val(),
+        "city":$('#factuurAddress').find('#f_city').val(),
+        "postalcode":$('#factuurAddress').find('#f_postalcode').val(),
+        "customer":selectedCustomer
+    };
+    editAddress($("#factuurAddress").find("#f_id").val(), f_address);
+}
+
+function changeBezorgAddress() {
+    let b_address = {
+        "id":$("#bezorgAddress").find("#b_id").val(),
+        "addressType":$("#bezorgAddress").find("#b_addressType").val(),
+        "streetname":$('#bezorgAddress').find('#b_streetname').val(),
+        "number":$('#bezorgAddress').find('#b_number').val(),
+        "addition":$('#bezorgAddress').find('#b_addition').val(),
+        "city":$('#bezorgAddress').find('#b_city').val(),
+        "postalcode":$('#bezorgAddress').find('#b_postalcode').val(),
+        "customer":selectedCustomer
+    };
+    editAddress($("#bezorgAddress").find("#b_id").val(), b_address);
+}
+
+
+function editAddress(addressId, address) {
+    $.ajax({
+        url:baseURL + "/address/" + addressId,
+        method: "PUT",
+        data: JSON.stringify(address),
+        contentType: "application/json",
+        error: function() {
+            alert("Error in function editAddress");
+        },
+        success: function() {
+            window.location.href="http://localhost:8080/customer.html#";
+            location.reload();
+            
         }
     });
 }
