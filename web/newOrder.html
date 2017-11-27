@@ -25,15 +25,32 @@ and open the template in the editor.
         
         <div id="header"></div>
         
-        <h1>Nieuwe Bestelling!</h1>
+        <h1>Nieuwe Bestelling aanmaken</h1>
         
-        <h2>Beschikbare producten</h2>
-        <div id="productTable"></div>
+        <div id="showCustomers">
+            <h2>Klant selecteren</h2>
+            <div id="customerTable"></div>
+        </div>
         
-        <h2>Geselecteerde producten</h2>
-        <div id="selectedProductsTable"></div>
+        <div hidden id="selectedCustomer">
+            <h2>Geselecteerde klant</h2>
+            <div id="showSelectedCustomer"></div>
+            <br/><button id ="changeSelectedCustomer">Andere klant selecteren</button>
+        </div>
+        
+        <div hidden id="showProducts">
+            <h2>Beschikbare producten</h2>
+            <div id="productTable" style="width:800px"></div>
+        </div>
+        
+        
+        <div hidden id="showSelectedProducts">
+            <h2>Geselecteerde producten</h2>
+            <div id="selectedProductsTable" style="width:800px"></div>
+            <br/><button id="saveOrderButton">Bestelling opslaan</button>
+        </div>
         <br/>
-        <button id="saveOrderButton">Bestelling opslaan</button>
+        
         
         <script>
             $("#header").load("header.html");

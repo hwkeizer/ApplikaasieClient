@@ -1,4 +1,8 @@
 var baseURL = "http://localhost:8080/Workshop3/webresources";
+var customer = {};
+var availableProducts = [];
+var selectedRows = [];
+var productsLoaded = false;
 
 $(document).ready(function () {
     $("#saveOrderButton").click(function (event) {
@@ -7,22 +11,81 @@ $(document).ready(function () {
         saveOrder();
     });
 
-    showAllProducts();
+    $("#changeSelectedCustomer").click(function (event) {
+        if (!confirm("Weet u zeker dat u een andere klant wilt selecteren?")) {
+            return;
+        }
+
+        hideAll();
+        $("#showCustomers").show();
+    });
+
+    showAllCustomers();
 });
 
-var initialProducts = [];
-var selectedRows = [];
+
+
+function showAllCustomers() {
+    $.ajax({
+        url: baseURL + "/customer",
+        method: "GET",
+        dataType: "json",
+        error: function () {
+            console.log("Error in function showAllCustomers");
+        },
+        success: function (data, textStatus, request) {
+            if (request.getResponseHeader('REQUIRES_AUTH') === '1') {
+                window.location.href = 'http://localhost:8080/login.html';
+            }
+            console.log(data);
+            $("#customerTable").tabulator({
+                layout: "fitColumns",
+                columns: [
+                    {title: "Voornaam", field: "firstName", headerFilter: "input"},
+                    {title: "Tussenvoegsel", field: "lastNamePrefix", headerFilter: "input"},
+                    {title: "Achternaam", field: "lastName", headerFilter: "input"},
+                    {title: "Email", field: "email", headerFilter: "input"},
+                    {title: "Account", field: "account.username", headerFilter: "input"}
+                ],
+                rowClick: function (e, row) {
+                    customer = row.getData();
+                    $("#showCustomers").hide(500);
+                    $("#selectedCustomer").show(500);
+                    showSelectedCustomer();
+                    $("#showProducts").show(500);
+                    if(!productsLoaded) {
+                        showAllProducts();
+                    }
+                    if (selectedRows.length !== 0) {
+                        $("#showSelectedProducts").show();
+                    }
+                }
+            });
+            $("#customerTable").tabulator("setData", data);
+        }
+    });
+}
+
+function showSelectedCustomer() {
+    $("#showSelectedCustomer").html("");
+    $("#showSelectedCustomer").append("<ul>" +
+            "<li> Voornaam: " + customer.firstName + "</li>" +
+            "<li> Tussenvoegsel: " + customer.lastNamePrefix + "</li>" +
+            "<li> Achternaam: " + customer.lastName + "</li>" +
+            "<li> Email: " + customer.email + "</li></ul>");
+}
 
 function showAllProducts() {
     $.ajax({
         method: "GET",
-        url: baseURL + "/product",
+        url: baseURL + "/product/available",
         dataType: "json",
         error: function () {
             console.log("error");
         },
         success: function (data) {
-            initialProducts = data;
+            productsLoaded = true;
+            availableProducts = data;
             $("#productTable").tabulator({
                 layout: "fitColumns",
                 columns: [
@@ -32,6 +95,8 @@ function showAllProducts() {
                     {title: "Product status", field: "productStatus", headerFilter: "input"},
                     {title: "Lege kolom", field: "amount", editor: true, validator: ["numeric"]},
                     {formatter: "buttonTick", title: "Toevoegen", align: "center", cellClick: function (e, cell) {
+
+                            $("#showSelectedProducts").show(500);
 
                             rowData = cell.getRow().getData();
 
@@ -55,13 +120,7 @@ function showAllProducts() {
                             $("#productTable").tabulator("deleteRow", cell.getRow());
 
                         }}
-                ],
-                rowClick: function (e, row) {
-                    $("#randomText").css("color", "red");
-                    hideAll();
-                    $("#showOneProduct").show(500);
-                    showOneProduct(row.getData());
-                }
+                ]
             });
             $("#productTable").tabulator("setData", data);
         }
@@ -88,15 +147,14 @@ function saveOrder() {
         var orderItemColl = createOrderItemCollection();
         var order = {
             "customer": {
-                "id": 1
+                "id": customer.id
             },
 
             "totalPrice": calculateTotalPrice(),
             "orderItemCollection": createOrderItemCollection()
         };
-        
+
         var orderJson = JSON.stringify(order);
-        alert(orderJson);
         console.log(orderJson);
         createOrder(orderJson);
     }
@@ -138,6 +196,14 @@ function calculateTotalPrice() {
     var totalPrice = 0;
     for (var i = 0; i < selectedRows.length; i++) {
         totalPrice += selectedRows[i].subTotal;
-    };
+    }
+    ;
     return totalPrice;
+}
+
+function hideAll() {
+    $("#showCustomers").hide(500);
+    $("#selectedCustomer").hide(500);
+    $("#showProducts").hide(500);
+    $("#showSelectedProducts").hide(500);
 }
