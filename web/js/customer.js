@@ -5,7 +5,7 @@
  */
 
 const baseURL = "http://localhost:8080/Workshop3/webresources";
-let selectedCustomer;
+let selectedCustomer = null;
 let postAddress = null;
 let factuurAddress = null;
 let bezorgAddress = null;
@@ -44,15 +44,7 @@ function showAllCustomers() {
                     {title:"Account", field:"account.username", headerFilter:"input"},
                 ],
                 rowClick:function(e, row){
-                    // hide all forms to start with
-                    $("#postAddress").hide();
-                    $("#factuurAddress").hide();
-                    $("#bezorgAddress").hide();
-                    $("#newAddress").hide();
-                    $("#newAddress")[0].reset();
-                    postAddress = null;
-                    factuurAddress = null;
-                    bezorgAddress = null;
+                    resetAllForms();
                     $(function () {
                         selectedCustomer = {
                             'id' : row.getData().id,
@@ -61,12 +53,9 @@ function showAllCustomers() {
                             'lastNamePrefix' : row.getData().lastNamePrefix,
                             'lastName' : row.getData().lastName,
                             'email' : row.getData().email
-                        };                        
-                        showAddressesCustomer(selectedCustomer.id);                        
-                        $('#customerDetails').find('#firstName').val(selectedCustomer.firstName);
-                        $('#customerDetails').find('#lastNamePrefix').val(selectedCustomer.lastNamePrefix);
-                        $('#customerDetails').find('#lastName').val(selectedCustomer.lastName);
-                        $('#customerDetails').find('#email').val(selectedCustomer.email);
+                        };   
+                        showCustomerDetails();
+                        showCustomerAddresses(selectedCustomer.id);                        
                     });
                     $("#buttons").hide();
                     $(".edit_instruction").hide();
@@ -79,7 +68,7 @@ function showAllCustomers() {
     });   
 }
 
-// Process the forms
+// Process all form submits
 $(document).on("click", ":submit", function(event) {
     event.preventDefault();
     let customer;
@@ -124,6 +113,11 @@ $(document).on("click", ":submit", function(event) {
             }
             break;
         case "Klant verwijderen":
+            if (postAddress !== null) {
+                deleteAddress(postAddress.id);
+            }
+            removeFactuurAddress();
+            removeBezorgAddress();
             deleteCustomer(selectedCustomer.id);
             break;
         case "Klant toevoegen":
@@ -137,63 +131,24 @@ $(document).on("click", ":submit", function(event) {
         case "Postadres wijzigen": changePostAddress(); break;
         case "Factuuradres wijzigen": changeFactuurAddress(); break;
         case "Bezorgadres wijzigen": changeBezorgAddress(); break;
-        case "Adres toevoegen": addAddressPreparation(); break;
+        case "Factuuradres verwijderen": removeFactuurAddress(); break;
+        case "Bezorgadres verwijderen": removeBezorgAddress(); break;
+        case "Adres toevoegen": showNewAddressForm(); break;
         case "Adres bevestigen" : addNewAddress(); break;
     } 
 });
 
-function editCustomer(customerId, customer) {
-    $.ajax({
-        url:baseURL + "/customer/" + customerId,
-        method: "PUT",
-        data: JSON.stringify(customer),
-        contentType: "application/json",
-        error: function() {
-            alert("Error in function editCustomer");
-        },
-        success: function() {
-            window.location.href="http://localhost:8080/customer.html#";
-            location.reload();
-            
-        }
-    });
+function showCustomerDetails() {
+    if (selectedCustomer === null) {
+        alert("geen klant geselecteerd");
+    }
+    $('#customerDetails').find('#firstName').val(selectedCustomer.firstName);
+    $('#customerDetails').find('#lastNamePrefix').val(selectedCustomer.lastNamePrefix);
+    $('#customerDetails').find('#lastName').val(selectedCustomer.lastName);
+    $('#customerDetails').find('#email').val(selectedCustomer.email);
 }
 
-function deleteCustomer(customerId) {
-    $.ajax({
-        url:baseURL + "/customer/" + customerId,
-        method: "DELETE",
-        contentType: "application/json",
-        error: function() {
-            console.log("Error in function deleteCustomer");
-        },
-        success: function() {
-            window.location.href="http://localhost:8080/customer.html#";
-            location.reload();
-            
-        }
-    });
-}
-
-function createCustomer(customer) {
-    console.log(customer);
-    $.ajax({
-        url:baseURL + "/customer",
-        method: "POST",
-        data: JSON.stringify(customer),
-        contentType: "application/json",
-        error: function() {
-            console.log("Error in function createCustomer");
-        },
-        success: function() {
-            window.location.href="http://localhost:8080/customer.html#";
-            location.reload();
-            
-        }
-    });
-}
-
-function showAddressesCustomer(customerId) {
+function showCustomerAddresses(customerId) {
     $.ajax({
         url:baseURL + "/customer/" + customerId + "/addresses",
         method: "GET",
@@ -281,42 +236,19 @@ function changeBezorgAddress() {
     editAddress(bezorgAddress.id, bezorgAddress);
 }
 
+function removeFactuurAddress() {
+    if (factuurAddress !== null) {
+        deleteAddress(factuurAddress.id);
+    }
+}  
 
-function editAddress(addressId, address) {
-    $.ajax({
-        url:baseURL + "/address/" + addressId,
-        method: "PUT",
-        data: JSON.stringify(address),
-        contentType: "application/json",
-        error: function() {
-            alert("Error in function editAddress");
-        },
-        success: function() {
-            window.location.href="http://localhost:8080/customer.html#";
-            location.reload();
-            
-        }
-    });
+function removeBezorgAddress() {
+    if (bezorgAddress !== null) {
+        deleteAddress(bezorgAddress.id);
+    }
 }
 
-function addAddress(address) {
-    $.ajax({
-        url:baseURL + "/address",
-        method: "POST",
-        data: JSON.stringify(address),
-        contentType: "application/json",
-        error: function() {
-            alert("Error in function addAddress");
-        },
-        success: function() {
-            window.location.href="http://localhost:8080/customer.html#";
-            location.reload();
-            
-        }
-    });
-}
-
-function addAddressPreparation() {
+function showNewAddressForm() {
     // If there is no postAddress this address will be the postAddress
     if (postAddress === null) {
         address = {"addressType": "POSTADRES",
@@ -356,6 +288,128 @@ function addNewAddress() {
                 "postalcode":$('#newAddress').find('#n_postalcode').val(),
                 "customer": selectedCustomer
          };
-        alert(JSON.stringify(address))
         addAddress(address);
+}
+
+// Reset all forms and global vars when a (different) customer is selected
+function resetAllForms() {
+    // hide all forms to start with
+    $("#postAddress").hide();
+    $("#factuurAddress").hide();
+    $("#bezorgAddress").hide();
+    $("#newAddress").hide();
+    $("#newAddress")[0].reset();
+    postAddress = null;
+    factuurAddress = null;
+    bezorgAddress = null;
+    selectedCustomer = null;
+}
+
+//************************
+//**  Backend requests  **
+//************************
+
+// Send change customer request to the backend
+function editCustomer(customerId, customer) {
+    $.ajax({
+        url:baseURL + "/customer/" + customerId,
+        method: "PUT",
+        data: JSON.stringify(customer),
+        contentType: "application/json",
+        error: function() {
+            alert("Error in function editCustomer");
+        },
+        success: function() {
+            window.location.href="http://localhost:8080/customer.html#";
+            location.reload();
+            
+        }
+    });
+}
+
+// Send delete customer request to the backend
+function deleteCustomer(customerId) {
+    $.ajax({
+        url:baseURL + "/customer/" + customerId,
+        method: "DELETE",
+        contentType: "application/json",
+        error: function() {
+            console.log("Error in function deleteCustomer");
+        },
+        success: function() {
+            window.location.href="http://localhost:8080/customer.html#";
+            location.reload();
+            
+        }
+    });
+}
+
+// Send new customer request to the backend
+function createCustomer(customer) {
+    console.log(customer);
+    $.ajax({
+        url:baseURL + "/customer",
+        method: "POST",
+        data: JSON.stringify(customer),
+        contentType: "application/json",
+        error: function() {
+            console.log("Error in function createCustomer");
+        },
+        success: function() {
+            window.location.href="http://localhost:8080/customer.html#";
+            location.reload();            
+        }
+    });
+}
+
+// Send change address request to the backend
+function editAddress(addressId, address) {
+    $.ajax({
+        url:baseURL + "/address/" + addressId,
+        method: "PUT",
+        data: JSON.stringify(address),
+        contentType: "application/json",
+        error: function() {
+            alert("Error in function editAddress");
+        },
+        success: function() {
+            window.location.href="http://localhost:8080/customer.html#";
+            location.reload();
+            
+        }
+    });
+}
+
+// Send new address request to the backend
+function addAddress(address) {
+    $.ajax({
+        url:baseURL + "/address",
+        method: "POST",
+        data: JSON.stringify(address),
+        contentType: "application/json",
+        error: function() {
+            alert("Error in function addAddress");
+        },
+        success: function() {
+            window.location.href="http://localhost:8080/customer.html#";
+            location.reload();
+            
+        }
+    });
+}
+
+// Send remove address to the backend
+function deleteAddress(addressId) {
+    $.ajax({
+        url:baseURL + "/address/" + addressId,
+        method: "DELETE",
+        contentType: "application/json",
+        error: function() {
+            console.log("Error in function deleteCustomer");
+        },
+        success: function() {
+            window.location.href="http://localhost:8080/customer.html#";
+            location.reload();            
+        }
+    });
 }
