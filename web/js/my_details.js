@@ -41,12 +41,11 @@ function changePassword() {
             error: function() {
                 console.log("Error in function changePassword");
             },
-            success: function() {
-   
+            success: function() {   
                 $("#changeSuccesfull").show();
                 setTimeout(function() {
                     window.location.href="http://localhost:8080/my_details.html#";               
-                   location.reload(); 
+                    location.reload(); 
                 },2000);
             }
         });

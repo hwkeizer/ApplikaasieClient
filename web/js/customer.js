@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-const baseURL = "http://localhost:8080/Workshop3/webresources";
+var baseURL = "http://localhost:8080/Workshop3/webresources";
 let selectedCustomer = null;
 let postAddress = null;
 let factuurAddress = null;
@@ -123,11 +123,15 @@ $(document).on("click", ":submit", function(event) {
             deleteCustomer(selectedCustomer.id);
             break;
         case "Klant toevoegen":
+            account = {"username":$("#newCustomer #email").val(),
+                    "password":generatePassword(),
+                    "accountType":"KLANT"};
             customer = {"firstName":$("#newCustomer #firstName").val(),
                     "lastNamePrefix":$("#newCustomer #lastNamePrefix").val(),
                     "lastName":$("#newCustomer #lastName").val(),
-                    "email":$("#newCustomer #email").val()
-             };
+                    "email":$("#newCustomer #email").val(),
+                    "account":account
+            };
             createCustomer(customer);
             break;
         case "Postadres wijzigen": changePostAddress(); break;
@@ -305,6 +309,14 @@ function resetAllForms() {
     factuurAddress = null;
     bezorgAddress = null;
     selectedCustomer = null;
+}
+
+function generatePassword() {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for (var i = 0; i < 5; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  return text;
 }
 
 //************************
