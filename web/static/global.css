@@ -27,6 +27,12 @@ html {
     text-decoration: none;
 }
 
+.navbar #user_status {
+    padding: 14px 16px;
+    color: white;
+    float: right;
+}
+
 .dropdown {
     float: left;
     overflow: hidden;
@@ -152,7 +158,7 @@ html {
 }
 
 /* Full-width inputs */
-.logincontainer input[type=text], input[type=password] {
+.logincontainer input {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;

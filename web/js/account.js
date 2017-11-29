@@ -35,40 +35,40 @@ function showAllAccounts() {
     $.ajax({
         url:baseURL + "/account",
         method: "GET",
-        dataType: "json",
         error: function() {
             console.log("Error in function showAllAccounts");
         },
         success: function(data, textStatus, request) {
             if (request.getResponseHeader('REQUIRES_AUTH') === '1'){ 
                 window.location.href = 'http://localhost:8080/login.html';
+            } else {
+                $("#accounts").tabulator({
+                    layout:"fitColumns",
+                    columns:[
+                        {title:"Gebruikersnaam", field:"username", headerFilter:"input"},
+                        {title:"Wachtwoord", field:"password"},
+                        {title:"Type", field:"accountType", headerFilter:"input"}
+                    ],
+                    rowClick:function(e, row){
+                        $(function () {
+                            selectedAccount = {
+                                'id' : row.getData().id,
+                                'username' : row.getData().username,
+                                'password' : row.getData().password,
+                                'accountType' : row.getData().accountType
+                            };
+                            $('#removeAccount').find('#username').val(selectedAccount.username);
+                            $('#removeAccount').find('#password').val(selectedAccount.password);
+                            $('#removeAccount').find('#accountType').val(selectedAccount.accountType);
+                        });
+                        $("#buttons").hide();
+                        $(".edit_instruction").hide();
+                        $("#newAccount").hide();
+                        $("#removeAccount").show();                   
+                    }
+                });
+                $("#accounts").tabulator("setData", data);
             }
-            $("#accounts").tabulator({
-                layout:"fitColumns",
-                columns:[
-                    {title:"Gebruikersnaam", field:"username", headerFilter:"input"},
-                    {title:"Wachtwoord", field:"password"},
-                    {title:"Type", field:"accountType", headerFilter:"input"}
-                ],
-                rowClick:function(e, row){
-                    $(function () {
-                        selectedAccount = {
-                            'id' : row.getData().id,
-                            'username' : row.getData().username,
-                            'password' : row.getData().password,
-                            'accountType' : row.getData().accountType
-                        };
-                        $('#removeAccount').find('#username').val(selectedAccount.username);
-                        $('#removeAccount').find('#password').val(selectedAccount.password);
-                        $('#removeAccount').find('#accountType').val(selectedAccount.accountType);
-                    });
-                    $("#buttons").hide();
-                    $(".edit_instruction").hide();
-                    $("#newAccount").hide();
-                    $("#removeAccount").show();                   
-                }
-            });
-            $("#accounts").tabulator("setData", data);
         }       
     });
 }

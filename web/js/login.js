@@ -4,11 +4,13 @@
  * and open the template in the editor.
  */
 const baseURL = "http://localhost:8080/Workshop3/webresources";
+let username = null;
 
 $(document).on("submit", "form#login", function(event) {
     event.preventDefault();
+    username = $("#username").val();
     console.log("Username:" + $("#username").val());
-    var login = {"username" : $("#username").val(),
+    var login = {"username" : username,
             "password" : $("#password").val()};
     var loginJson = JSON.stringify(login);
     console.log(loginJson);
@@ -22,7 +24,9 @@ $(document).on("submit", "form#login", function(event) {
             console.log("Error in function login");
         },
         success: function(data) {
-            console.log("login succesful");
+            // Keep username in local web session storage
+            sessionStorage.user = username;
+            console.log("User " + sessionStorage.user + " stored in local session web storage");
             window.location.href="http://localhost:8080/home.html#";
             location.reload();
         }       

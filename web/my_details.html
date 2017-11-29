@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Mijn gegevens</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- jquery scripts -->
+        <script type="text/javascript" src="js/jquery/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>
+        <!-- tabulator script en styling -->
+        <link rel="stylesheet" href="static/tabulator/tabulator.min.css" >
+        <script type="text/javascript" src="js/tabulator/tabulator.min.js"></script>
+        <!-- css files -->
+        <link rel="stylesheet" type="text/css" href="static/global.css"/>
+        <!-- local scripts -->
+        <script type="text/javascript" src="js/my_details.js"></script>
+    </head>
+    <body>        
+        <div id="header"></div>  
+        
+        <br/>
+        <div id="content">
+            <form id="accountDetails">
+            <div class="formfields">
+                <h3 class="center">Mijn account gegevens</h3>
+                <table>
+                    <tr><td><label>Gebruikersnaam:</label></td><td><input type="text" id="username"/></td></tr> 
+                    <tr><td><label>Account type:</label></td><td><input type="text" id="accountType"/></td></tr>
+                </table>
+                <div class="button_panel">
+                    <input class="button" type="submit" value="Wachtwoord wijzigen" />
+                </div>
+            </div>             
+            </form>
+        
+            <form hidden id="changePassword">
+                <div class="formfields">
+                    <h3 class="center">Wachtwoord wijzigen</h3>
+                    <table>
+                        <tr><td><label>Nieuw wachtwoord:</label></td><td><input type="password" id="newpassword1"/></td></tr>
+                        <tr><td><label>Nogmaals:</label></td><td><input type="password" id="newpassword2"/></td></tr>
+                    </table>
+                    <div class="button_panel">
+                        <input class="button" type="submit" value="Bevestigen" />
+                    </div>
+                    <h3 hidden class="center" id="changeSuccesfull">Wachtwoord succesvol gewijzigd</h3>
+                </div>             
+            </form>
+        </div> 
+        
+        <div id="footer"></div>
+        <script>
+            $("#header").load("header.html");
+            $("#footer").load("footer.html");
+        </script>     
+    </body>
+</html>

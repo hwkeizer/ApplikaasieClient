@@ -25,45 +25,47 @@ function showAllCustomers() {
     $.ajax({
         url:baseURL + "/customer",
         method: "GET",
-        dataType: "json",
+        contentType: "application/json",
+//        dataType: "json",
         error: function() {
             console.log("Error in function showAllCustomers");
         },
         success: function(data, textStatus, request) {
             if (request.getResponseHeader('REQUIRES_AUTH') === '1'){ 
                 window.location.href = 'http://localhost:8080/login.html';
+            } else {
+                console.log(data)
+                $("#customers").tabulator({
+                    layout:"fitColumns",
+                    columns:[
+                        {title:"Voornaam", field:"firstName", headerFilter:"input"},
+                        {title:"Tussenvoegsel", field:"lastNamePrefix", headerFilter:"input"},
+                        {title:"Achternaam", field:"lastName", headerFilter:"input"},
+                        {title:"Email", field:"email", headerFilter:"input"},
+                        {title:"Account", field:"account.username", headerFilter:"input"},
+                    ],
+                    rowClick:function(e, row){
+                        resetAllForms();
+                        $(function () {
+                            selectedCustomer = {
+                                'id' : row.getData().id,
+                                'account' : row.getData().account.id,
+                                'firstName' : row.getData().firstName,
+                                'lastNamePrefix' : row.getData().lastNamePrefix,
+                                'lastName' : row.getData().lastName,
+                                'email' : row.getData().email
+                            };   
+                            showCustomerDetails();
+                            showCustomerAddresses(selectedCustomer.id);                        
+                        });
+                        $("#buttons").hide();
+                        $(".edit_instruction").hide();
+                        $("#newCustomer").hide();
+                        $("#customerDetails").show();                   
+                    }
+                });
+                $("#customers").tabulator("setData", data);
             }
-            console.log(data)
-            $("#customers").tabulator({
-                layout:"fitColumns",
-                columns:[
-                    {title:"Voornaam", field:"firstName", headerFilter:"input"},
-                    {title:"Tussenvoegsel", field:"lastNamePrefix", headerFilter:"input"},
-                    {title:"Achternaam", field:"lastName", headerFilter:"input"},
-                    {title:"Email", field:"email", headerFilter:"input"},
-                    {title:"Account", field:"account.username", headerFilter:"input"},
-                ],
-                rowClick:function(e, row){
-                    resetAllForms();
-                    $(function () {
-                        selectedCustomer = {
-                            'id' : row.getData().id,
-                            'account' : row.getData().account.id,
-                            'firstName' : row.getData().firstName,
-                            'lastNamePrefix' : row.getData().lastNamePrefix,
-                            'lastName' : row.getData().lastName,
-                            'email' : row.getData().email
-                        };   
-                        showCustomerDetails();
-                        showCustomerAddresses(selectedCustomer.id);                        
-                    });
-                    $("#buttons").hide();
-                    $(".edit_instruction").hide();
-                    $("#newCustomer").hide();
-                    $("#customerDetails").show();                   
-                }
-            });
-            $("#customers").tabulator("setData", data);
         }       
     });   
 }

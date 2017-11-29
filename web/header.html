@@ -16,6 +16,19 @@ and open the template in the editor.
             <a href="account.html">Accounts</a> 
             <a href="product.html">Producten</a>
             <a href="order.html">Bestellingen</a>
-        </div>        
+            <a href="my_details.html">Mijn gegevens</a>      
+            <a id="user_status" href="login.html">Inloggen</a>
+        </div> 
+        <script>
+            let loginURL = "login.html";
+            let logoutURL = "logout.html";
+            if (sessionStorage.user !== undefined) {
+                $("#user_status").text(sessionStorage.user + " uitloggen");
+                $("#user_status").attr("href", logoutURL);
+            } else {
+                $("#user_status").text("Inloggen");
+                $("#user_status").attr("href", loginURL);
+            }
+        </script>
     </body>
 </html>
