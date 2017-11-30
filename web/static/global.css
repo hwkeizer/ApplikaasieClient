@@ -177,6 +177,10 @@ html {
     height: 40px;
 }
 
+#login_failed {
+    color: red;
+}
+
 button:hover {
     opacity: 0.8;
 }

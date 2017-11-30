@@ -23,12 +23,17 @@ $(document).on("submit", "form#login", function(event) {
         error: function() {
             console.log("Error in function login");
         },
-        success: function(data) {
+        success: function(data, textStatus, request) {
+            if (request.getResponseHeader('AUTH_FAILED') === '1'){ 
+                $("#login_failed").show();
+            } else {
+            
             // Keep username in local web session storage
             sessionStorage.user = username;
             console.log("User " + sessionStorage.user + " stored in local session web storage");
             window.location.href="http://localhost:8080/home.html";
 //            location.reload();
+            }
         }       
     });
 });
