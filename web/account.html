@@ -46,7 +46,7 @@ and open the template in the editor.
             </div>             
         </form>
                 
-        <form hidden id="removeAccount">
+        <form hidden id="accountDetails">
             <div class="formfields">
                 <h3 class="center">Account details</h3>
                 <table>
@@ -55,8 +55,23 @@ and open the template in the editor.
                     <tr><td><label>Account type:</label></td><td><input type="text" id="accountType" readonly/></td></tr>
                 </table>
                 <div class="button_panel">
-                    <input id="remove" class="button" type="submit" value="Account verwijderen" />
+                    <input class="button" type="submit" value="Wachtwoord wijzigen" />
+                    <input class="button" type="submit" value="Account verwijderen" />
                 </div>
+            </div>             
+        </form>
+                
+        <form hidden id="changePassword">
+            <div class="formfields">
+                <h3 class="center">Wachtwoord wijzigen</h3>
+                <table>
+                    <tr><td><label>Nieuw wachtwoord:</label></td><td><input type="password" id="newpassword1"/></td></tr>
+                    <tr><td><label>Nogmaals:</label></td><td><input type="password" id="newpassword2"/></td></tr>
+                </table>
+                <div class="button_panel">
+                    <input class="button" type="submit" value="Bevestigen" />
+                </div>
+                <h3 hidden class="center" id="changeSuccesfull">Wachtwoord succesvol gewijzigd</h3>
             </div>             
         </form>
         

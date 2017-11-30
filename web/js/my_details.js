@@ -49,6 +49,12 @@ function changePassword() {
                 },2000);
             }
         });
+    } else {
+        $("#notEqual").show();
+        setTimeout(function() {
+            $("#changePassword")[0].reset();
+            $("#notEqual").hide();
+        }, 2000);
     }
 }
 

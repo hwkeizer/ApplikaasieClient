@@ -57,14 +57,14 @@ function showAllAccounts() {
                                 'password' : row.getData().password,
                                 'accountType' : row.getData().accountType
                             };
-                            $('#removeAccount').find('#username').val(selectedAccount.username);
-                            $('#removeAccount').find('#password').val(selectedAccount.password);
-                            $('#removeAccount').find('#accountType').val(selectedAccount.accountType);
+                            $('#accountDetails').find('#username').val(selectedAccount.username);
+                            $('#accountDetails').find('#password').val(selectedAccount.password);
+                            $('#accountDetails').find('#accountType').val(selectedAccount.accountType);
                         });
                         $("#buttons").hide();
                         $(".edit_instruction").hide();
                         $("#newAccount").hide();
-                        $("#removeAccount").show();                   
+                        $("#accountDetails").show();                   
                     }
                 });
                 $("#accounts").tabulator("setData", data);
@@ -88,8 +88,43 @@ $(document).on("click", ":submit", function(event) {
              };
              createAccount(account);
             break;
+        case "Wachtwoord wijzigen": {
+                showChangePassword();
+                break;
+        }
+        case "Bevestigen" : {
+                changePassword();
+                break;
+        }
     }
 });
+
+function showChangePassword() {
+    $("#changePassword").show();
+}
+
+function changePassword() {
+    let newPassword = $("#changePassword #newpassword1").val();
+    if (newPassword === $("#changePassword #newpassword2").val()) {
+        selectedAccount.password = newPassword;
+        $.ajax({
+            url:baseURL + "/account/cp",
+            method: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify(selectedAccount),
+            error: function() {
+                console.log("Error in function changePassword");
+            },
+            success: function() {   
+                $("#changeSuccesfull").show();
+                setTimeout(function() {
+                    window.location.href="http://localhost:8080/my_details.html#";               
+                    location.reload(); 
+                },2000);
+            }
+        });
+    }
+}
 
 function deleteAccount(accountId) {
     $.ajax({
