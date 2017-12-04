@@ -1,14 +1,18 @@
 var baseURL = "http://localhost:8080/Workshop3/webresources";
 var customer = {};
-var availableProducts = [];
+var availableProducts;
 var selectedRows = [];
 var productsLoaded = false;
 
 $(document).ready(function () {
     $("#saveOrderButton").click(function (event) {
-        if (selectedRows.length === 0)
+        if (selectedRows.length === 0) {
             alert("U dient eerst producten te selecteren voordat een bestelling opgeslagen kan worden.");
-        saveOrder();
+            return;
+        }
+        else {
+            saveOrder();
+        }
     });
 
     $("#changeSelectedCustomer").click(function (event) {
@@ -53,11 +57,14 @@ function showAllCustomers() {
                     $("#selectedCustomer").show(500);
                     showSelectedCustomer();
                     $("#showProducts").show(500);
-                    if(!productsLoaded) {
+                    $("#showSelectedProducts").show(500);
+                    if (!productsLoaded) {
                         showAllProducts();
                     }
                     if (selectedRows.length !== 0) {
-                        $("#showSelectedProducts").show();
+                        $("#selectedProducts").show(500);
+                        $("#selectedProductsTable").show(500);
+                        $("#noProductsSelected").hide(500);
                     }
                 }
             });
@@ -93,11 +100,12 @@ function showAllProducts() {
                     {formatter: "money", title: "Prijs/stuk", field: "price"},
                     {title: "Voorraad", field: "stock"},
                     {title: "Product status", field: "productStatus", headerFilter: "input"},
-                    {title: "Lege kolom", field: "amount", editor: true, validator: ["numeric"]},
+                    {title: "Aantal toe te voegen", field: "amount", editor: true, validator: ["numeric"]},
                     {formatter: "buttonTick", title: "Toevoegen", align: "center", cellClick: function (e, cell) {
 
-                            $("#showSelectedProducts").show(500);
-
+                            $("#selectedProductsTable").show(500);
+                            $("#noProductsSelected").hide(500);
+                            
                             rowData = cell.getRow().getData();
 
                             if (rowData.amount === undefined) {
@@ -116,13 +124,19 @@ function showAllProducts() {
                             rowData.subTotal = rowData.amount * rowData.price;
 
                             selectedRows.push(rowData);
+                            for (var i = 0; i < availableProducts.length; i++) {
+                                if (rowData.id === availableProducts[i].id) {
+                                    availableProducts.splice(i, 1);
+                                }
+                            }
                             addRowToSelected(cell.getRow().getData());
                             $("#productTable").tabulator("deleteRow", cell.getRow());
 
                         }}
                 ]
             });
-            $("#productTable").tabulator("setData", data);
+            availableProducts.sort(compare);
+            $("#productTable").tabulator("setData", availableProducts);
         }
     });
 }
@@ -135,7 +149,33 @@ function addRowToSelected(data) {
             {title: "Product", field: "name"},
             {formatter: "money", title: "Prijs/stuk", field: "price"},
             {title: "Aantal", field: "amount"},
-            {formatter: "money", title: "Subtotaal", field: "subTotal"}
+            {formatter: "money", title: "Subtotaal", field: "subTotal"},
+            {formatter: "buttonCross", title: "Verwijderen", align: "center", cellClick: function (e, cell) {
+                    rowData = cell.getRow().getData();
+
+                    for (var i = 0; i < selectedRows.length; i++) {
+                        if (rowData.id === selectedRows[i].id) {
+                            selectedRows.splice(i, 1);
+                        }
+                    }
+                    if(selectedRows.length === 0) {
+                        $("#selectedProductsTable").hide(500);
+                    }
+                    rowData.amount = undefined;
+                    availableProducts.push(rowData);
+
+                    $("#selectedProductsTable").tabulator("deleteRow", cell.getRow());
+                    
+                    availableProducts.sort(compare);
+                    
+                    $("#productTable").tabulator("setData", availableProducts);
+                    
+                    if(selectedRows.length === 0) {
+                        $("#noProductsSelected").show(500);
+                    }
+                }
+            }
+
         ]
     });
 
@@ -206,4 +246,12 @@ function hideAll() {
     $("#selectedCustomer").hide(500);
     $("#showProducts").hide(500);
     $("#showSelectedProducts").hide(500);
+}
+
+function compare(a,b) {
+  if (a.name < b.name)
+    return -1;
+  if (a.name > b.name)
+    return 1;
+  return 0;
 }
