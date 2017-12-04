@@ -30,6 +30,7 @@ $(document).on("submit", "form#login", function(event) {
             
             // Keep username in local web session storage
             sessionStorage.user = username;
+			sessionStorage.role = request.getResponseHeader('ROLE');
             console.log("User " + sessionStorage.user + " stored in local session web storage");
             window.location.href="http://localhost:8080/home.html";
 //            location.reload();

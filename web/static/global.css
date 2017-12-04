@@ -52,6 +52,10 @@ html {
     background-color: #3c893f;
 }
 
+#header {display: none;}
+
+/*
+
 .dropdown-content {
     display: none;
     position: absolute;
@@ -73,6 +77,8 @@ html {
 .dropdown-content a:hover {
     background-color: #ddd;
 }
+
+*/
 
 .show {
     display: block;

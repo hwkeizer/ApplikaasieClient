@@ -1,34 +1,43 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- css files -->
+		<link rel="stylesheet" type="text/css" href="static/navbar.css"/>
+		<!-- jquery scripts -->
+        <script type="text/javascript" src="js/jquery/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>
+		<!-- local scripts -->
+		<script>
+			$(document).ready(function() {
+				resizing();
+			});
+		</script>
+		<script type="text/javascript" src="js/navbar.js"></script>
     </head>
-    <body>
-        <div class="navbar">
-            <a href="home.html">Home</a>
-            <a href="customer.html">Klanten</a>
-            <a href="account.html">Accounts</a> 
-            <a href="product.html">Producten</a>
-            <a href="order.html">Bestellingen</a>
-            <a href="my_details.html">Mijn gegevens</a>      
-            <a id="user_status" href="login.html">Inloggen</a>
-        </div> 
-        <script>
-            let loginURL = "login.html";
-            let logoutURL = "logout.html";
-            if (sessionStorage.user !== undefined) {
-                $("#user_status").text(sessionStorage.user + " uitloggen");
-                $("#user_status").attr("href", logoutURL);
-            } else {
-                $("#user_status").text("Inloggen");
-                $("#user_status").attr("href", loginURL);
-            }
-        </script>
-    </body>
+    <div id = "0001" style="position:fixed;top:0px;left:0px;width:100%;z-index:10; display: none">
+			<div class="top-navbar" style="width:100%;overflow:hidden;height:44px;position:relative">
+				<a href = "home.html"><img src="images/home.png"/></a>
+				<a href="my_details.html" onmouseover="javascript:showgegevens()" onmouseout="javascript:hidegegevens(1)">Mijn gegevens</a>
+				<a href = "product.html">Producten</a>
+				<a href="customer.html">Klanten</a>
+				<a href="account.html">Accounts</a>
+				<a href="order.html">Bestellingen</a>				
+				<a class="user_status" href="login.html">Inloggen</a>
+				<a id="top-navbar-dropdwn" href="javascript:showcontent()">Meer <img src="images/dropdown arrow.png"/></a>
+			</div>
+			<div class="gegevens-dropdown-content top-navbar">
+				<a href="order.html" style = "border-top: 2px solid rgb(70,70,70); display:none">Bestellingen</a>
+				<a href = "account.html" style = "display:none">Account</a>
+				<a href = "edit.html" style = "display:none">Wijzigen</a>
+			</div>
+			<div class="dropdown-content top-navbar">
+				<a class="user_status" href="login.html" style = "display:none">Inloggen</a>
+				<a href="order.html">Bestellingen</a>	
+				<a href="account.html" style = "display:none">Accounts</a>
+				<a href="customer.html" style = "display:none">Klanten</a>
+				<a href = "product.html" style = "display:none">Producten</a>
+				<a href="my_details.html" style = "display:none">Mijn gegevens</a>
+			</div>
+		</div>
 </html>

@@ -53,7 +53,9 @@ and open the template in the editor.
         
         
         <script>
-            $("#header").load("header.html");
+            $('#header').load('header.html', function() {
+				$('#header').css("display", "initial");
+			});
             $("#footer").load("footer.html");
         </script>
     </body>
