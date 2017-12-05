@@ -51,9 +51,10 @@ and open the template in the editor.
         <div id="addNewProduct" style="display:none"></div>
 
         <script>
-            $('#header').load('header.html', function() {
-				$('#header').css("display", "initial");
-				$(".gegevens-dropdown-content div").css("display", "initial");
+            $( document ).ajaxStop(function() {
+				$('#header').load('header.html', function() {
+					$('#header').css("display", "initial");
+				});
 			});
             $("#footer").load("footer.html");
         </script>       

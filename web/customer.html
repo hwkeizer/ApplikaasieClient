@@ -143,8 +143,10 @@ and open the template in the editor.
         
         <div id="footer"></div>
         <script>
-            $('#header').load('header.html', function() {
-				$('#header').css("display", "initial");
+            $( document ).ajaxStop(function() {
+				$('#header').load('header.html', function() {
+					$('#header').css("display", "initial");
+				});
 			});
             $("#footer").load("footer.html");
         </script>       
