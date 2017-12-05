@@ -33,10 +33,19 @@ function resizing() {
 			$("[class*='top-navbar']:not([class*='gegevens']) > a").css("text-align", "initial");
 			$("a[href = 'my_details.html']").css("display", "none");
 		}
-		resizetopbar((parseInt(min_width, 10) - (30 + (options-1) * 128)) / options, options);
+		if (parseInt(min_width, 10) < 1404)
+			resizetopbar((parseInt(min_width, 10) - (30 + (options-1) * 128)) / options, options);
+		else {
+			resizetopbar((parseInt(min_width, 10) - (30 + (options-1) * (min_width / 10))) / options, options);
+			$("a[href = 'javascript:showcontent()']").css("display", "none");
+		}
 	}
 	else if (sessionStorage.role === undefined || sessionStorage.role === "NONE" || sessionStorage.role === "KLANT") {
-		if (parseInt(min_width, 10) > 1283)
+		if (parseInt(min_width, 10) > 1500) {
+			resizetopbar((parseInt(min_width, 10) - (30 + (options-1) * (min_width / 10))) / options, options);
+			$("a[href = 'javascript:showcontent()']").css("display", "none");
+		}
+		else if (parseInt(min_width, 10) > 1283)
 			resizetopbar((parseInt(min_width, 10) - (30 + (options-1) * 140)) / options, options);
 		else if (parseInt(min_width, 10) > 618)
 			resizetopbar((parseInt(min_width, 10) - (30 + (options-1) * 135)) / options, options);
@@ -179,6 +188,7 @@ function resetOptions() {
 	$("a[href = 'customer.html']").css("display", "none");
 	$("a[href = 'account.html']:not([class*='gegevens'])").css("display", "block");
 	$("a[href = 'my_details.html']").css("display", "block");
+	$("a[href = 'javascript:showcontent()']").css("display", "block");
 }
 $(window).resize(function() {
 	min_width = $(window).width();
@@ -191,7 +201,7 @@ jQuery(document).ready(function() {
 	jQuery(document).ready(function() {
 		min_width = $(window).width();
 		resizing();
-		$("#0001").css("display", "initial");
+		$("#linkbardiv").css("display", "initial");
 		resizing();
 	});
 });
