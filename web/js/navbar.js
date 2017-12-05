@@ -1,8 +1,6 @@
 var min_width = $(window).width();
 var top_navbar_dropdown = false;
 var gegevens_hover = false;
-let loginURL = "login.html";
-let logoutURL = "logout.html";
 
 function resizing() {
 	let options = 0;
@@ -160,6 +158,8 @@ function setDropdownboxesWidth() {
 	$(".dropdown-content").css("left", dropdowncontent_pos);
 }
 function login_status() {
+	let loginURL = "login.html";
+	let logoutURL = "logout.html";
 	resetOptions();
 	if (sessionStorage.user !== undefined) {
         $(".user_status").text("Uitloggen");
