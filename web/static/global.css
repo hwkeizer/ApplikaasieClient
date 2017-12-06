@@ -11,6 +11,7 @@ and open the template in the editor.
 html {
     font-family: Arial, Helvetica, sans-serif;
 }
+
 /* Layout for menu */
 .navbar {
     overflow: hidden;
@@ -54,92 +55,14 @@ html {
 
 #header {display: none;}
 
-/*
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-.dropdown-content a {
-    float: none;
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-}
-
-.dropdown-content a:hover {
-    background-color: #ddd;
-}
-
-*/
-
 .show {
     display: block;
 }
 
-/* Layout for forms */
-
-.formfields {
-    position: relative;
-    display: block;
-    float:left;
-    width: 340px;
-    height: 250px;
-    padding: 6px;
-    margin: 4px;
-    border-color: #4CAF50;
-    background-color: #d6f5d6;
-    border-width: 1px;
-    border-style: solid;
-
-}
-.formfields input {
-    display: inline-block;
-    width: 170px;
-    float: right;
-}
-
-.formfields label {
-    display: inline-block;
-    float: left;
-    width: 150px;
-    text-align: left;
-}
-
-.formfields .button {
-    background-color: #4CAF50;
-    width: 155px;
-    border: none;
-    color: white;
-    margin-left: 10px;
-    margin-right: 10px;
-    padding: 2px 2px;
-    text-align: center;
-    text-decoration: none;
-    display: block;
-    float: right;
-    font-size: 13px;
-}
-
-.formfields .button_panel {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    width: 100%;
-}
-
 /* layout for content */
 #content {
-    clear: both;    
+    clear: both;
+    margin-top: 50px;    
 }
 
 .center {
@@ -181,6 +104,7 @@ html {
     border: none;
     cursor: pointer;
     height: 40px;
+    float: right;
 }
 
 #login_failed {
@@ -194,13 +118,72 @@ button:hover {
 .logincontainer .cancelbtn {
     width: auto;
     padding: 10px 18px;
-    background-color: #f44336;
-    float: right;
+    background-color: #ff8080;
+    float: left;
 }
 
 .container {
     padding: 16px;
 }
 
+/* Layout for forms */
+form label {
+  display: inline-block;
+  width: 110px;
+}
+
+form div {
+  margin: 5px;
+}
+input.error {
+  color: red;
+  outline: thin solid red;
+  /*margin-left: 5px;*/
+}
+
+label.error {
+  color: red;
+  font-size: 75%;
+  margin-left: 112px;
+  /*display:inline;*/
+}
+
+.formfields {
+    position: relative;
+    background-color: #d6f5d6;
+    border-color: #4CAF50;    
+    border-width: 1px;
+    border-style: solid;
+    width: 340px;
+    height: 240px;
+    font-size: 14px;
+    padding-left: 10px; 
+    display: block;
+    float: left;
+}
+
+.formbuttons {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding-bottom: 5px;
+    padding-right: 15px;
+}
+
+.formfields .button {
+    background-color: #4CAF50;
+    width: 155px;
+    border: none;
+    color: white;
+    margin-left: 9px;
+    margin-right: 9px;
+    padding: 3px;
+    display: block;
+    float: right;
+}
+.formfields .button.red {
+    background-color: #ff8080;
+}
 
 

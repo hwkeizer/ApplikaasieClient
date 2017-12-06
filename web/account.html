@@ -25,7 +25,9 @@ and open the template in the editor.
     <body>
         <div id="header"></div>
         
-                <br/>
+        <br/>
+        <br/>
+        <br/>
         <div id="buttons">
             <button type="button" id="addAccount">Account toevoegen</button>
             <button type="button" id="editAccount">Account verwijderen</button>
@@ -34,13 +36,20 @@ and open the template in the editor.
         <form hidden id="newAccount">
             <div class="formfields">
                 <h3 class="center">Nieuw account</h3>
-                <table>
-                    <tr><td><label>Gebruikersnaam:</label></td><td><input type="text" id="username"/></td></tr>
-                    <tr><td><label>Wachtwoord:</label></td><td><input type="text" id="password"/></td></tr>                    
-                    <tr><td><label>Account type:</label></td><td><input list="accountTypes" id="accountType"/></td></tr>
-                </table>
+                <div>
+                    <label>Gebruikersnaam:</label>
+                    <input type="text" id="username"/>
+                </div>
+                <div>
+                    <label>Wachtwoord:</label>
+                    <input type="text" id="password"/>
+                </div>
+                <div>
+                    <label>Account type:</label>
+                    <input list="accountTypes" id="accountType"/>
+                </div>
                 <datalist id="accountTypes"></datalist>
-                <div class="button_panel">
+                <div class="formbuttons">
                     <input class="button" type="submit" value="Account toevoegen" />
                 </div>
             </div>             
@@ -49,12 +58,19 @@ and open the template in the editor.
         <form hidden id="accountDetails">
             <div class="formfields">
                 <h3 class="center">Account details</h3>
-                <table>
-                    <tr><td><label>Gebruikersnaam:</label></td><td><input type="text" id="username" readonly/></td></tr>
-                    <tr><td><label>Wachtwoord:</label></td><td><input type="text" id="password" readonly/></td></tr>
-                    <tr><td><label>Account type:</label></td><td><input type="text" id="accountType" readonly/></td></tr>
-                </table>
-                <div class="button_panel">
+                <div>
+                    <label>Gebruikersnaam:</label>
+                    <input type="text" id="username" readonly/>
+                </div>
+                <div>
+                    <label>Wachtwoord:</label>
+                    <input type="text" id="password" readonly/>
+                </div>
+                <div>
+                    <label>Account type:</label>
+                    <input type="text" id="accountType" readonly/>
+                </div>
+                <div class="formbuttons">
                     <input class="button" type="submit" value="Wachtwoord wijzigen" />
                     <input class="button" type="submit" value="Account verwijderen" />
                 </div>
@@ -64,11 +80,15 @@ and open the template in the editor.
         <form hidden id="changePassword">
             <div class="formfields">
                 <h3 class="center">Wachtwoord wijzigen</h3>
-                <table>
-                    <tr><td><label>Nieuw wachtwoord:</label></td><td><input type="password" id="newpassword1"/></td></tr>
-                    <tr><td><label>Nogmaals:</label></td><td><input type="password" id="newpassword2"/></td></tr>
-                </table>
-                <div class="button_panel">
+                <div>
+                    <label>Nieuw wachtwoord:</label>
+                    <input type="password" id="newpassword1"/>
+                </div>
+                <div>
+                    <label>Nogmaals:</label>
+                    <input type="password" id="newpassword2"/>
+                </div>
+                <div class="formbuttons">
                     <input class="button" type="submit" value="Bevestigen" />
                 </div>
                 <h3 hidden class="center" id="changeSuccesfull">Wachtwoord succesvol gewijzigd</h3>
