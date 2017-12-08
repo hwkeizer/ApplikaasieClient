@@ -129,7 +129,7 @@ button:hover {
 /* Layout for forms */
 form label {
   display: inline-block;
-  width: 110px;
+  width: 125px;
 }
 
 form div {
@@ -157,7 +157,7 @@ label.error {
     width: 340px;
     height: 240px;
     font-size: 14px;
-    padding-left: 10px; 
+    padding: 5px; 
     display: block;
     float: left;
 }
@@ -167,17 +167,18 @@ label.error {
     bottom: 0;
     left: 0;
     width: 100%;
-    padding-bottom: 5px;
-    padding-right: 15px;
+    padding-bottom: 6px;
+    margin: 0px;
+    /*padding-right: 0px;*/
 }
 
 .formfields .button {
     background-color: #4CAF50;
-    width: 155px;
+    width: 154px;
     border: none;
     color: white;
-    margin-left: 9px;
-    margin-right: 9px;
+    margin-left: 10px;
+    margin-right: 10px;
     padding: 3px;
     display: block;
     float: right;

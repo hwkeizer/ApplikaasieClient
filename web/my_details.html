@@ -29,11 +29,15 @@ and open the template in the editor.
             <form id="accountDetails">
             <div class="formfields">
                 <h3 class="center">Mijn account gegevens</h3>
-                <table>
-                    <tr><td><label>Gebruikersnaam:</label></td><td><input type="text" id="username"/></td></tr> 
-                    <tr><td><label>Account type:</label></td><td><input type="text" id="accountType"/></td></tr>
-                </table>
-                <div class="button_panel">
+                <div>
+                    <label>Gebruikersnaam:</label>
+                    <input type="text" id="username"/>
+                </div>
+                <div>
+                    <label>Account type:</label>
+                    <input type="text" id="accountType"/>
+                </div>
+                <div class="formbuttons">
                     <input class="button" type="submit" value="Wachtwoord wijzigen" />
                 </div>
             </div>             
@@ -42,11 +46,15 @@ and open the template in the editor.
             <form hidden id="changePassword">
                 <div class="formfields">
                     <h3 class="center">Wachtwoord wijzigen</h3>
-                    <table>
-                        <tr><td><label>Nieuw wachtwoord:</label></td><td><input type="password" id="newpassword1"/></td></tr>
-                        <tr><td><label>Nogmaals:</label></td><td><input type="password" id="newpassword2"/></td></tr>
-                    </table>
-                    <div class="button_panel">
+                    <div>
+                        <label>Nieuw wachtwoord:</label>
+                        <input type="password" id="newpassword1"/>
+                    </div>
+                    <div>
+                        <label>Nogmaals:</label>
+                        <input type="password" id="newpassword2"/>
+                    </div>
+                    <div class="formbuttons">
                         <input class="button" type="submit" value="Bevestigen" />
                     </div>
                     <h3 hidden class="center" id="changeSuccesfull">Wachtwoord succesvol gewijzigd</h3>
