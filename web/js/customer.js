@@ -392,11 +392,14 @@ function changeCustomer() {
                 "lastName":$("#cd_lastName").val(),
                 "email":$("#cd_email").val()
             };
+            // If email is changed the account username will change accordingly
+            account.username = customer.email;
+            editAccount(account.id, account);
             editCustomer(selectedCustomer.id, customer);
         }).catch((error) => {
             console.log("error " + error);
         });                
-    } else {
+    } else { // should not happen since every customer should have an account
         // Customer has no account so it should not get updated
         customer = {
             "id": selectedCustomer.id,
@@ -420,6 +423,7 @@ function addCustomer() {
             "account":account
     };
     createCustomer(customer);
+    $("#newCustomer")[0].reset();
 }
 
 function removeCustomer() {
@@ -429,6 +433,7 @@ function removeCustomer() {
     removeFactuurAddress();
     removeBezorgAddress();
     deleteCustomer(selectedCustomer.id);
+    deleteAccount(selectedCustomer.account);
 }
 
 
@@ -662,6 +667,24 @@ function editCustomer(customerId, customer) {
     });
 }
 
+// Send change account request to the backend
+function editAccount(accountId, account) {
+    $.ajax({
+        url:baseURL + "/account/" + accountId,
+        method: "PUT",
+        data: JSON.stringify(account),
+        contentType: "application/json",
+        error: function() {
+            console.log("Error in function editAccount");
+        },
+        success: function() {
+            window.location.href="http://localhost:8080/customer.html#";
+            location.reload();
+            
+        }
+    });
+}
+
 // Send delete customer request to the backend
 function deleteCustomer(customerId) {
     $.ajax({
@@ -741,6 +764,23 @@ function deleteAddress(addressId) {
         contentType: "application/json",
         error: function() {
             console.log("Error in function deleteCustomer");
+        },
+        success: function() {
+            window.location.href="http://localhost:8080/customer.html#";
+            location.reload();            
+        }
+    });
+}
+
+// Send delete account to the backend
+function deleteAccount(accountId) {
+    alert("DELETING account " + accountId);
+    $.ajax({
+        url:baseURL + "/account/" + accountId,
+        method: "DELETE",
+        contentType: "application/json",
+        error: function() {
+            console.log("Error in function deleteAccount");
         },
         success: function() {
             window.location.href="http://localhost:8080/customer.html#";
