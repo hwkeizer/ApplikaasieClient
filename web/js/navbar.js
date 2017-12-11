@@ -19,7 +19,8 @@ function resizing() {
 			options --;
 		}
 		if (parseInt(min_width, 10) < 750) {
-			$("a[href = 'login.html'], a[href = 'logout.html'], a[href = 'account.html'], a[href = 'product.html']").css("display", "none");
+			$("a[href = 'login.html'], a[href = 'logout.html'], a[href = 'account.html']").css("display", "none");
+			$(".product").css("display", "none");
 			options --;
 		}
 		if (parseInt(min_width, 10) < 600) {
@@ -50,8 +51,10 @@ function resizing() {
 		else {
 			if (sessionStorage.role === undefined || sessionStorage.role === "NONE")
 				$("a[href = 'login.html'], a[href = 'logout.html'], a[href = 'account.html']").css("display", "none");
-			else
+			else {
 				$("a[href = 'login.html'], a[href = 'logout.html'], a[href = 'product.html']").css("display", "none");
+				$(".product").css("display", "none");
+			}
 			options --;
 			resizetopbar((parseInt(min_width, 10) - (30 + (options-1) * 106)) / options, options);
 		}
@@ -169,6 +172,7 @@ function login_status() {
 		if (sessionStorage.role !== undefined && sessionStorage.role !== "KLANT") {
                     $("a[href = 'customer.html']").css("display", "block");
                     $("a[href = 'order.html']").css("display", "block");
+			$(".product").attr("href", "product_admin.html");
         }
 		else
 			$("a[href = 'account.html']").css("display", "none");
@@ -182,6 +186,7 @@ function login_status() {
 	$(".gegevens-dropdown-content a").css("display", "none");
 }
 function resetOptions() {
+	$(".product").attr("href", "product.html");
 	$("a[href = 'product.html']").css("display", "block");
 	$("a[href = 'login.html'], a[href = 'logout.html']").css("display", "block");
 	$("a[href = 'order.html']:not([class*='gegevens'])").css("display", "none");
