@@ -40,23 +40,23 @@ and open the template in the editor.
                 <h3 class="center">Nieuwe klant</h3>
                 <div>
                     <label for="nc_firstName">Voornaam:</label>
-                    <input type="text" id="nc_firstName" name="nc_firstName"/>
-                    <div id="nc_firstNameError"></div>
+                    <input type="text" id="nc_firstName" name="firstName"/>
+                    <div></div>
                 </div>
                 <div>
                     <label for="nc_lastNamePrefix">Tussenvoegsel:</label>
-                    <input type="text" id="nc_lastNamePrefix" name="nc_lastNamePrefix"/>
-                    <div id="nc_lastNamePrefixError"></div>
+                    <input type="text" id="nc_lastNamePrefix" name="lastNamePrefix"/>
+                    <div></div>
                 </div>
                 <div>
                     <label for="nc_lastName">Achternaam:</label>
-                    <input type="text" id="nc_lastName" name="nc_lastName"/>
-                    <div id="nc_lastNameError"></div>
+                    <input type="text" id="nc_lastName" name="lastName"/>
+                    <div></div>
                 </div>
                 <div>
                     <label for="nc_email">Email:</label>
-                    <input type="text" id="nc_email" name="nc_email"/>
-                    <div id="nc_emailError"></div>
+                    <input type="text" id="nc_email" name="email"/>
+                    <div></div>
                 </div>
                 <div class="formbuttons">
                     <input class="button" type="submit" value="Klant toevoegen" />
@@ -64,7 +64,38 @@ and open the template in the editor.
             </div>             
         </form>
         
+        
         <form hidden id="customerDetails">            
+            <div class="formfields">
+                <h3 class="center">Klant details</h3>
+                <div>
+                    <label for="cd_firstName">Voornaam:</label>
+                    <input type="text" id="cd_firstName" name="firstName"/>
+                    <div id="cd_firstNameError"></div>
+                </div>
+                <div>
+                    <label for="cd_lastNamePrefix">Tussenvoegsel:</label>
+                    <input type="text" id="cd_lastNamePrefix" name="lastNamePrefix"/>
+                    <div id="cd_lastNamePrefixError"></div>
+                </div>
+                <div>
+                    <label for="cd_lastName">Achternaam:</label>
+                    <input type="text" id="cd_lastName" name="lastName"/>
+                    <div id="cd_lastNameError"></div>
+                </div>
+                <div>
+                    <label for="cd_email">Email:</label>
+                    <input type="text" id="cd_email" name="email"/>
+                    <div id="cd_emailError"></div>
+                </div>
+                <div class="formbuttons">
+                    <input class="button" type="submit" value="Klant wijzigen" />
+                    <input class="button red" type="button" id="removeCustomer" value="Klant verwijderen"/>
+                </div>
+            </div>             
+        </form>
+        
+<!--        <form hidden id="customerDetails">            
             <div class="formfields">
                 <h3 class="center">Klant details</h3>
                 <div>
@@ -92,34 +123,34 @@ and open the template in the editor.
                     <input class="button red" type="button" id="removeCustomer" value="Klant verwijderen"/>
                 </div>
             </div>             
-        </form>
+        </form>-->
         
         <form hidden id="postAddress">            
             <div class="formfields">
                 <h3 class="center">Postadres</h3>
                 <div>
                     <label for="pa_streetname">Straatnaam:</label>
-                    <input type="text" id="pa_streetname" name="pa_streetname"/>
+                    <input type="text" id="pa_streetname" name="streetname"/>
                     <div id="pa_streetnameError"></div>
                 </div>
                 <div>
                     <label for="pa_number">Nummer:</label>
-                    <input type="text" id="pa_number" name="pa_number"/>
+                    <input type="text" id="pa_number" name="number"/>
                     <div id="pa_numberError"></div>
                 </div>
                 <div>
                     <label for="pa_addition">Toevoeging:</label>
-                    <input type="text" id="pa_addition" name="pa_addition"/>
+                    <input type="text" id="pa_addition" name="addition"/>
                     <div id="pa_additionError"></div>
                 </div>
                 <div>
                     <label for="pa_city">Plaats:</label>
-                    <input type="text" id="pa_city" name="pa_city"/>
+                    <input type="text" id="pa_city" name="city"/>
                     <div id="pa_cityError"></div>
                 </div>
                 <div>
                     <label for="pa_postalcode">Postcode:</label>
-                    <input type="text" id="pa_postalcode" name="pa_postalcode"/>
+                    <input type="text" id="pa_postalcode" name="postalcode"/>
                     <div id="pa_postalcodeError"></div>
                 </div>
                 <div class="formbuttons">
@@ -134,27 +165,27 @@ and open the template in the editor.
                 <h3 class="center">Factuuradres</h3>
                 <div>
                     <label for="fa_streetname">Straatnaam:</label>
-                    <input type="text" id="fa_streetname" name="fa_streetname"/>
+                    <input type="text" id="fa_streetname" name="streetname"/>
                     <div id="fa_streetnameError"></div>
                 </div>
                 <div>
                     <label for="fa_number">Nummer:</label>
-                    <input type="text" id="fa_number" name="fa_number"/>
+                    <input type="text" id="fa_number" name="number"/>
                     <div id="fa_numberError"></div>
                 </div>
                 <div>
                     <label for="fa_addition">Toevoeging:</label>
-                    <input type="text" id="fa_addition" name="fa_addition"/>
+                    <input type="text" id="fa_addition" name="addition"/>
                     <div id="fa_additionError"></div>
                 </div>
                 <div>
                     <label for="fa_city">Plaats:</label>
-                    <input type="text" id="fa_city" name="fa_city"/>
+                    <input type="text" id="fa_city" name="city"/>
                     <div id="fa_cityError"></div>
                 </div>
                 <div>
                     <label for="fa_postalcode">Postcode:</label>
-                    <input type="text" id="fa_postalcode" name="fa_postalcode"/>
+                    <input type="text" id="fa_postalcode" name="postalcode"/>
                     <div id="fa_postalcodeError"></div>
                 </div>
                 <div class="formbuttons">
@@ -169,27 +200,27 @@ and open the template in the editor.
                 <h3 class="center">Bezorgadres</h3>
                 <div>
                     <label for="ba_streetname">Straatnaam:</label>
-                    <input type="text" id="ba_streetname" name="ba_streetname"/>
+                    <input type="text" id="ba_streetname" name="streetname"/>
                     <div id="ba_streetnameError"></div>
                 </div>
                 <div>
                     <label for="ba_number">Nummer:</label>
-                    <input type="text" id="ba_number" name="ba_number"/>
+                    <input type="text" id="ba_number" name="number"/>
                     <div id="ba_numberError"></div>
                 </div>
                 <div>
                     <label for="ba_addition">Toevoeging:</label>
-                    <input type="text" id="ba_addition" name="ba_addition"/>
+                    <input type="text" id="ba_addition" name="addition"/>
                     <div id="ba_additionError"></div>
                 </div>
                 <div>
                     <label for="ba_city">Plaats:</label>
-                    <input type="text" id="ba_city" name="ba_city"/>
+                    <input type="text" id="ba_city" name="city"/>
                     <div id="ba_cityError"></div>
                 </div>
                 <div>
                     <label for="ba_postalcode">Postcode:</label>
-                    <input type="text" id="ba_postalcode" name="ba_postalcode"/>
+                    <input type="text" id="ba_postalcode" name="postalcode"/>
                     <div id="ba_postalcodeError"></div>
                 </div>
                 <div class="formbuttons">
@@ -204,32 +235,32 @@ and open the template in the editor.
                 <h3 class="center">Nieuw adres</h3>
                 <div>
                     <label for="na_addressType">Adres type:</label>
-                    <input list="addressTypes" id="na_addressType" name="na_addressType"/>
+                    <input list="addressTypes" id="na_addressType" name="addressType"/>
                     <div id="na_addressTypeError"></div>
                 </div>
                 <div>
                     <label for="na_streetname">Straatnaam:</label>
-                    <input type="text" id="na_streetname" name="na_streetname"/>
+                    <input type="text" id="na_streetname" name="streetname"/>
                     <div id="na_streetnameError"></div>
                 </div>
                 <div>
                     <label for="na_number">Nummer:</label>
-                    <input type="text" id="na_number" name="na_number"/>
+                    <input type="text" id="na_number" name="number"/>
                     <div id="na_numberError"></div>
                 </div>
                 <div>
                     <label for="na_addition">Toevoeging:</label>
-                    <input type="text" id="na_addition" name="na_addition"/>
+                    <input type="text" id="na_addition" name="addition"/>
                     <div id="na_additionError"></div>
                 </div>
                 <div>
                     <label for="na_city">Plaats:</label>
-                    <input type="text" id="na_city" name="na_city"/>
+                    <input type="text" id="na_city" name="city"/>
                     <div id="na_cityError"></div>
                 </div>
                 <div>
                     <label for="na_postalcode">Postcode:</label>
-                    <input type="text" id="na_postalcode" name="na_postalcode"/>
+                    <input type="text" id="na_postalcode" name="postalcode"/>
                     <div id="na_postalcodeError"></div>
                 </div>
                 <datalist id="addressTypes"></datalist>

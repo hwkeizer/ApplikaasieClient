@@ -32,342 +32,146 @@ $(document).ready(function(){
         showNewAddressForm();
     });
     
+    // Validation for forms
     jQuery.validator.setDefaults({
         errorPlacement: function(error, element) {
-            if (element.attr("name") === "cd_firstName")
-                error.appendTo('#cd_firstNameError');
-            if (element.attr("name") === "cd_lastNamePrefix")
-                error.appendTo('#cd_lastNamePrefixError');
-            if (element.attr("name") === "cd_lastName")
-                error.appendTo('#cd_lastNameError');
-            if (element.attr("name") === "cd_email")
-                error.appendTo('#cd_emailError');
-            if (element.attr("name") === "nc_firstName")
-                error.appendTo('#nc_firstNameError');
-            if (element.attr("name") === "nc_lastNamePrefix")
-                error.appendTo('#nc_lastNamePrefixError');
-            if (element.attr("name") === "nc_lastName")
-                error.appendTo('#nc_lastNameError');
-            if (element.attr("name") === "nc_email")
-                error.appendTo('#nc_emailError');
-            if (element.attr("name") === "pa_streetname")
-                error.appendTo('#pa_streetnameError');
-            if (element.attr("name") === "pa_number")
-                error.appendTo('#pa_numberError');
-            if (element.attr("name") === "pa_addition")
-                error.appendTo('#pa_additionError');
-            if (element.attr("name") === "pa_city")
-                error.appendTo('#pa_cityError');
-            if (element.attr("name") === "pa_postalcode")
-                error.appendTo('#pa_postalcodeError');
-            if (element.attr("name") === "na_streetname")
-                error.appendTo('#na_streetnameError');
-            if (element.attr("name") === "na_number")
-                error.appendTo('#na_numberError');
-            if (element.attr("name") === "na_addition")
-                error.appendTo('#na_additionError');
-            if (element.attr("name") === "na_city")
-                error.appendTo('#na_cityError');
-            if (element.attr("name") === "na_postalcode")
-                error.appendTo('#na_postalcodeError');
-            if (element.attr("name") === "fa_streetname")
-                error.appendTo('#fa_streetnameError');
-            if (element.attr("name") === "fa_number")
-                error.appendTo('#fa_numberError');
-            if (element.attr("name") === "fa_addition")
-                error.appendTo('#fa_additionError');
-            if (element.attr("name") === "fa_city")
-                error.appendTo('#fa_cityError');
-            if (element.attr("name") === "fa_postalcode")
-                error.appendTo('#fa_postalcodeError');
-            if (element.attr("name") === "ba_streetname")
-                error.appendTo('#ba_streetnameError');
-            if (element.attr("name") === "ba_number")
-                error.appendTo('#ba_numberError');
-            if (element.attr("name") === "ba_addition")
-                error.appendTo('#ba_additionError');
-            if (element.attr("name") === "ba_city")
-                error.appendTo('#ba_cityError');
-            if (element.attr("name") === "ba_postalcode")
-                error.appendTo('#ba_postalcodeError');
+            error.appendTo(element.next());
         }
-    });
+    });   
+    validateAll();
     
-    $('form[id="customerDetails"]').validate({
-        rules: {
-            cd_firstName: {
-                required: true,
-                maxlength: 16
-            },
-            cd_lastName: {
-                required: true,
-                maxlength: 16
-            },
-            cd_email: {
-                required: true,
-                email: true
-            }
-        },
-        messages: {
-            cd_firstName: {
-                maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
-                required: 'Dit veld is vereist'
-            },
-            cd_lastName: {
-                maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
-                required: 'Dit veld is vereist'
-            },
-            cd_email: {
-                required: 'Dit veld is vereist',
-                email: 'Geef een geldig email adres'
-            }            
-        },
-        submitHandler: function(form) {            
-            changeCustomer();
-        }
-    });
-    
-    $('form[id="newCustomer"]').validate({
-        rules: {
-            nc_firstName: {
-                required: true,
-                maxlength: 16
-            },
-            nc_lastName: {
-                required: true,
-                maxlength: 16
-            },
-            nc_email: {
-                required: true,
-                email: true
-            }
-        },
-        messages: {
-            nc_firstName: {
-                maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
-                required: 'Dit veld is vereist'
-            },
-            nc_lastName: {
-                maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
-                required: 'Dit veld is vereist'
-            },
-            nc_email: {
-                required: 'Dit veld is vereist',
-                email: 'Geef een geldig email adres'
-            }            
-        },
-        submitHandler: function(form) {            
-            addCustomer();
-        }
-    });
-    
-    $('form[id="postAddress"]').validate({
-        rules: {
-            pa_streetname: {
-                required: true,
-                maxlength: 16
-            },
-            pa_number: {
-                required: true,
-                maxlength: 16
-            },
-            pa_addition: {
-                required: false,
-                maxlength: 16
-            },
-            pa_city: {
-                required: true,
-                maxlength: 16
-            },
-            pa_postalcode: {
-                required: true,
-                maxlength: 16
-            }
-        },
-        messages: {
-            pa_streetname: {
-                maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
-                required: 'Dit veld is vereist'
-            },
-            pa_number: {
-                maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
-                required: 'Dit veld is vereist'
-            },
-            pa_addition: {
-                maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
-                required: 'Dit veld is vereist'
-            },
-            pa_city: {
-                maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
-                required: 'Dit veld is vereist'
-            }, 
-            pa_postalcode: {
-                required: 'Dit veld is vereist',
-                email: 'Geef een geldige postcode'
-            }   
-        },
-        submitHandler: function(form) {  
-            changePostAddress();
-        }
-    });
-    
-    $('form[id="newAddress"]').validate({
-        rules: {
-            na_addressType: {
-                required: true
-            },
-            na_streetname: {
-                required: true,
-                maxlength: 16
-            },
-            na_number: {
-                required: true,
-                maxlength: 16
-            },
-            na_addition: {
-                required: false,
-                maxlength: 16
-            },
-            na_city: {
-                required: true,
-                maxlength: 16
-            },
-            na_postalcode: {
-                required: true,
-                maxlength: 16
-            }
-        },
-        messages: {
-            na_addressType: {
-                required: 'Dit veld is vereist'
-            },
-            na_streetname: {
-                maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
-                required: 'Dit veld is vereist'
-            },
-            na_number: {
-                maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
-                required: 'Dit veld is vereist'
-            },
-            na_addition: {
-                maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
-                required: 'Dit veld is vereist'
-            },
-            na_city: {
-                maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
-                required: 'Dit veld is vereist'
-            }, 
-            na_postalcode: {
-                required: 'Dit veld is vereist',
-                email: 'Geef een geldige postcode'
-            }   
-        },
-        submitHandler: function(form) {  
-            addNewAddress();
-        }
-    });
-    
-    $('form[id="factuurAddress"]').validate({
-        rules: {
-            fa_streetname: {
-                required: true,
-                maxlength: 16
-            },
-            fa_number: {
-                required: true,
-                maxlength: 16
-            },
-            fa_addition: {
-                required: false,
-                maxlength: 16
-            },
-            fa_city: {
-                required: true,
-                maxlength: 16
-            },
-            fa_postalcode: {
-                required: true,
-                maxlength: 16
-            }
-        },
-        messages: {
-            fa_streetname: {
-                maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
-                required: 'Dit veld is vereist'
-            },
-            fa_number: {
-                maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
-                required: 'Dit veld is vereist'
-            },
-            fa_addition: {
-                maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
-                required: 'Dit veld is vereist'
-            },
-            fa_city: {
-                maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
-                required: 'Dit veld is vereist'
-            }, 
-            fa_postalcode: {
-                required: 'Dit veld is vereist',
-                email: 'Geef een geldige postcode'
-            }   
-        },
-        submitHandler: function(form) {  
-            changeFactuurAddress();
-        }
-    });
-    
-    $('form[id="bezorgAddress"]').validate({
-        rules: {
-            ba_streetname: {
-                required: true,
-                maxlength: 16
-            },
-            ba_number: {
-                required: true,
-                maxlength: 16
-            },
-            ba_addition: {
-                required: false,
-                maxlength: 16
-            },
-            ba_city: {
-                required: true,
-                maxlength: 16
-            },
-            ba_postalcode: {
-                required: true,
-                maxlength: 16
-            }
-        },
-        messages: {
-            ba_streetname: {
-                maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
-                required: 'Dit veld is vereist'
-            },
-            ba_number: {
-                maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
-                required: 'Dit veld is vereist'
-            },
-            ba_addition: {
-                maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
-                required: 'Dit veld is vereist'
-            },
-            ba_city: {
-                maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
-                required: 'Dit veld is vereist'
-            }, 
-            ba_postalcode: {
-                required: 'Dit veld is vereist',
-                email: 'Geef een geldige postcode'
-            }   
-        },
-        submitHandler: function(form) {  
-            changeBezorgAddress();
-        }
-    });
-
 });
+
+function getCustomerValidationObject() {
+    let customerValidationObject = {};
+    customerValidationObject.rules = {
+        firstName: {
+            required: true,
+            maxlength: 16
+        },
+        lastName: {
+            required: true,
+            maxlength: 16
+        },
+        email: {
+            required: true,
+            email: true
+        }
+    };
+    customerValidationObject.messages = {
+        firstName: {
+            maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
+            required: 'Dit veld is vereist'
+        },
+        lastName: {
+            maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
+            required: 'Dit veld is vereist'
+        },
+        email: {
+            required: 'Dit veld is inderdaad vereist',
+            email: 'Geef een geldig email adres'
+        }
+    };
+    return customerValidationObject;
+}
+
+function getAddressValidationObject() {
+    let addressValidationObject = {};
+    addressValidationObject.rules = {
+        streetname: {
+            required: true,
+            maxlength: 16
+        },
+        number: {
+            required: true,
+            maxlength: 16
+        },
+        addition: {
+            required: false,
+            maxlength: 16
+        },
+        city: {
+            required: true,
+            maxlength: 16
+        },
+        postalcode: {
+            required: true,
+            maxlength: 16
+        }
+    };
+    addressValidationObject.messages = {
+        streetname: {
+            maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
+            required: 'Dit veld is vereist'
+        },
+        number: {
+            maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
+            required: 'Dit veld is vereist'
+        },
+        addition: {
+            maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
+            required: 'Dit veld is vereist'
+        },
+        city: {
+            maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
+            required: 'Dit veld is vereist'
+        }, 
+        postalcode: {
+            required: 'Dit veld is vereist',
+            email: 'Geef een geldige postcode'
+        }
+    };
+    return addressValidationObject;
+}
+
+function validateAll() {
+    let formNames = [
+        "customerDetails", 
+        "newCustomer",
+        "postAddress",
+        "factuurAddress",
+        "bezorgAddress",
+        "newAddress"
+    ];
+    for (let formName of formNames) {
+        let validationObject;
+        // Get the correct validation properties for the form
+        switch (formName) {
+            case "customerDetails" : {
+                validationObject = getCustomerValidationObject();
+                validationObject.submitHandler = function(form) {changeCustomer();};
+                break;
+            }
+            case "newCustomer" : {
+                validationObject = getCustomerValidationObject();
+                validationObject.submitHandler = function(form) {addCustomer();}; 
+                break;
+            }
+            case "newAddress" : {
+                validationObject = getAddressValidationObject();
+                validationObject.submitHandler = function(form) {addNewAddress();};
+                break;
+            }
+            case "postAddress" : {
+                validationObject = getAddressValidationObject();
+                validationObject.submitHandler = function(form) {changePostAddress();};
+                break;
+            }
+            case "factuurAddress" : {
+                validationObject = getAddressValidationObject();
+                validationObject.submitHandler = function(form) {changeFactuurAddress();};
+                break;
+            }
+            case "bezorgAddress" : {
+                validationObject = getAddressValidationObject();
+                validationObject.submitHandler = function(form) {changeBezorgAddress();};
+                break;
+            }              
+        } 
+        // Validate and submit the form if valide
+        $("form[id=\"" + formName + "\"]").validate(validationObject);
+    }
+}
 
 function changeCustomer() {
     let customer;
@@ -611,7 +415,7 @@ function showNewAddressForm() {
 //    }
 }
 
-function addNewAddress() {    
+function addNewAddress() {
     address = {"addressType":$('#newAddress').find('#na_addressType').val(),
                 "streetname":$('#newAddress').find('#na_streetname').val(),
                 "number":$('#newAddress').find('#na_number').val(),

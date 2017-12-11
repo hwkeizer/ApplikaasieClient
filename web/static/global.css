@@ -135,6 +135,7 @@ form label {
 form div {
   margin: 5px;
 }
+
 input.error {
   color: red;
   outline: thin solid red;
@@ -144,7 +145,7 @@ input.error {
 label.error {
   color: red;
   font-size: 75%;
-  margin-left: 112px;
+  margin-left: 123px;
   /*display:inline;*/
 }
 
