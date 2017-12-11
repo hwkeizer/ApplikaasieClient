@@ -32,6 +32,8 @@ $(document).on("submit", "form#login", function(event) {
             sessionStorage.user = username;
             sessionStorage.shoppingCart = "";
 			sessionStorage.role = request.getResponseHeader('ROLE');
+            sessionStorage.customerId = request.getResponseHeader('CUSTOMER_ID');
+            console.log("customer id: " + sessionStorage.customerId);
             console.log("User " + sessionStorage.user + " stored in local session web storage");
             window.location.href="http://localhost:8080/home.html";
 //            location.reload();

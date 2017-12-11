@@ -54,7 +54,7 @@ function saveOrder() {
     if (confirm("Bestelling opslaan?")) {
         var order = {
             "customer": {
-                "id": getCustomerId()
+                "id": sessionStorage.customerId
             },
 
             "orderItemCollection": createOrderItemCollection(),
@@ -63,11 +63,10 @@ function saveOrder() {
 
         var orderJson = JSON.stringify(order);
         console.log(orderJson);
-//        createOrder(orderJson);
 
         $.ajax({
             method: "POST",
-            url: baseURL + "/order1",
+            url: baseURL + "/order1/" + sessionStorage.user,
             data: orderJson,
             contentType: "application/json",
             error: function () {
@@ -78,8 +77,8 @@ function saveOrder() {
                 $("#saveOrderButton").hide(500);
                 $("#saveSuccesful").show(500);
                 
-                console.log("Shopping car was emptied, now length: " + sessionStorage.shoppingCart.length);
                 sessionStorage.shoppingCart = "";
+                console.log("Shopping car was emptied, now length: " + sessionStorage.shoppingCart.length);
             }
         });
     }
@@ -112,8 +111,4 @@ function calculateTotalPrice() {
     ;
     console.log("total price: " + totalPrice);
     return totalPrice;
-}
-
-function getCustomerId() {
-    return 6;
 }
