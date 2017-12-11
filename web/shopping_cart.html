@@ -1,0 +1,66 @@
+<html>
+    <head>
+        <title>Productpagina</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- jquery scripts -->
+        <script type="text/javascript" src="js/jquery/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>
+        <!-- tabulator script en styling -->
+        <link rel="stylesheet" href="static/tabulator/tabulator.min.css" >
+        <script type="text/javascript" src="js/tabulator/tabulator.min.js"></script>
+        <!-- css files -->
+        <link rel="stylesheet" type="text/css" href="static/global.css"/>
+        <!-- local scripts -->
+        <script type="text/javascript" src="js/shopping_cart.js"></script>
+        <script src="js/js-cookie.js"></script>
+    </head>
+    <body>
+
+        <div id="header"></div>
+
+        <h1>Winkelwagen</h1>
+
+        <div hidden id="noItemsInShoppingCart">
+            <h2>Uw bestelling:</h2>
+            <br/>
+            <p>U heeft nog geen artikelen aan de winkelwagen toegevoegd.</p>
+            <p>Dit kunt u alsnog doen op de <a href="/product2.html">productpagina</a></p>
+        </div>
+
+        <div hidden id="showOrder">
+            <h2>Uw bestelling:</h2>
+            
+            <div id="totalPrice"></div><br/>
+            <p>Uw bestelling bevat de volgende producten:</p><br/>
+            <div id="orderItemTable">
+            </div>
+            
+            <br/><br/>
+            <p>Als u meer producten toe wilt voegen, dan kunt u dit doen op de <a href="/product2.html">productpagina</a></p>
+            
+            <br/><br/>
+            <button id="saveOrderButton">Bestelling opslaan</button>
+
+        </div>
+        
+        <div hidden id="saveSuccesful">
+            <p>Uw bestelling is succesvol opgeslagen.</p>
+        </div>
+
+
+        <script>
+//            $(document).ajaxStop(function () {
+//                $('#header').load('header.html', function () {
+//                    $('#header').css("display", "initial");
+//                });
+//            });
+
+            $('#header').load('header.html', function () {
+                $('#header').css("display", "initial");
+            });
+            $("#footer").load("footer.html");
+        </script>
+
+    </body>
+</html>
