@@ -2,6 +2,7 @@ var baseURL = "http://localhost:8080/Workshop3/webresources";
 
 var availableProducts;
 var selectedProducts = [];
+var selectedProduct;
 
 $(document).ready(function () {
     if (sessionStorage.role !== "KLANT") {
@@ -28,6 +29,15 @@ $(document).ready(function () {
             storeShoppingCart();
         });
     }
+
+    $("#changeProductAmountButton").click(function (event) {
+        addProduct();
+    });
+
+    $("#cancelProductAmountButton").click(function (event) {
+        event.preventDefault();
+        $('#changeProductAmount').hide(500);
+    });
 });
 
 function showAllProductsNotLoggedIn() {
@@ -47,7 +57,6 @@ function showAllProductsNotLoggedIn() {
                     {title: "Product", field: "name", headerFilter: "input"},
                     {formatter: "money", title: "Prijs/stuk", field: "price"},
                     {title: "Voorraad", field: "stock"}
-//                    {title: "Aantal toe te voegen", field: "amount", editor: true, validator: ["numeric"]},
                 ]
             });
             availableProducts.sort(compare);
@@ -74,43 +83,21 @@ function showAllProducts() {
                     {title: "Product", field: "name", headerFilter: "input"},
                     {formatter: "money", title: "Prijs/stuk", field: "price"},
                     {title: "Voorraad", field: "stock"},
-//                    {title: "Aantal toe te voegen", field: "amount", editor: true, validator: ["numeric"]},
-                    {title: "Aantal toe te voegen", field: "amount", editable: true, editor: "number", validator: ["numeric"]},
-                    {formatter: "buttonTick", title: "Toevoegen", align: "center", cellClick: function (e, cell) {
-
-                            rowData = cell.getRow().getData();
-                            console.log(rowData.name);
-
-                            if (rowData.amount === undefined) {
-                                alert("U dient eerst een aantal in te voeren voordat u dit product kunt toevoegen");
-                                return;
-                            }
-                            if (rowData.amount < 1) {
-                                alert("Om een product toe te voegen dient u een minimumaantal van '1' in te voeren");
-                                return;
-                            }
-                            if (rowData.amount > rowData.stock) {
-                                alert("Het is niet mogelijk om meer producten te bestellen dan de voorraad bevat");
-                                return;
-                            }
-
-                            selectedProducts.push(cell.getRow().getData());
-                            console.log("Pushed to selectedProducts");
-                            rowData.chosen = "Reeds in winkelwagen";
-                            console.log("Chosen message updated");
-
-                            console.log("Selected products length" + selectedProducts.length);
-
-                            setAvailable();
-                            $("#showProducts").hide();
-                            $("#showProducts2").show();
-                            $("#linkToShoppingCart").show(500);
-                            showAllProducts2();
-
-
-                        }},
                     {title: "Status", field: "chosen"}
-                ]
+                ],
+                rowClick: function (e, row) {
+                    if (row.getData().chosen === "Beschikbaar") {
+                        selectedProduct = null;
+                        selectedProduct = row.getData();
+                        $("#changeProductAmount").show(500);
+                        showchangeProductAmount(row.getData());
+                        $("#showProducts").hide();
+                        $("#showProducts2").show();
+                        showAllProducts2();
+                    } else {
+                        alert("U heeft dit product reeds aan uw winkelwagen toegevoegd. Bezoek de winkelwagenpagina voor meer opties.");
+                    }
+                }
             });
             availableProducts.sort(compare);
             $("#productTable").tabulator("setData", availableProducts);
@@ -126,39 +113,55 @@ function showAllProducts2() {
             {title: "Product", field: "name", headerFilter: "input"},
             {formatter: "money", title: "Prijs/stuk", field: "price"},
             {title: "Voorraad", field: "stock"},
-//                    {title: "Aantal toe te voegen", field: "amount", editor: true, validator: ["numeric"]},
-            {title: "Aantal toe te voegen", field: "amount", editable: true, editor: "number", validator: ["numeric"]},
-            {formatter: "buttonTick", title: "Toevoegen", align: "center", cellClick: function (e, cell) {
-
-                    rowData = cell.getRow().getData();
-                    console.log(rowData.name);
-
-                    if (rowData.amount === undefined) {
-                        alert("U dient eerst een aantal in te voeren voordat u dit product kunt toevoegen");
-                        return;
-                    }
-                    if (rowData.amount < 1) {
-                        alert("Om een product toe te voegen dient u een minimumaantal van '1' in te voeren");
-                        return;
-                    }
-                    if (rowData.amount > rowData.stock) {
-                        alert("Het is niet mogelijk om meer producten te bestellen dan de voorraad bevat");
-                        return;
-                    }
-
-                    selectedProducts.push(cell.getRow().getData());
-                    console.log("Pushed to selectedProducts");
-
-                    setAvailable();
-                    $("#productTable2").tabulator("setData", availableProducts);
-
-
-                }},
             {title: "Status", field: "chosen"}
-        ]
+        ],
+        rowClick: function (e, row) {
+            if (row.getData().chosen === "Beschikbaar") {
+                selectedProduct = null;
+                selectedProduct = row.getData();
+
+                $("#changeProductAmount").show(500);
+                showchangeProductAmount(row.getData());
+            } else {
+                alert("U heeft dit product reeds aan uw winkelwagen toegevoegd. Bezoek de winkelwagenpagina voor meer opties.");
+            }
+        }
+
     });
     availableProducts.sort(compare);
     $("#productTable2").tabulator("setData", availableProducts);
+}
+
+function showchangeProductAmount(product) {
+    $("#changeProductAmount")[0].reset();
+    $('#changeProductAmount').find('#product_name').val(product.name);
+    $('#changeProductAmount').find('#product_price').val(product.price.toFixed(2));
+    $('#changeProductAmount').find('#product_stock').val(product.stock);
+    $('#changeProductAmount').find('#new_product_amount').val(0);
+}
+
+function addProduct() {
+    event.preventDefault();
+        selectedProduct.amount = $("#new_product_amount").val();
+
+        if (selectedProduct.amount === undefined) {
+            alert("U dient eerst een aantal in te voeren voordat u dit product kunt toevoegen");
+            return;
+        }
+        if (selectedProduct.amount < 1) {
+            alert("Om een product toe te voegen dient u een minimumaantal van '1' in te voeren");
+            return;
+        }
+        if (selectedProduct.amount > selectedProduct.stock) {
+            alert("Het is niet mogelijk om meer producten te bestellen dan de voorraad bevat");
+            return;
+        }
+
+        selectedProducts.push(selectedProduct);
+
+        $("#changeProductAmount").hide(500);
+        setAvailable();
+        $("#productTable2").tabulator("setData", availableProducts);
 }
 
 function setAvailable() {
@@ -172,7 +175,7 @@ function setAvailable() {
 
             if (availableRow.id === selectedRow.id) {
                 console.log("i is: " + i + " and j is " + j);
-                availableRow.chosen = "Reeds in winkelwagen";
+                availableRow.chosen = selectedRow.amount + " stuks in winkelwagen";
                 break;
             }
         }
@@ -182,7 +185,7 @@ function setAvailable() {
 function parseShoppingCart() {
     console.log("Entered unpacking method");
     console.log("length: " + sessionStorage.shoppingCart.length);
-    if (sessionStorage.shoppingCart.length !== 0)
+    if (sessionStorage.shoppingCart !== "")
         selectedProducts = JSON.parse(sessionStorage.getItem("shoppingCart"));
     else
         selectedProducts = [];
