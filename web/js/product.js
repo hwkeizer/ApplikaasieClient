@@ -1,191 +1,206 @@
 var baseURL = "http://localhost:8080/Workshop3/webresources";
 
+var availableProducts;
+var selectedProducts = [];
+
 $(document).ready(function () {
-    $("#addNewProductLink").click(function (event) {
-        event.preventDefault();
-        hideAll();
-        $("#addNewProduct").show(500);
-        addNewProduct();
+    if (sessionStorage.role !== "KLANT") {
+        console.log("Niet ingelogd als klant");
+        $("#productsNotLoggedIn").show();
+        showAllProductsNotLoggedIn();
+    } else {
+        console.log("Wel ingelogd als klant");
+        $("#showProducts").show();
+        $("#linkToShoppingCart").show();
+        parseShoppingCart();
+        console.log("parsing shopping cart finished");
 
-    });
+        showAllProducts();
 
-    showAllProducts();
+        console.log("selectedProducts length: " + selectedProducts.length);
+
+        for (var i = 0; i < selectedProducts.length; i++) {
+            console.log(selectedProducts[i]);
+        }
+
+        $(window).bind('beforeunload', function () {
+            console.log("Reloading");
+            storeShoppingCart();
+        });
+    }
 });
 
-function showAllProducts() {
+function showAllProductsNotLoggedIn() {
     $.ajax({
         method: "GET",
-        url: baseURL + "/product",
+        url: baseURL + "/product/available",
         dataType: "json",
         error: function () {
             console.log("error");
         },
         success: function (data) {
+            availableProducts = data;
+            setAvailable();
+            $("#productTableNotLoggedIn").tabulator({
+                layout: "fitColumns",
+                columns: [
+                    {title: "Product", field: "name", headerFilter: "input"},
+                    {formatter: "money", title: "Prijs/stuk", field: "price"},
+                    {title: "Voorraad", field: "stock"}
+//                    {title: "Aantal toe te voegen", field: "amount", editor: true, validator: ["numeric"]},
+                ]
+            });
+            availableProducts.sort(compare);
+            $("#productTableNotLoggedIn").tabulator("setData", availableProducts);
+
+        }
+    });
+}
+
+function showAllProducts() {
+    $.ajax({
+        method: "GET",
+        url: baseURL + "/product/available",
+        dataType: "json",
+        error: function () {
+            console.log("error");
+        },
+        success: function (data) {
+            availableProducts = data;
+            setAvailable();
             $("#productTable").tabulator({
                 layout: "fitColumns",
                 columns: [
-                    {title: "Naam", field: "name", headerFilter: "input"},
-                    {formatter: "money", title: "Prijs/stuk", field: "price", align: "right"},
+                    {title: "Product", field: "name", headerFilter: "input"},
+                    {formatter: "money", title: "Prijs/stuk", field: "price"},
                     {title: "Voorraad", field: "stock"},
-                    {title: "Productstatus", field: "productStatus", headerFilter: "input"}
-                ],
-                rowClick: function (e, row) {
-                    hideAll();
-                    $("#showOneProduct").show(500);
-                    showOneProduct(row.getData());
-                }
+//                    {title: "Aantal toe te voegen", field: "amount", editor: true, validator: ["numeric"]},
+                    {title: "Aantal toe te voegen", field: "amount", editable: true, editor: "number", validator: ["numeric"]},
+                    {formatter: "buttonTick", title: "Toevoegen", align: "center", cellClick: function (e, cell) {
+
+                            rowData = cell.getRow().getData();
+                            console.log(rowData.name);
+
+                            if (rowData.amount === undefined) {
+                                alert("U dient eerst een aantal in te voeren voordat u dit product kunt toevoegen");
+                                return;
+                            }
+                            if (rowData.amount < 1) {
+                                alert("Om een product toe te voegen dient u een minimumaantal van '1' in te voeren");
+                                return;
+                            }
+                            if (rowData.amount > rowData.stock) {
+                                alert("Het is niet mogelijk om meer producten te bestellen dan de voorraad bevat");
+                                return;
+                            }
+
+                            selectedProducts.push(cell.getRow().getData());
+                            console.log("Pushed to selectedProducts");
+                            rowData.chosen = "Reeds in winkelwagen";
+                            console.log("Chosen message updated");
+
+                            console.log("Selected products length" + selectedProducts.length);
+
+                            setAvailable();
+                            $("#showProducts").hide();
+                            $("#showProducts2").show();
+                            $("#linkToShoppingCart").show(500);
+                            showAllProducts2();
+
+
+                        }},
+                    {title: "Status", field: "chosen"}
+                ]
             });
-            $("#productTable").tabulator("setData", data);
+            availableProducts.sort(compare);
+            $("#productTable").tabulator("setData", availableProducts);
+
         }
     });
 }
 
-function showOneProduct(product) {
+function showAllProducts2() {
+    $("#productTable2").tabulator({
+        layout: "fitColumns",
+        columns: [
+            {title: "Product", field: "name", headerFilter: "input"},
+            {formatter: "money", title: "Prijs/stuk", field: "price"},
+            {title: "Voorraad", field: "stock"},
+//                    {title: "Aantal toe te voegen", field: "amount", editor: true, validator: ["numeric"]},
+            {title: "Aantal toe te voegen", field: "amount", editable: true, editor: "number", validator: ["numeric"]},
+            {formatter: "buttonTick", title: "Toevoegen", align: "center", cellClick: function (e, cell) {
 
-    $("#showOneProduct").html("");
-    $("#showOneProduct").append("<button id='backToAllProducts1'>Terug naar overzicht</button>");
-    $("#showOneProduct").append("<br/><br/><button id='editProductButton'>Product wijzigen</button>");
-    $("#showOneProduct").append("<br/><br/><button id='deleteProductButton'>Product verwijderen</button>");
-    $("#showOneProduct").append("<ul>" +
-            "<li>Naam: " + product.name + "</li>" +
-            "<li>Prijs: " + product.price + "</li>" +
-            "<li>Voorraad: " + product.stock + "</li>" +
-            "<li>Productstatus: " + product.productStatus + "</li>" +
-            "</ul>");
+                    rowData = cell.getRow().getData();
+                    console.log(rowData.name);
 
-    $("#backToAllProducts1").click(function (event) {
+                    if (rowData.amount === undefined) {
+                        alert("U dient eerst een aantal in te voeren voordat u dit product kunt toevoegen");
+                        return;
+                    }
+                    if (rowData.amount < 1) {
+                        alert("Om een product toe te voegen dient u een minimumaantal van '1' in te voeren");
+                        return;
+                    }
+                    if (rowData.amount > rowData.stock) {
+                        alert("Het is niet mogelijk om meer producten te bestellen dan de voorraad bevat");
+                        return;
+                    }
 
-        hideAll();
-        $("#productTable").show(500);
+                    selectedProducts.push(cell.getRow().getData());
+                    console.log("Pushed to selectedProducts");
+
+                    setAvailable();
+                    $("#productTable2").tabulator("setData", availableProducts);
+
+
+                }},
+            {title: "Status", field: "chosen"}
+        ]
     });
-
-    $("#editProductButton").click(function (event) {
-
-        hideAll();
-        $("#editProduct").show(500);
-        editProduct(product);
-    });
-
-    $("#deleteProductButton").click(function (event) {
-        deleteProduct(product);
-    });
+    availableProducts.sort(compare);
+    $("#productTable2").tabulator("setData", availableProducts);
 }
 
-function editProduct(product) {
+function setAvailable() {
+    for (var i = 0; i < availableProducts.length; i++) {
+        var availableRow = availableProducts[i];
+        availableRow.chosen = "Beschikbaar";
+        availableRow.amount = null;
 
-    $("#editProduct").find('#productName').val(product.name);
-    $("#editProduct").find('#productPrice').val(product.price);
-    $("#editProduct").find('#productStock').val(product.stock);
-    $("#editProduct").find('#productStatus').val(product.productStatus);
+        for (var j = 0; j < selectedProducts.length; j++) {
+            var selectedRow = selectedProducts[j];
 
-    $("#editButton").click( function (event) {
-        var newProduct = {
-            "id": product.id,
-            "name": $("#productName").val(),
-            "price": $("#productPrice").val(),
-            "stock": $("#productStock").val(),
-            "productStatus": $("#productStatus").val()
-        };
-
-        var productJson = JSON.stringify(newProduct);
-        updateProduct(newProduct.id, productJson);
-
-    });
-
-    function updateProduct(id, product) {
-        $.ajax({
-            method: "PUT",
-            url: baseURL + "/product/" + id,
-            data: product,
-            contentType: "application/json",
-            error: function () {
-                console.log("error");
-            },
-            success: function () {
-                window.location.href = "http://localhost:8080/product.html";
+            if (availableRow.id === selectedRow.id) {
+                console.log("i is: " + i + " and j is " + j);
+                availableRow.chosen = "Reeds in winkelwagen";
+                break;
             }
-        })
-    }
-
-}
-
-function deleteProduct(product) {
-    if (confirm("Product verwijderen?")) {
-        $.ajax({
-            method: "DELETE",
-            url: baseURL + "/product/" + product.id,
-            error: function () {
-                alert("Dit product kon niet verwijderd worden");
-            },
-            success: function () {
-                window.location.href = "http://localhost:8080/product.html";
-            }
-        });
-    }
-}
-
-function addNewProduct() {
-    $("#addNewProduct").html("");
-    $("#addNewProduct").append("<button id='backToAllProducts'>Terug naar overzicht</button><br/><br/>");
-
-
-    $("#addNewProduct").append("" +
-            "<form id='newProduct'>" +
-            "<label>Naam: </label><input type='text' id='inputName'></input><br/>" +
-            "<label>Prijs: </label><input type='text' id='inputPrice'></input><br/>" +
-            "<label>Voorraad: </label><input type='number' id='inputStock'></input><br/>" +
-            "<label>Productstatus: </label><input type='text' id='inputProductStatus'></input><br/>" +
-            "<br/><br/><button id='saveProduct' type='submit'>Submit</button>" +
-            "</form>"
-            );
-
-    $("#backToAllProducts").click(function (event) {
-        hideAll();
-        $("#productTable").show(500);
-    });
-
-
-    $("#saveProduct").click(function (event) {
-        saveProduct();
-    });
-}
-
-function saveProduct() {
-    if (confirm("Product opslaan?")) {
-        $(document).on("submit", "form#newProduct", function (event) {
-            event.preventDefault();
-            var product = {
-                "name": $("#inputName").val(),
-                "price": $("#inputPrice").val(),
-                "stock": $("#inputStock").val(),
-                "productStatus": $("#inputProductStatus").val()
-            };
-            var productJson = JSON.stringify(product);
-            createProduct(productJson);
-        });
-
-        function createProduct(product) {
-            $.ajax({
-                method: "POST",
-                url: baseURL + "/product",
-                data: product,
-                contentType: "application/json",
-                error: function () {
-                    console.log("error");
-                },
-                success: function () {
-                    window.location.href = "http://localhost:8080/product.html";
-                }
-            });
         }
     }
 }
 
-// Utility method to hide all elements. Can be called in methods, followed by showX to show just 1 element
+function parseShoppingCart() {
+    console.log("Entered unpacking method");
+    console.log("length: " + sessionStorage.shoppingCart.length);
+    if (sessionStorage.shoppingCart.length !== 0)
+        selectedProducts = JSON.parse(sessionStorage.getItem("shoppingCart"));
+    else
+        selectedProducts = [];
+}
 
-function hideAll() {
-    $("#productTable").hide(500);
-    $("#showOneProduct").hide(500);
-    $("#addNewProduct").hide(500);
-    $("#editProduct").hide(500);
+function storeShoppingCart() {
+    if (selectedProducts.length !== 0) {
+        sessionStorage.setItem("shoppingCart", JSON.stringify(selectedProducts));
+    } else {
+        sessionStorage.setItem("shoppingCart", JSON.stringify(""));
+    }
+
+}
+
+function compare(a, b) {
+    if (a.name < b.name)
+        return -1;
+    if (a.name > b.name)
+        return 1;
+    return 0;
 }

@@ -1,9 +1,3 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <title>Productpagina</title>
@@ -22,33 +16,33 @@ and open the template in the editor.
         <script src="js/js-cookie.js"></script>
     </head>
     <body>
+        
         <div id="header"></div>
+        
+        <h1>Producten</h1>
 
+        <div hidden id="productsNotLoggedIn">
+            <h2>Beschikbare producten</h2>
+            <div id="productTableNotLoggedIn" style="width:1200px"></div>
+            <br/>
+            <p>Om producten toe te voegen aan uw winkelwagen dient u eerst ingelogd te zijn met uw eigen account<br/>
+                Voor het inloggen en/of aanmaken van een account kunt u <a href="/login.html">hier</a> terecht.<p>
+        </div>
+        
+        
+        <div hidden id="showProducts">
+            <h2>Beschikbare producten</h2>
+            <div id="productTable" style="width:1200px"></div>
+        </div>
+        
+        <div hidden id="showProducts2">
+            <h2>Beschikbare producten 2</h2>
+            <div id="productTable2" style="width:1200px"></div>
+        </div>
 
-        <h3 class="center">Productoverzicht</h3>
-
-        <button id="addNewProductLink">Nieuw product toevoegen</button>
-        <br/><br/>
-
-        <div id="productTable"></div>
-
-        <div id="showOneProduct" style="display:none"></div>
-
-        <!--        <div id="editProduct" class="formfields" style="display:none"></div>-->
-
-        <form hidden id="editProduct">
-            <div class="formfields">
-                <label>Naam:</label><input type="text" id="productName"/>
-                <label>Prijs:</label><input type="text" id="productPrice"/>
-                <label>Voorraad:</label><input type="number" id="productStock"/>
-                <label>Productstatus:</label><input type="text" id="productStatus"/>
-                <div class="button_panel">
-                    <input id="editButton" class="button" type="submit" value="Product wijzigen" />
-                </div>
-            </div>             
-        </form>
-
-        <div id="addNewProduct" style="display:none"></div>
+        <div hidden id="linkToShoppingCart">
+            <p>Een overzicht van uw bestelling tot nu toe kunt u bekijken in de <a href="/shopping_cart.html">winkelwagen</a>.</p>
+        </div>
 
         <script>
             $( document ).ajaxStop(function() {
@@ -57,6 +51,7 @@ and open the template in the editor.
 				});
 			});
             $("#footer").load("footer.html");
-        </script>       
+        </script>
+        
     </body>
 </html>
