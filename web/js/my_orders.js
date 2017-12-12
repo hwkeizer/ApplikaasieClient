@@ -1,44 +1,49 @@
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 var baseURL = "http://localhost:8080/Workshop3/webresources";
-var orderItemTablePrepared = false;
 
 $(document).ready(function () {
-//    prepareOrderItemTable();
+    prepareOrderItemTable();
 
     $("#backToOverview").click(function (event) {
-        $("#showOrders").show(500);
+        $("#showMyOrders").show(500);
         $("#showOneOrder").hide(500);
 
     });
 
-    showAllOrders();
+    showOrderList();
 });
 
-function showAllOrders() {
+function showOrderList() {
+    console.log("URL: " + baseURL + "/order1/" + sessionStorage.customerId + "/" + sessionStorage.user);
     $.ajax({
         method: "GET",
-        url: baseURL + "/order1",
+        url: baseURL + "/order1/" + sessionStorage.customerId + "/" + sessionStorage.user,
         dataType: "json",
         error: function () {
             console.log("error");
         },
         success: function (data) {
             editData(data);
-            $("#orderTable").tabulator({
+            $("#myOrderTable").tabulator({
                 height: 300,
                 layout: "fitColumns",
                 columns: [
-                    {title: "Klant", field: "customer.fullName", headerFilter: "input"},
+                    {title: "Besteldatum", field: "dateTime", headerFilter: "input"},
                     {formatter: "money", title: "Totaalprijs", field: "totalPrice", align: "right"},
-                    {title: "Bestelstatus", field: "orderStatus", headerFilter: "input"},
-                    {title: "Besteldatum", field: "dateTime", headerFilter: "input"}
+                    {title: "Bestelstatus", field: "orderStatus", headerFilter: "input"}
                 ],
                 rowClick: function (e, row) {
-                    $("#showOrders").hide(500);
+                    $("#showMyOrders").hide(500);
                     $("#showOneOrder").show(500);
                     showOneOrder(row.getData());
                 }
             });
-            $("#orderTable").tabulator("setData", data);
+            $("#myOrderTable").tabulator("setData", data);
         }
     });
 }
@@ -55,25 +60,26 @@ function prepareOrderItemTable() {
 }
 
 function showOneOrder(order) {
-    if(!orderItemTablePrepared) {
-        console.log("First preparation orderItemTable");
-        prepareOrderItemTable();
-        orderItemTablePrepared = true;
-    }
-    
     $("#showOrder").html("");
     $("#showOrder").append("<ul>" +
-            "<li>Klant: " + order.customer.fullName + "</li>" +
+            "<li>Besteldatum: " + order.dateTime + "</li>" +
             "<li>Totaalprijs: €" + order.totalPrice.toFixed(2) + "</li>" +
             "<li>Bestelstatus: " + order.orderStatus + "</li>" +
-            "<li>Besteldatum: " + order.dateTime + "</li>" +
             "</ul>");
 
+//    $("#orderItemTable").tabulator({
+//        layout: "fitColumns",
+//        columns: [
+//            {title: "Product", field: "product.name", headerFilter: "input"},
+//            {title: "Aantal", field: "amount"},
+//            {formatter: "money", title: "Subtotaal", field: "subTotal", align: "right"}
+//        ]
+//    });
     order.orderItemCollection.sort(compare);
     $("#orderItemTable").tabulator("setData", order.orderItemCollection);
 }
 
-// method to edit the dates to dd-MM-yyyy, combines the names of the customer into customer.fullName and presents the orderstatus in a non-capitalised form
+
 function editData(data) {
     for (var i = 0; i < data.length; i++) {
         var row = data[i];
@@ -81,10 +87,6 @@ function editData(data) {
         var day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
         var month = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
         row.dateTime = day + "-" + month + "-" + date.getFullYear();
-
-        var lnPrefix = row.customer.lastNamePrefix !== 0 ? row.customer.lastNamePrefix + " " : "";
-        var name = row.customer.firstName + " " + lnPrefix + row.customer.lastName;
-        row.customer.fullName = name;
 
         var orderStatus = row.orderStatus;
         if (orderStatus === "NIEUW") {
@@ -105,3 +107,4 @@ function compare(a, b) {
         return 1;
     return 0;
 }
+
