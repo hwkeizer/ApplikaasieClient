@@ -33,7 +33,11 @@ and open the template in the editor.
 				$('#header').css("display", "initial");
 			});
             $("#footer").load("footer.html");
-            
+            $(document).ready(function(){
+				let xmlHttp = new XMLHttpRequest();
+				xmlHttp.open( "GET", "http://localhost:8080/Workshop3/logout", true );
+				xmlHttp.send( null );
+			});
         </script>
     </body>
 </html>
