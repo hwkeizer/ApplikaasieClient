@@ -25,19 +25,24 @@
             <h2>Uw bestelling:</h2>
             <br/>
             <p>U heeft nog geen artikelen aan de winkelwagen toegevoegd.</p>
-            <p>Dit kunt u alsnog doen op de <a href="/product2.html">productpagina</a></p>
+            <p>Dit kunt u alsnog doen op de <a href="/product.html">productpagina</a></p>
         </div>
 
         <div hidden id="showOrder">
-            <h2>Uw bestelling:</h2>
+            <h2>Bestellingoverzicht</h2>
             
-            <div id="totalPrice"></div><br/>
+            
             <p>Uw bestelling bevat de volgende producten:</p><br/>
             <div id="orderItemTable">
             </div>
             
+            <div id="totalPrice"></div><br/>
+            
+            
             <br/><br/>
-            <p>Als u meer producten toe wilt voegen, dan kunt u dit doen op de <a href="/product2.html">productpagina</a></p>
+            <p>Als u het aantal van een product in uw bestelling wilt wijzigen, klik dan op de betreffende rij in de tabel.</p>
+
+            <p>Als u meer producten toe wilt voegen, dan kunt u dit doen op de <a href="/product.html">productpagina</a></p>
             
             <br/><br/>
             <button id="saveOrderButton">Bestelling opslaan</button>
@@ -47,6 +52,44 @@
         <div hidden id="saveSuccesful">
             <p>Uw bestelling is succesvol opgeslagen.</p>
         </div>
+        
+        
+        
+        <form hidden id="changeProductAmount">            
+            <div class="formfields">
+                <h3 class="center">Productaantal wijzigen</h3>
+                <div contenteditable="false">
+                    <label for="product_name">Product:</label>
+                    <input type="text" id="product_name" name="name" disabled/>
+                    <!--<div id="cd_firstNameError"></div>-->
+                </div>
+                <div>
+                    <label for="product_price">Prijs per stuk:</label>
+                    <input type="text" id="product_price" name="price" disabled/>
+                    <!--<div id="cd_lastNamePrefixError"></div>-->
+                </div>
+                <div>
+                    <label for="product_stock">Voorraad:</label>
+                    <input type="text" id="product_stock" name="stock" disabled/>
+                    <!--<div id="cd_lastNamePrefixError"></div>-->
+                </div>
+                <div>
+                    <label for="product_amount">Huidig aantal:</label>
+                    <input type="text" id="product_amount" name="amount" disabled/>
+                    <!--<div id="cd_lastNameError"></div>-->
+                </div>
+                <div>
+                    <label for="new_product_amount">Nieuw aantal:</label>
+                    <input type="number" id="new_product_amount" name="amount"/>
+                    <!--<div id="cd_lastNameError"></div>-->
+                </div>
+                <br/>
+                <div align="center">
+                    <button id="changeProductAmountButton">Aantal wijzigen</button>
+                    <button id="cancelProductAmountButton">Annuleren</button>
+                </div>
+            </div>             
+        </form>
 
 
         <script>
