@@ -1,15 +1,47 @@
 var baseURL = "http://localhost:8080/Workshop3/webresources";
+var selectedProduct;
 
 $(document).ready(function () {
-    $("#addNewProductLink").click(function (event) {
-        event.preventDefault();
-        hideAll();
-        $("#addNewProduct").show(500);
-        addNewProduct();
+    showAllProducts();
 
+    $("#addProduct").click(function (event) {
+        event.preventDefault();
+        $("#buttons").hide(500);
+        $("#newProduct").show(500);
+        $(".edit_instruction").hide(500);
     });
 
-    showAllProducts();
+    $("#editProductButton").click(function (event) {
+        event.preventDefault();
+        $(".edit_instruction").show(500);
+    });
+    
+    $("#cancelEditProduct").click(function (event) {
+        event.preventDefault();
+        $("#buttons").show(500);
+        $("#editProduct").hide(500);
+    });
+    
+    
+
+    $("#submitEditProduct").click(function (event) {
+        event.preventDefault();
+        editProduct();
+    });
+
+    $("#submitNewProduct").click(function (event) {
+        event.preventDefault();
+        saveProduct();
+    });
+
+    $("#cancelNewProduct").click(function (event) {
+        event.preventDefault();
+        $("#buttons").show(500);
+        $("#newProduct").hide(500);
+    });
+
+
+
 });
 
 function showAllProducts() {
@@ -21,6 +53,7 @@ function showAllProducts() {
             console.log("error");
         },
         success: function (data) {
+            data.sort(compare);
             $("#productTable").tabulator({
                 layout: "fitColumns",
                 columns: [
@@ -30,9 +63,14 @@ function showAllProducts() {
                     {title: "Productstatus", field: "productStatus", headerFilter: "input"}
                 ],
                 rowClick: function (e, row) {
-                    hideAll();
-                    $("#showOneProduct").show(500);
-                    showOneProduct(row.getData());
+                    
+                    selectedProduct = row.getData();
+                    fillEditProductForm();
+
+                    $("#buttons").hide(500);
+                    $(".edit_instruction").hide(500);
+                    $("#newProduct").hide(500);
+                    $("#editProduct").show(500);
                 }
             });
             $("#productTable").tabulator("setData", data);
@@ -40,73 +78,41 @@ function showAllProducts() {
     });
 }
 
-function showOneProduct(product) {
-
-    $("#showOneProduct").html("");
-    $("#showOneProduct").append("<button id='backToAllProducts1'>Terug naar overzicht</button>");
-    $("#showOneProduct").append("<br/><br/><button id='editProductButton'>Product wijzigen</button>");
-    $("#showOneProduct").append("<br/><br/><button id='deleteProductButton'>Product verwijderen</button>");
-    $("#showOneProduct").append("<ul>" +
-            "<li>Naam: " + product.name + "</li>" +
-            "<li>Prijs: " + product.price + "</li>" +
-            "<li>Voorraad: " + product.stock + "</li>" +
-            "<li>Productstatus: " + product.productStatus + "</li>" +
-            "</ul>");
-
-    $("#backToAllProducts1").click(function (event) {
-
-        hideAll();
-        $("#productTable").show(500);
-    });
-
-    $("#editProductButton").click(function (event) {
-
-        hideAll();
-        $("#editProduct").show(500);
-        editProduct(product);
-    });
-
-    $("#deleteProductButton").click(function (event) {
-        deleteProduct(product);
-    });
+function fillEditProductForm() {
+    console.log("Selected product: " + selectedProduct.name);
+    $('#editProduct').find('#product_name').val(selectedProduct.name);
+    $('#editProduct').find('#product_price').val(selectedProduct.price);
+    $('#editProduct').find('#product_stock').val(selectedProduct.stock);
+    $('#editProduct').find('#product_status').val(selectedProduct.productStatus);
 }
 
-function editProduct(product) {
+function editProduct() {
 
-    $("#editProduct").find('#productName').val(product.name);
-    $("#editProduct").find('#productPrice').val(product.price);
-    $("#editProduct").find('#productStock').val(product.stock);
-    $("#editProduct").find('#productStatus').val(product.productStatus);
+    var newProduct = {
+        "id": selectedProduct.id,
+        "name": $("#product_name").val(),
+        "price": $("#product_price").val(),
+        "stock": $("#product_stock").val(),
+        "productStatus": $("#product_status").val()
+    };
 
-    $("#editButton").click( function (event) {
-        var newProduct = {
-            "id": product.id,
-            "name": $("#productName").val(),
-            "price": $("#productPrice").val(),
-            "stock": $("#productStock").val(),
-            "productStatus": $("#productStatus").val()
-        };
+    console.log("Making json");
+    var productJson = JSON.stringify(newProduct);
 
-        var productJson = JSON.stringify(newProduct);
-        updateProduct(newProduct.id, productJson);
-
+    console.log("Entering ajax method");
+    $.ajax({
+        method: "PUT",
+        url: baseURL + "/product/" + selectedProduct.id,
+        data: productJson,
+        contentType: "application/json",
+        error: function () {
+            console.log("error");
+        },
+        success: function () {
+            console.log("Product edited succesfully");
+            window.location.href = "http://localhost:8080/product_admin.html";
+        }
     });
-
-    function updateProduct(id, product) {
-        $.ajax({
-            method: "PUT",
-            url: baseURL + "/product/" + id,
-            data: product,
-            contentType: "application/json",
-            error: function () {
-                console.log("error");
-            },
-            success: function () {
-                window.location.href = "http://localhost:8080/product.html";
-            }
-        })
-    }
-
 }
 
 function deleteProduct(product) {
@@ -124,68 +130,42 @@ function deleteProduct(product) {
     }
 }
 
-function addNewProduct() {
-    $("#addNewProduct").html("");
-    $("#addNewProduct").append("<button id='backToAllProducts'>Terug naar overzicht</button><br/><br/>");
-
-
-    $("#addNewProduct").append("" +
-            "<form id='newProduct'>" +
-            "<label>Naam: </label><input type='text' id='inputName'></input><br/>" +
-            "<label>Prijs: </label><input type='text' id='inputPrice'></input><br/>" +
-            "<label>Voorraad: </label><input type='number' id='inputStock'></input><br/>" +
-            "<label>Productstatus: </label><input type='text' id='inputProductStatus'></input><br/>" +
-            "<br/><br/><button id='saveProduct' type='submit'>Submit</button>" +
-            "</form>"
-            );
-
-    $("#backToAllProducts").click(function (event) {
-        hideAll();
-        $("#productTable").show(500);
-    });
-
-
-    $("#saveProduct").click(function (event) {
-        saveProduct();
-    });
-}
-
 function saveProduct() {
-    if (confirm("Product opslaan?")) {
-        $(document).on("submit", "form#newProduct", function (event) {
-            event.preventDefault();
-            var product = {
-                "name": $("#inputName").val(),
-                "price": $("#inputPrice").val(),
-                "stock": $("#inputStock").val(),
-                "productStatus": $("#inputProductStatus").val()
-            };
-            var productJson = JSON.stringify(product);
-            createProduct(productJson);
-        });
 
-        function createProduct(product) {
-            $.ajax({
-                method: "POST",
-                url: baseURL + "/product",
-                data: product,
-                contentType: "application/json",
-                error: function () {
-                    console.log("error");
-                },
-                success: function () {
-                    window.location.href = "http://localhost:8080/product.html";
-                }
-            });
+    var product = {
+        "name": $("#product_name_new").val(),
+        "price": $("#product_price_new").val(),
+        "stock": $("#product_stock_new").val(),
+        "productStatus": $("#product_status_new").val()
+    };
+
+    var productJson = JSON.stringify(product);
+
+    $.ajax({
+        method: "POST",
+        url: baseURL + "/product",
+        data: productJson,
+        contentType: "application/json",
+        error: function () {
+            console.log("error");
+        },
+        success: function () {
+            window.location.href = "http://localhost:8080/product_admin.html";
         }
-    }
+    });
 }
-
-// Utility method to hide all elements. Can be called in methods, followed by showX to show just 1 element
 
 function hideAll() {
     $("#productTable").hide(500);
     $("#showOneProduct").hide(500);
     $("#addNewProduct").hide(500);
     $("#editProduct").hide(500);
+}
+
+function compare(a, b) {
+    if (a.name < b.name)
+        return -1;
+    if (a.name > b.name)
+        return 1;
+    return 0;
 }
