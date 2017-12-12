@@ -46,7 +46,13 @@ function showAllAccounts() {
                     layout:"fitColumns",
                     columns:[
                         {title:"Gebruikersnaam", field:"username", headerFilter:"input"},
-                        {title:"Wachtwoord", field:"password"},
+                        {title:"Laatst gebruikt", field:"lastLogin", formatter:function(cell, formatterParams){
+                            if (cell.getValue() === undefined) {
+                                return "Nooit";
+                            }
+                            d = new Date(cell.getValue());
+                            return d.getDate() + "-" + (d.getMonth()+1) + "-" + d.getFullYear()
+                        }},
                         {title:"Type", field:"accountType", headerFilter:"input"}
                     ],
                     rowClick:function(e, row){
