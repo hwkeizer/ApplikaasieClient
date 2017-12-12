@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Bestellingen</title>
+        <title>Mijn bestellingen</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -19,22 +19,19 @@ and open the template in the editor.
         <!-- css files -->
         <link rel="stylesheet" type="text/css" href="static/global.css"/>
         <!-- local scripts -->
-        <script type="text/javascript" src="js/order.js"></script>
+        <script type="text/javascript" src="js/my_orders.js"></script>
     </head>
-    <body>
-        
-        <div id="header"></div>
+    <body>        
+        <div id="header"></div>  
         
         <br/>
-        
-        <div id="showOrders" style="width:800px">
-            <h2>Bestellingenoverzicht</h2>
+                
+        <div id="showMyOrders" style="width:800px">
+            <h2>Mijn bestellingen:</h2>
             
-            <div id="orderTable"></div>
+            <div id="myOrderTable"></div>
             
             <p>Klik op een bestelling in de tabel voor de details van deze bestelling.</p>
-            <br/><br/>
-            <a href="/new_order.html" id="addNewOrderLink">Nieuwe bestelling toevoegen</a>
                         
         </div>
         
@@ -45,20 +42,15 @@ and open the template in the editor.
                 <p>Deze bestelling bevat de volgende producten:</p>
                 <div id="orderItemTable"></div>
             </div>
-            
             <br/><br/><button id ="backToOverview">Terug naar overzicht</button>
         </div>
         
-        
+        <div id="footer"></div>
         <script>
-            $( document ).ajaxStop(function() {
-				$('#header').load('header.html', function() {
-					$('#header').css("display", "initial");
-				});
+            $('#header').load('header.html', function() {
+				$('#header').css("display", "initial");
 			});
             $("#footer").load("footer.html");
-        </script>
-
-        
+        </script>     
     </body>
 </html>

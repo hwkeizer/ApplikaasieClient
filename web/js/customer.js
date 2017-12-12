@@ -37,7 +37,10 @@ $(document).ready(function(){
         errorPlacement: function(error, element) {
             error.appendTo(element.next());
         }
-    });   
+    }); 
+    $.validator.addMethod('postcode', function (value) { 
+    return /^[1-9][0-9]{3} ?(?!sa|sd|ss)[a-z]{2}$/i.test(value); 
+}, 'Geef aub een geldige postcode');
     validateAll();
     
 });
@@ -96,7 +99,7 @@ function getAddressValidationObject() {
         },
         postalcode: {
             required: true,
-            maxlength: 16
+            postcode: true
         }
     };
     addressValidationObject.messages = {
