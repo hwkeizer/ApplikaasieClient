@@ -139,32 +139,32 @@ function validateAll() {
         switch (formName) {
             case "customerDetails" : {
                 validationObject = getCustomerValidationObject();
-                validationObject.submitHandler = function(form) {changeCustomer();};
+                validationObject.submitHandler = (form) => changeCustomer(form);
                 break;
             }
             case "newCustomer" : {
                 validationObject = getCustomerValidationObject();
-                validationObject.submitHandler = function(form) {addCustomer();}; 
+                validationObject.submitHandler = (form) => addCustomer(form); 
                 break;
             }
             case "newAddress" : {
                 validationObject = getAddressValidationObject();
-                validationObject.submitHandler = function(form) {addNewAddress();};
+                validationObject.submitHandler = (form) => addNewAddress(form);
                 break;
             }
             case "postAddress" : {
                 validationObject = getAddressValidationObject();
-                validationObject.submitHandler = function(form) {changePostAddress();};
+                validationObject.submitHandler = (form) => changePostAddress(form);
                 break;
             }
             case "factuurAddress" : {
                 validationObject = getAddressValidationObject();
-                validationObject.submitHandler = function(form) {changeFactuurAddress();};
+                validationObject.submitHandler = (form) => changeFactuurAddress(form);
                 break;
             }
             case "bezorgAddress" : {
                 validationObject = getAddressValidationObject();
-                validationObject.submitHandler = function(form) {changeBezorgAddress();};
+                validationObject.submitHandler = (form) => changeBezorgAddress(form);
                 break;
             }              
         } 
@@ -173,7 +173,7 @@ function validateAll() {
     }
 }
 
-function changeCustomer() {
+function changeCustomer(form) {
     let customer;
     if (selectedCustomer.account !== undefined) {
         window.fetch(baseURL + "/account/" + selectedCustomer.account, {
@@ -189,10 +189,10 @@ function changeCustomer() {
             return response.json();
         }).then(account => {
             // If email is changed the account username will change accordingly
-            if (account.username !== $("#cd_email").val()) {
+            if (account.username !== form["email"].value) {
                 account = {
                     "id":account.id,
-                    "username":$("#cd_email").val(),
+                    "username":form["email"].value,
                     "password":account.password,
                     "accountType":account.accountType
                 };
@@ -200,10 +200,10 @@ function changeCustomer() {
             customer = {
                 "id": selectedCustomer.id,
                 "account": account,
-                "firstName":$("#cd_firstName").val(),
-                "lastNamePrefix":$("#cd_lastNamePrefix").val(),
-                "lastName":$("#cd_lastName").val(),
-                "email":$("#cd_email").val()
+                "firstName":form["firstName"].value,
+                "lastNamePrefix":form["lastNamePrefix"].value,
+                "lastName":form["lastName"].value,
+                "email":form["email"].value
             }; 
             editCustomer(selectedCustomer.id, customer);              
         }).catch((error) => {
@@ -213,23 +213,23 @@ function changeCustomer() {
         // Customer has no account so it should not get updated
         customer = {
             "id": selectedCustomer.id,
-            "firstName":$("#cd_firstName").val(),
-            "lastNamePrefix":$("#cd_lastNamePrefix").val(),
-            "lastName":$("#cd_lastName").val(),
-            "email":$("#cd_email").val()
+            "firstName":form["firstName"].value,
+            "lastNamePrefix":form["lastNamePrefix"].value,
+            "lastName":form["lastName"].value,
+            "email":form["email"].value
             };
         editCustomer(selectedCustomer.id, customer);
     }
 }
 
-function addCustomer() {
-    let account = {"username":$("#nc_email").val(),
+function addCustomer(form) {
+    let account = {"username":form["email"].value,
             "password":generatePassword(),
             "accountType":"KLANT"};
-    let customer = {"firstName":$("#nc_firstName").val(),
-            "lastNamePrefix":$("#nc_lastNamePrefix").val(),
-            "lastName":$("#nc_lastName").val(),
-            "email":$("#nc_email").val(),
+    let customer = {"firstName":form["firstName"].value,
+            "lastNamePrefix":form["lastNamePrefix"].value,
+            "lastName":form["lastName"].value,
+            "email":form["email"].value,
             "account":account
     };
     createCustomer(customer);
@@ -296,10 +296,10 @@ function showAllCustomers() {
 }
 
 function showCustomerDetails() {
-    $('#customerDetails').find('#cd_firstName').val(selectedCustomer.firstName);
-    $('#customerDetails').find('#cd_lastNamePrefix').val(selectedCustomer.lastNamePrefix);
-    $('#customerDetails').find('#cd_lastName').val(selectedCustomer.lastName);
-    $('#customerDetails').find('#cd_email').val(selectedCustomer.email);
+    $('#customerDetails').find("[name='firstName']").val(selectedCustomer.firstName);
+    $('#customerDetails').find("[name='lastNamePrefix']").val(selectedCustomer.lastNamePrefix);
+    $('#customerDetails').find("[name='lastName']").val(selectedCustomer.lastName);
+    $('#customerDetails').find("[name='email']").val(selectedCustomer.email);
 }
 
 function showCustomerAddresses(customerId) {
@@ -324,31 +324,31 @@ function showCustomerAddresses(customerId) {
                 switch (data[i].addressType) {
                     case "POSTADRES": {
                         postAddress = data[i]; // save postAddress globally
-                        $('#postAddress').find('#pa_streetname').val(data[i].streetname);
-                        $('#postAddress').find('#pa_number').val(data[i].number);
-                        $('#postAddress').find('#pa_addition').val(data[i].addition);
-                        $('#postAddress').find('#pa_city').val(data[i].city);
-                        $('#postAddress').find('#pa_postalcode').val(data[i].postalcode);
+                        $('#postAddress').find("[name='streetname']").val(data[i].streetname);
+                        $('#postAddress').find("[name='number']").val(data[i].number);
+                        $('#postAddress').find("[name='addition']").val(data[i].addition);
+                        $('#postAddress').find("[name='city']").val(data[i].city);
+                        $('#postAddress').find("[name='postalcode']").val(data[i].postalcode);
                         $("#postAddress").show();
                         break;
                     }
                     case "FACTUURADRES": {
                         factuurAddress = data[i]; // save factuurAddress globally
-                        $('#factuurAddress').find('#fa_streetname').val(data[i].streetname);
-                        $('#factuurAddress').find('#fa_number').val(data[i].number);
-                        $('#factuurAddress').find('#fa_addition').val(data[i].addition);
-                        $('#factuurAddress').find('#fa_city').val(data[i].city);
-                        $('#factuurAddress').find('#fa_postalcode').val(data[i].postalcode);
+                        $('#factuurAddress').find("[name='streetname']").val(data[i].streetname);
+                        $('#factuurAddress').find("[name='number']").val(data[i].number);
+                        $('#factuurAddress').find("[name='addition']").val(data[i].addition);
+                        $('#factuurAddress').find("[name='city']").val(data[i].city);
+                        $('#factuurAddress').find("[name='postalcode']").val(data[i].postalcode);
                         $("#factuurAddress").show();
                         break;
                     }
                     case "BEZORGADRES": {
                         bezorgAddress = data[i]; // save bezorgAddress globally
-                        $('#bezorgAddress').find('#ba_streetname').val(data[i].streetname);
-                        $('#bezorgAddress').find('#ba_number').val(data[i].number);
-                        $('#bezorgAddress').find('#ba_addition').val(data[i].addition);
-                        $('#bezorgAddress').find('#ba_city').val(data[i].city);
-                        $('#bezorgAddress').find('#ba_postalcode').val(data[i].postalcode);
+                        $('#bezorgAddress').find("[name='streetname']").val(data[i].streetname);
+                        $('#bezorgAddress').find("[name='number']").val(data[i].number);
+                        $('#bezorgAddress').find("[name='addition']").val(data[i].addition);
+                        $('#bezorgAddress').find("[name='city']").val(data[i].city);
+                        $('#bezorgAddress').find("[name='postalcode']").val(data[i].postalcode);
                         $("#bezorgAddress").show(); 
                         break;                            
                     }
@@ -358,30 +358,30 @@ function showCustomerAddresses(customerId) {
     });
 }
 
-function changePostAddress() {
-    postAddress.streetname = $('#postAddress').find('#pa_streetname').val();
-    postAddress.number = $('#postAddress').find('#pa_number').val();
-    postAddress.addition = $('#postAddress').find('#pa_addition').val();
-    postAddress.city = $('#postAddress').find('#pa_city').val();
-    postAddress.postalcode = $('#postAddress').find('#pa_postalcode').val();
+function changePostAddress(form) {
+    postAddress.streetname = form["streetname"].value;
+    postAddress.number = form["number"].value;
+    postAddress.addition = form["addition"].value;
+    postAddress.city = form["city"].value;
+    postAddress.postalcode = form["postalcode"].value;
     editAddress(postAddress.id, postAddress);
 }
 
-function changeFactuurAddress() {
-    factuurAddress.streetname = $('#factuurAddress').find('#fa_streetname').val();
-    factuurAddress.number = $('#factuurAddress').find('#fa_number').val();
-    factuurAddress.addition = $('#factuurAddress').find('#fa_addition').val();
-    factuurAddress.city = $('#factuurAddress').find('#fa_city').val();
-    factuurAddress.postalcode = $('#factuurAddress').find('#fa_postalcode').val();
+function changeFactuurAddress(form) {
+    factuurAddress.streetname = form["streetname"].value;
+    factuurAddress.number = form["number"].value;
+    factuurAddress.addition = form["addition"].value;
+    factuurAddress.city = form["city"].value;
+    factuurAddress.postalcode = form["postalcode"].value;
     editAddress(factuurAddress.id, factuurAddress);
 }
 
-function changeBezorgAddress() {
-    bezorgAddress.streetname = $('#bezorgAddress').find('#ba_streetname').val();
-    bezorgAddress.number = $('#bezorgAddress').find('#ba_number').val();
-    bezorgAddress.addition = $('#bezorgAddress').find('#ba_addition').val();
-    bezorgAddress.city = $('#bezorgAddress').find('#ba_city').val();
-    bezorgAddress.postalcode = $('#bezorgAddress').find('#ba_postalcode').val();
+function changeBezorgAddress(form) {
+    bezorgAddress.streetname = form["streetname"].value;
+    bezorgAddress.number = form["number"].value;
+    bezorgAddress.addition = form["addition"].value;
+    bezorgAddress.city = form["city"].value;
+    bezorgAddress.postalcode = form["postalcode"].value;
     editAddress(bezorgAddress.id, bezorgAddress);
 }
 
@@ -416,16 +416,16 @@ function showNewAddressForm() {
 //    }
 }
 
-function addNewAddress() {
-    address = {"addressType":$('#newAddress').find('#na_addressType').val(),
-                "streetname":$('#newAddress').find('#na_streetname').val(),
-                "number":$('#newAddress').find('#na_number').val(),
-                "addition":$('#newAddress').find('#na_addition').val(),
-                "city":$('#newAddress').find('#na_city').val(),
-                "postalcode":$('#newAddress').find('#na_postalcode').val(),
-                "customer": selectedCustomer
-         };
-        addAddress(address);
+function addNewAddress(form) {
+    address = {"addressType":form["addressType"].value,
+            "streetname":form["streetname"].value,
+            "number":form["number"].value,
+            "addition":form["addition"].value,
+            "city":form["city"].value,
+            "postalcode":form["postalcode"].value,
+            "customer": selectedCustomer
+        };
+    addAddress(address);
 }
 
 // Reset all forms and global vars when a (different) customer is selected
