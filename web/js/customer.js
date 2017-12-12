@@ -188,6 +188,15 @@ function changeCustomer() {
             console.log("content response header: " + response.headers.get("content-type"));
             return response.json();
         }).then(account => {
+            // If email is changed the account username will change accordingly
+            if (account.username !== $("#cd_email").val()) {
+                account = {
+                    "id":account.id,
+                    "username":$("#cd_email").val(),
+                    "password":account.password,
+                    "accountType":account.accountType
+                };
+            } 
             customer = {
                 "id": selectedCustomer.id,
                 "account": account,
@@ -195,11 +204,8 @@ function changeCustomer() {
                 "lastNamePrefix":$("#cd_lastNamePrefix").val(),
                 "lastName":$("#cd_lastName").val(),
                 "email":$("#cd_email").val()
-            };
-            // If email is changed the account username will change accordingly
-            account.username = customer.email;
-            editAccount(account.id, account);
-            editCustomer(selectedCustomer.id, customer);
+            }; 
+            editCustomer(selectedCustomer.id, customer);              
         }).catch((error) => {
             console.log("error " + error);
         });                
@@ -249,13 +255,11 @@ function showAllCustomers() {
 //        dataType: "json",
         error: function() {
             console.log("Error in function showAllCustomers");
-            console.log()
         },
         success: function(data, textStatus, request) {
             if (request.getResponseHeader('REQUIRES_AUTH') === '1'){ 
                 window.location.href = 'http://localhost:8080/login.html';
             } else {
-                console.log(data)
                 $("#customers").tabulator({
                     layout:"fitColumns",
                     columns:[
@@ -263,7 +267,7 @@ function showAllCustomers() {
                         {title:"Tussenvoegsel", field:"lastNamePrefix", headerFilter:"input"},
                         {title:"Achternaam", field:"lastName", headerFilter:"input"},
                         {title:"Email", field:"email", headerFilter:"input"},
-                        {title:"Account", field:"account.username", headerFilter:"input"},
+                        {title:"Account", field:"account.username", headerFilter:"input"}
                     ],
                     rowClick:function(e, row){
                         resetAllForms();
@@ -292,9 +296,6 @@ function showAllCustomers() {
 }
 
 function showCustomerDetails() {
-    if (selectedCustomer === null) {
-        alert("geen klant geselecteerd");
-    }
     $('#customerDetails').find('#cd_firstName').val(selectedCustomer.firstName);
     $('#customerDetails').find('#cd_lastNamePrefix').val(selectedCustomer.lastNamePrefix);
     $('#customerDetails').find('#cd_lastName').val(selectedCustomer.lastName);
@@ -307,7 +308,7 @@ function showCustomerAddresses(customerId) {
         method: "GET",
         dataType: "json",
         error: function() {
-            alert("Error in function showAddressesCustomer");
+            console.log("Error in function showAddressesCustomer");
         },
         success: function(data) {
             // No address found, show a new address form
@@ -461,7 +462,7 @@ function editCustomer(customerId, customer) {
         data: JSON.stringify(customer),
         contentType: "application/json",
         error: function() {
-            alert("Error in function editCustomer");
+            console.log("Error in function editCustomer");
         },
         success: function() {
             window.location.href="http://localhost:8080/customer.html#";
@@ -532,7 +533,7 @@ function editAddress(addressId, address) {
         data: JSON.stringify(address),
         contentType: "application/json",
         error: function() {
-            alert("Error in function editAddress");
+            console.log("Error in function editAddress");
         },
         success: function() {
             window.location.href="http://localhost:8080/customer.html#";
@@ -550,7 +551,7 @@ function addAddress(address) {
         data: JSON.stringify(address),
         contentType: "application/json",
         error: function() {
-            alert("Error in function addAddress");
+            console.log("Error in function addAddress");
         },
         success: function() {
             window.location.href="http://localhost:8080/customer.html#";
@@ -578,7 +579,6 @@ function deleteAddress(addressId) {
 
 // Send delete account to the backend
 function deleteAccount(accountId) {
-    alert("DELETING account " + accountId);
     $.ajax({
         url:baseURL + "/account/" + accountId,
         method: "DELETE",
