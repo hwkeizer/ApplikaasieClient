@@ -30,10 +30,12 @@ and open the template in the editor.
         <br/>
         <br/>
         <br/>
+        <div class="hidden_content">
         <div id="buttons">
             <button type="button" id="addCustomer">Klant toevoegen</button>
             <button type="button" id="editCustomer">Klant wijzigen of verwijderen</button>
         </div>
+        
         
         <form hidden id="newCustomer">
             <div class="formfields">
@@ -200,12 +202,12 @@ and open the template in the editor.
             </div>             
         </form>
         
-        <form hidden id="newAddress">            
+        <form hidden id="newAddress" autocomplete="off">            
             <div class="formfields">
                 <h3 class="center">Nieuw adres</h3>
                 <div>
                     <label>Adres type:</label>
-                    <input list="addressTypes" name="addressType"/>
+                    <input list="addressTypes" name="addressType" autocomplete="off"/>
                     <div></div>
                 </div>
                 <div>
@@ -242,11 +244,17 @@ and open the template in the editor.
 
         
         <br/>
+        <br/>
         <div hidden class="edit_instruction">Selecteer een klant in onderstaande tabel om te wijzigen of te verwijderen</div>
+        </div>
+       
         
         <div id="content">
+            <br/>
             <h3 class="center">Klant overzicht</h3>
-            <div id="customers"></div>
+            <div class="large_table">
+                <div id="customers"></div>
+            </div>
         </div>
         
         <div id="footer"></div>

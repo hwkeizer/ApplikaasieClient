@@ -81,6 +81,9 @@ function getCustomerValidationObject() {
 function getAddressValidationObject() {
     let addressValidationObject = {};
     addressValidationObject.rules = {
+        addressType: {
+            required: true
+        },
         streetname: {
             required: true,
             maxlength: 16
@@ -104,6 +107,9 @@ function getAddressValidationObject() {
         }
     };
     addressValidationObject.messages = {
+        addressType: {
+            required: 'Dit veld is vereist'
+        },
         streetname: {
             maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
             required: 'Dit veld is vereist'

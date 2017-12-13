@@ -28,6 +28,7 @@ and open the template in the editor.
         <br/>
         <br/>
         <br/>
+        <div class="hidden_content">
         <div id="buttons">
             <button type="button" id="addAccount">Account toevoegen</button>
             <button type="button" id="editAccount">Account verwijderen</button>
@@ -60,15 +61,15 @@ and open the template in the editor.
                 <h3 class="center">Account details</h3>
                 <div>
                     <label>Gebruikersnaam:</label>
-                    <input type="text" id="username" readonly/>
+                    <input type="text" id="username" disabled/>
                 </div>
                 <div>
                     <label>Wachtwoord:</label>
-                    <input type="text" id="password" readonly/>
+                    <input type="text" id="password" disabled/>
                 </div>
                 <div>
                     <label>Account type:</label>
-                    <input type="text" id="accountType" readonly/>
+                    <input type="text" id="accountType" disabled/>
                 </div>
                 <div class="formbuttons">
                     <input class="button" type="submit" value="Wachtwoord wijzigen" />
@@ -96,9 +97,12 @@ and open the template in the editor.
         </form>
         
         <br/>
+        <br/>
         <div hidden class="edit_instruction">Selecteer een account in onderstaande tabel om te wijzigen of te verwijderen</div>
-                
+        </div>
+        
         <div id="content">
+        <br/>
         <h3 class="center">Account overzicht</h3>
         <div id="accounts"></div>
         </div>

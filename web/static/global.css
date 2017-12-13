@@ -60,9 +60,30 @@ html {
 }
 
 /* layout for content */
+.hidden_content {
+    margin-left: 50px;
+}
+
+.hidden_content button {
+    background-color: #4CAF50;
+    width: 200px;
+    border: none;
+    color: white;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 3px;
+    display: block;
+    float: left;
+}
+
+.edit_instruction {
+    float:left;
+}
+
 #content {
     clear: both;
-    margin-top: 50px;    
+    margin-left: 50px; 
+    margin-right: 50px;
 }
 
 .center {
@@ -190,6 +211,35 @@ label.error {
 
 .formfields h3 {
     margin: 0.5em;
+}
+
+/* Layout for tables */
+/*.large_table {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+}*/
+
+.tabulator .tabulator-header .tabulator-col {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
+.tabulator .tabulator-header {
+    border: #4CAF50;
+}
+
+.tabulator {
+    border: 1px solid #4CAF50;
+}
+
+.tabulator .tabulator-table {
+    border: 1px solid #4CAF50;
+}
+
+.tabulator .tabulator-header .tabulator-col.tabulator-sortable:hover {
+    background-color: #57cc5b;    
 }
 
 
