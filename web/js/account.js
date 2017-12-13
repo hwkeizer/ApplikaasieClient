@@ -53,6 +53,13 @@ function showAllAccounts() {
                             d = new Date(cell.getValue());
                             return d.getDate() + "-" + (d.getMonth()+1) + "-" + d.getFullYear()
                         }},
+                    {title:"Laatst gewijzigd", field:"lastChanged", formatter:function(cell, formatterParams){
+                            if (cell.getValue() === undefined) {
+                                return "Nooit";
+                            }
+                            d = new Date(cell.getValue());
+                            return d.getDate() + "-" + (d.getMonth()+1) + "-" + d.getFullYear()
+                        }},
                         {title:"Type", field:"accountType", headerFilter:"input"}
                     ],
                     rowClick:function(e, row){
@@ -113,6 +120,7 @@ function changePassword() {
     let newPassword = $("#changePassword #newpassword1").val();
     if (newPassword === $("#changePassword #newpassword2").val()) {
         selectedAccount.password = newPassword;
+        selectedAccount.lastChanged = new Date();
         $.ajax({
             url:baseURL + "/account/cp",
             method: "PUT",
