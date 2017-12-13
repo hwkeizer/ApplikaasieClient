@@ -13,6 +13,11 @@ html {
 }
 
 /* Layout for menu */
+
+body {
+	background-color: rgb(232, 232, 255);
+}
+
 .navbar {
     overflow: hidden;
     background-color: #4CAF50;
