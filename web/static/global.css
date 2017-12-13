@@ -239,4 +239,22 @@ label.error {
     background-color: #57cc5b;    
 }
 
+table {
+	width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+	border: 1px solid #4CAF50;
+	text-align: left;
+        border-collapse: collapse; }
 
+th {
+	font-weight: bold;
+	background-color: #4CAF50;
+	border-bottom: 1px solid #4CAF50; }
+      
+td,th  {
+	padding: 4px 5px; }
+
+table, th, td {
+   border: 2px solid #4CAF50;
+}

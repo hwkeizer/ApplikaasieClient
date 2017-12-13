@@ -75,11 +75,19 @@ function showAllCustomers() {
 
 function showSelectedCustomer() {
     $("#showSelectedCustomer").html("");
-    $("#showSelectedCustomer").append("<ul>" +
-            "<li> Voornaam: " + customer.firstName + "</li>" +
-            "<li> Tussenvoegsel: " + customer.lastNamePrefix + "</li>" +
-            "<li> Achternaam: " + customer.lastName + "</li>" +
-            "<li> Email: " + customer.email + "</li></ul>");
+    
+    $("#showSelectedCustomer").append("<table class=\"table\">" +
+            "<tr><td> Voornaam:</td><td>" + customer.firstName + "</td></tr>" +
+            "<tr><td> Tussenvoegsel:</td><td>" + customer.lastNamePrefix + "</td></tr>" +
+            "<tr><td> Achternaam:</td><td>" + customer.lastName + "</td></tr>" +
+            "<tr><td> Email:</td><td>" + customer.email + "</td></tr></table>");
+    
+    
+//    $("#showSelectedCustomer").append("<ul>" +
+//            "<li> Voornaam: " + customer.firstName + "</li>" +
+//            "<li> Tussenvoegsel: " + customer.lastNamePrefix + "</li>" +
+//            "<li> Achternaam: " + customer.lastName + "</li>" +
+//            "<li> Email: " + customer.email + "</li></ul>");
 }
 
 function showAllProducts() {

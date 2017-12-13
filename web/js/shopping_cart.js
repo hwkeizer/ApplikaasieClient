@@ -44,7 +44,7 @@ function showOrderDetails() {
     $("#orderItemTable").tabulator({
         layout: "fitColumns",
         columns: [
-            {title: "Product", field: "name", headerFilter: "input", width: 300},
+            {title: "Product", field: "name", headerFilter: "input"},
             {formatter: "money", title: "Prijs/stuk", field: "price"},
             {title: "Voorraad", field: "stock"},
             {title: "Aantal in winkelwagen", field: "amount"},
@@ -90,30 +90,6 @@ function showchangeProductAmount(product) {
     $('#changeProductAmount').find('#product_amount').val(product.amount);
     $('#changeProductAmount').find('#new_product_amount').val(product.amount);
 
-//    $("#changeProductAmountButton").click(function (event) {
-//        event.preventDefault();
-//        for (var i = 0; i < selectedProducts.length; i++) {
-//
-//            if (product.id === selectedProducts[i].id) {
-//
-//                if ($("#new_product_amount").val() < 1) {
-//                    alert("Om een product toe te voegen dient u een minimumaantal van '1' in te voeren");
-//                    return;
-//                }
-//                if ($("#new_product_amount").val() > product.stock) {
-//                    alert("Het is niet mogelijk om meer producten te bestellen dan de voorraad toelaat");
-//                    return;
-//                }
-//
-//                selectedProducts[i].amount = $("#new_product_amount").val();
-//                selectedProducts[i].subTotal = selectedProducts[i].amount * selectedProducts[i].price;
-//                setTotalPrice();
-//
-//            }
-//        }
-//        $("#changeProductAmount").hide(500);
-//        $("#orderItemTable").tabulator("setData", selectedProducts);
-//    });
 }
 
 function updateAmount() {
@@ -160,7 +136,7 @@ function storeShoppingCart() {
 }
 
 function saveOrder() {
-    if (confirm("Bestelling opslaan?")) {
+    if (confirm("Klik op 'ok' om de bestelling op te slaan\nKlik op 'annuleren' als u uw bestelling nog niet op wilt slaan.")) {
         var order = {
             "customer": {
                 "id": sessionStorage.customerId
@@ -183,7 +159,7 @@ function saveOrder() {
             },
             success: function () {
                 console.log("order was saved!");
-                $("#saveOrderButton").hide(500);
+                $("#showOrder").hide(500);
                 $("#saveSuccesful").show(500);
 
                 sessionStorage.shoppingCart = "";
@@ -226,7 +202,11 @@ function calculateTotalPrice() {
 function setTotalPrice() {
     totalPrice = calculateTotalPrice().toFixed(2);
     $("#totalPrice").html("");
-    $("#totalPrice").append("<ul>" +
-            "<li>Totaalprijs: €" + totalPrice + "</li>" +
-            "</ul>");
+    $("#totalPrice").append("<table>" +
+            "<tr><td><b>Totaalprijs:</b></td><td><b>€" + totalPrice + "</b></td></tr>" +
+            "</table>");
+    
+//    $("#totalPrice").append("<ul>" +
+//            "<li>Totaalprijs: €" + totalPrice + "</li>" +
+//            "</ul>");
 }

@@ -27,10 +27,12 @@ and open the template in the editor.
         <br/>
         <br/>
         <br/>
-        
-        <div id="buttons">
-            <button type="button" id="addProduct">Product toevoegen</button>
-            <button type="button" id="editProductButton">Product wijzigen</button>
+
+        <div class='hidden_content'>
+            <div id="buttons">
+                <button type="button" id="addProduct">Product toevoegen</button>
+                <button type="button" id="editProductButton">Product wijzigen</button>
+            </div>
         </div>
 
         <form hidden id="newProduct">
@@ -87,16 +89,22 @@ and open the template in the editor.
                     <input type="text" id="product_status" name="productStatus"/>
                     <div></div>
                 </div>
-                <div align="center">
+                <div class='hidden_content'>
                     <br/>
-                    <button id="submitEditProduct">Product wijzigen</button>
+                    <button id="submitEditProduct">Product wijzigen</button><br/>
+
+                </div>
+                <div class='hidden_content'>
+                    <br/>
                     <button id="cancelEditProduct">Annuleren</button>
                 </div>
             </div>             
         </form>
-        
+
         <br/>
-        <div hidden class="edit_instruction">Selecteer een product in onderstaande tabel om te wijzigen.</div>
+        <div hidden class="edit_instruction">
+            <p class='center'>Selecteer een product in onderstaande tabel om te wijzigen.</p>
+        </div>
 
         <div id="content">
             <h3 class="center">Productoverzicht</h3>
@@ -104,7 +112,7 @@ and open the template in the editor.
         </div>
 
 
-        <div id="productTable"></div>
+<!--        <div id="productTable"></div>-->
 
         <script>
             $(document).ajaxStop(function () {

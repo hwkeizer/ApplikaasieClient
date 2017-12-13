@@ -62,12 +62,12 @@ function showOneOrder(order) {
     }
     
     $("#showOrder").html("");
-    $("#showOrder").append("<ul>" +
-            "<li>Klant: " + order.customer.fullName + "</li>" +
-            "<li>Totaalprijs: €" + order.totalPrice.toFixed(2) + "</li>" +
-            "<li>Bestelstatus: " + order.orderStatus + "</li>" +
-            "<li>Besteldatum: " + order.dateTime + "</li>" +
-            "</ul>");
+    $("#showOrder").append("<table class=\"table\">" +
+            "<tr><td>Klant:</td><td>" + order.customer.fullName + "</td></tr>" +
+            "<tr><td>Totaalprijs:</td><td>€" + order.totalPrice.toFixed(2) + "</td></tr>" +
+            "<tr><td>Bestelstatus:</td><td>" + order.orderStatus + "</td></tr>" +
+            "<tr><td>Besteldatum:</td><td>" + order.dateTime + "</td></tr>" +
+            "</table>");
 
     order.orderItemCollection.sort(compare);
     $("#orderItemTable").tabulator("setData", order.orderItemCollection);

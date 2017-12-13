@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Productpagina</title>
+        <title>Nieuwe bestelling aanmaken</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!-- jquery scripts -->
@@ -22,45 +22,64 @@ and open the template in the editor.
         <script src="js/js-cookie.js"></script>
     </head>
     <body>
-        
+
         <div id="header"></div>
-        
-        <h1>Nieuwe Bestelling aanmaken</h1>
-        
-        <div id="showCustomers">
-            <h2>Klant selecteren</h2>
-            <div id="customerTable"></div>
-        </div>
-        
-        <div hidden id="selectedCustomer">
-            <h2>Geselecteerde klant</h2>
-            <div id="showSelectedCustomer"></div>
-            <br/><button id ="changeSelectedCustomer">Andere klant selecteren</button>
-        </div>
-        
-        <div hidden id="showProducts">
-            <h2>Beschikbare producten</h2>
-            <div id="productTable" style="width:1200px"></div>
-        </div>
-        
-        
-        <div hidden id="showSelectedProducts">
-            <h2>Geselecteerde producten</h2>
-            <div id="noProductsSelected">
-                <p>Er zijn nog geen producten geselecteerd.</p>
+
+        <br/><br/>
+
+        <h2 class='center'>Nieuwe Bestelling aanmaken</h2>
+
+        <div id='content'>
+            <div id="showCustomers">
+                <h3 class='center'>Klant selecteren</h2>
+                    <div id="customerTable"></div>
             </div>
-            <div id="selectedProductsTable" style="width:1200px"></div>
-            <br/><button id="saveOrderButton">Bestelling opslaan</button>            
+        </div>
+
+        <div id='content'>
+            <div hidden id="selectedCustomer">
+                <h3 class='center'>Geselecteerde klant</h3>
+                <div id="showSelectedCustomer"></div>
+                <br/>
+                <div class='hidden_content'>
+                    <button class='center' id ="changeSelectedCustomer">Andere klant selecteren</button>
+                </div>
+            </div>
+        </div>
+
+        <br/><br/>
+
+        <div id='content'>
+            <div hidden id="showProducts">
+                
+                <h3 class='center'>Beschikbare producten</h3>
+                <div id="productTable" style="width:1200px"></div>
+            </div>
+        </div>
+        
+        <br/><br/>
+        
+        <div id='content'>
+            <div hidden id="showSelectedProducts">
+                <h3 class='center'>Geselecteerde producten</h3>
+                <div id="noProductsSelected">
+                    <p class='center'>Er zijn nog geen producten geselecteerd.</p>
+                </div>
+                <div id="selectedProductsTable" style="width:1200px"></div>
+                <div class='hidden_content'>
+                    <br/><button id="saveOrderButton">Bestelling opslaan</button>
+                </div>
+            </div>
         </div>
         <br/>
-        
-        
+
+
         <script>
-            $( document ).ajaxStop(function() {
-				$('#header').load('header.html', function() {
-					$('#header').css("display", "initial");
-				});
-			});
+            $(document).ajaxStop(function () {
+                $('#header').load('header.html', function () {
+                    $('#header').css("display", "initial");
+                });
+            });
             $("#footer").load("footer.html");
         </script>
     </body>

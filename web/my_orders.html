@@ -23,33 +23,42 @@ and open the template in the editor.
     </head>
     <body>        
         <div id="header"></div>  
-        
+
         <br/>
-                
-        <div id="showMyOrders" style="width:800px">
-            <h2>Mijn bestellingen:</h2>
-            
-            <div id="myOrderTable"></div>
-            
-            <p>Klik op een bestelling in de tabel voor de details van deze bestelling.</p>
-                        
-        </div>
-        
-        <div hidden id="showOneOrder">
-            <br/><h2>Bestellingdetails:</h2>
-            <div id="showOrder"></div>
-            <div id="showOrderItems" style="width:500px">
-                <p>Deze bestelling bevat de volgende producten:</p>
-                <div id="orderItemTable"></div>
+        <br/>
+
+        <div id='content'>
+            <div id="showMyOrders">
+                <h3 class='center'>Mijn bestellingen:</h3>
+
+                <div id="myOrderTable"></div>
+
+                <p class='center'>Klik op een bestelling in de tabel voor de details van deze bestelling.</p>
+
             </div>
-            <br/><br/><button id ="backToOverview">Terug naar overzicht</button>
         </div>
-        
+
+        <div id='content'>
+            <div hidden id="showOneOrder">
+                <br/>
+                <h3 class='center'>Bestellingdetails:</h3>
+                <div id="showOrder"></div>
+                <div id="showOrderItems">
+                    <p class='center'>Deze bestelling bevat de volgende producten:</p>
+                    <div id="orderItemTable"></div>
+                </div>
+                <br/><br/>
+                <div class='hidden_content'>
+                <button id ="backToOverview">Terug naar overzicht</button>
+                </div>
+            </div>
+        </div>
+
         <div id="footer"></div>
         <script>
-            $('#header').load('header.html', function() {
-				$('#header').css("display", "initial");
-			});
+            $('#header').load('header.html', function () {
+                $('#header').css("display", "initial");
+            });
             $("#footer").load("footer.html");
         </script>     
     </body>

@@ -19,77 +19,87 @@
 
         <div id="header"></div>
 
-        <h1>Winkelwagen</h1>
+        <br/><br/>
+        <h1 class='center'>Winkelwagen</h1>
 
-        <div hidden id="noItemsInShoppingCart">
-            <h2>Uw bestelling:</h2>
-            <br/>
-            <p>U heeft nog geen artikelen aan de winkelwagen toegevoegd.</p>
-            <p>Dit kunt u alsnog doen op de <a href="/product.html">productpagina</a></p>
-        </div>
-
-        <div hidden id="showOrder">
-            <h2>Bestellingoverzicht</h2>
-            
-            
-            <p>Uw bestelling bevat de volgende producten:</p><br/>
-            <div id="orderItemTable">
+        <div class='content'>
+            <div hidden id="noItemsInShoppingCart">
+                <h3 class='center'>Uw bestelling:</h3>
+                <br/>
+                <p class='center'>U heeft nog geen artikelen aan de winkelwagen toegevoegd.</p>
+                <p class='center'>Dit kunt u alsnog doen op de <a href="/product.html">productpagina</a></p>
             </div>
-            
-            <div id="totalPrice"></div><br/>
-            
-            
-            <br/><br/>
-            <p>Als u het aantal van een product in uw bestelling wilt wijzigen, klik dan op de betreffende rij in de tabel.</p>
-
-            <p>Als u meer producten toe wilt voegen, dan kunt u dit doen op de <a href="/product.html">productpagina</a></p>
-            
-            <br/><br/>
-            <button id="saveOrderButton">Bestelling opslaan</button>
-
         </div>
-        
-        <div hidden id="saveSuccesful">
-            <p>Uw bestelling is succesvol opgeslagen.</p>
-        </div>
-        
-        
-        
-        <form hidden id="changeProductAmount">            
-            <div class="formfields">
-                <h3 class="center">Productaantal wijzigen</h3>
-                <div contenteditable="false">
-                    <label for="product_name">Product:</label>
-                    <input type="text" id="product_name" name="name" disabled/>
-                    <!--<div id="cd_firstNameError"></div>-->
-                </div>
-                <div>
-                    <label for="product_price">Prijs per stuk:</label>
-                    <input type="text" id="product_price" name="price" disabled/>
-                    <!--<div id="cd_lastNamePrefixError"></div>-->
-                </div>
-                <div>
-                    <label for="product_stock">Voorraad:</label>
-                    <input type="text" id="product_stock" name="stock" disabled/>
-                    <!--<div id="cd_lastNamePrefixError"></div>-->
-                </div>
-                <div>
-                    <label for="product_amount">Huidig aantal:</label>
-                    <input type="text" id="product_amount" name="amount" disabled/>
-                    <!--<div id="cd_lastNameError"></div>-->
-                </div>
-                <div>
-                    <label for="new_product_amount">Nieuw aantal:</label>
-                    <input type="number" id="new_product_amount" name="amount"/>
-                    <!--<div id="cd_lastNameError"></div>-->
+
+        <div id='content'>
+            <div hidden id="showOrder">
+                <h3 class='center'>Bestellingoverzicht</h3>
+
+
+                <p class='center'>Uw bestelling bevat de volgende producten:</p><br/>
+                <div id="orderItemTable">
                 </div>
                 <br/>
-                <div align="center">
-                    <button id="changeProductAmountButton">Aantal wijzigen</button>
-                    <button id="cancelProductAmountButton">Annuleren</button>
+                <div id="totalPrice" style="width:500px"></div><br/>
+
+
+                <br/>
+                <p class='center'>Als u het aantal van een product in uw bestelling wilt wijzigen, klik dan op de betreffende rij in de tabel.</p>
+
+                <p class='center'>Als u meer producten toe wilt voegen, dan kunt u dit doen op de <a href="/product.html">productpagina</a></p>
+
+                <br/><br/>
+                <div class='hidden_content'>
+                    <button id="saveOrderButton">Bestelling opslaan</button>
                 </div>
-            </div>             
-        </form>
+
+            </div>
+        </div>
+
+        <div hidden id="saveSuccesful">
+            <p class="center">Hartelijk dank voor uw bestelling, deze is opgeslagen in het systeem en we gaan ermee aan de slag!</p>
+            <p class="center">Voor een overzicht van uw bestellingen kunt u kijken bij <a href="/my_orders.html">mijn bestellingen</a>.</p>
+        </div>
+
+
+        <br/><br/>
+        <div>
+            <form hidden id="changeProductAmount">            
+                <div class="formfields">
+                    <h3 class="center">Productaantal wijzigen</h3>
+                    <div contenteditable="false">
+                        <label for="product_name">Product:</label>
+                        <input type="text" id="product_name" name="name" disabled/>
+                        <!--<div id="cd_firstNameError"></div>-->
+                    </div>
+                    <div>
+                        <label for="product_price">Prijs per stuk:</label>
+                        <input type="text" id="product_price" name="price" disabled/>
+                        <!--<div id="cd_lastNamePrefixError"></div>-->
+                    </div>
+                    <div>
+                        <label for="product_stock">Voorraad:</label>
+                        <input type="text" id="product_stock" name="stock" disabled/>
+                        <!--<div id="cd_lastNamePrefixError"></div>-->
+                    </div>
+                    <div>
+                        <label for="product_amount">Huidig aantal:</label>
+                        <input type="text" id="product_amount" name="amount" disabled/>
+                        <!--<div id="cd_lastNameError"></div>-->
+                    </div>
+                    <div>
+                        <label for="new_product_amount">Nieuw aantal:</label>
+                        <input type="number" id="new_product_amount" name="amount"/>
+                        <!--<div id="cd_lastNameError"></div>-->
+                    </div>
+                    <br/>
+                    <div align="center">
+                        <button id="changeProductAmountButton">Aantal wijzigen</button>
+                        <button id="cancelProductAmountButton">Annuleren</button>
+                    </div>
+                </div>             
+            </form>
+        </div>
 
 
         <script>

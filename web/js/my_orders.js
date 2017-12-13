@@ -30,7 +30,6 @@ function showOrderList() {
         success: function (data) {
             editData(data);
             $("#myOrderTable").tabulator({
-                height: 300,
                 layout: "fitColumns",
                 columns: [
                     {title: "Besteldatum", field: "dateTime", headerFilter: "input"},
@@ -52,7 +51,7 @@ function prepareOrderItemTable() {
     $("#orderItemTable").tabulator({
         layout: "fitColumns",
         columns: [
-            {title: "Product", field: "product.name", headerFilter: "input"},
+            {title: "Product", field: "product.name"},
             {title: "Aantal", field: "amount"},
             {formatter: "money", title: "Subtotaal", field: "subTotal", align: "right"}
         ]
@@ -61,20 +60,19 @@ function prepareOrderItemTable() {
 
 function showOneOrder(order) {
     $("#showOrder").html("");
-    $("#showOrder").append("<ul>" +
-            "<li>Besteldatum: " + order.dateTime + "</li>" +
-            "<li>Totaalprijs: €" + order.totalPrice.toFixed(2) + "</li>" +
-            "<li>Bestelstatus: " + order.orderStatus + "</li>" +
-            "</ul>");
+    $("#showOrder").append("<table class=\"table\">" +
+            "<tr><td>Besteldatum:</td><td>" + order.dateTime + "</td></tr>" +
+            "<tr><td>Totaalprijs:</td><td>€" + order.totalPrice.toFixed(2) + "</td></tr>" +
+            "<tr><td>Bestelstatus:</td><td>" + order.orderStatus + "</td></tr>" +
+            "</table>");
 
-//    $("#orderItemTable").tabulator({
-//        layout: "fitColumns",
-//        columns: [
-//            {title: "Product", field: "product.name", headerFilter: "input"},
-//            {title: "Aantal", field: "amount"},
-//            {formatter: "money", title: "Subtotaal", field: "subTotal", align: "right"}
-//        ]
-//    });
+//    $("#showOrder").html("");
+//    $("#showOrder").append("<ul>" +
+//            "<li>Besteldatum: " + order.dateTime + "</li>" +
+//            "<li>Totaalprijs: €" + order.totalPrice.toFixed(2) + "</li>" +
+//            "<li>Bestelstatus: " + order.orderStatus + "</li>" +
+//            "</ul>");
+
     order.orderItemCollection.sort(compare);
     $("#orderItemTable").tabulator("setData", order.orderItemCollection);
 }
