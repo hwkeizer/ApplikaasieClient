@@ -87,6 +87,7 @@ function getAddressValidationObject() {
         },
         number: {
             required: true,
+            digits: true,
             maxlength: 16
         },
         addition: {
@@ -109,6 +110,7 @@ function getAddressValidationObject() {
         },
         number: {
             maxlength: 'Dit veld mag maximaal 16 tekens bevatten',
+            digits: 'Dit veld mag alleen cijfers bevatten',
             required: 'Dit veld is vereist'
         },
         addition: {
