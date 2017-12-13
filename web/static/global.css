@@ -228,18 +228,10 @@ label.error {
 .tabulator .tabulator-header .tabulator-col {
     background-color: #4CAF50;
     color: white;
-    border: 1px solid #4CAF50;
-}
-
-.tabulator .tabulator-header {
-    border: #4CAF50;
+    border: 1px solid #999 /*#4CAF50;*/
 }
 
 .tabulator {
-    border: 1px solid #4CAF50;
-}
-
-.tabulator .tabulator-table {
     border: 1px solid #4CAF50;
 }
 
