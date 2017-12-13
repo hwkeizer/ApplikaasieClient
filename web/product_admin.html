@@ -24,38 +24,94 @@ and open the template in the editor.
     <body>
         <div id="header"></div>
 
+        <br/>
+        <br/>
+        <br/>
+        
+        <div id="buttons">
+            <button type="button" id="addProduct">Product toevoegen</button>
+            <button type="button" id="editProductButton">Product wijzigen</button>
+        </div>
 
-        <h3 class="center">Productoverzicht</h3>
-
-        <button id="addNewProductLink">Nieuw product toevoegen</button>
-        <br/><br/>
-
-        <div id="productTable"></div>
-
-        <div id="showOneProduct" style="display:none"></div>
-
-        <!--        <div id="editProduct" class="formfields" style="display:none"></div>-->
-
-        <form hidden id="editProduct">
+        <form hidden id="newProduct">
             <div class="formfields">
-                <label>Naam:</label><input type="text" id="productName"/>
-                <label>Prijs:</label><input type="text" id="productPrice"/>
-                <label>Voorraad:</label><input type="number" id="productStock"/>
-                <label>Productstatus:</label><input type="text" id="productStatus"/>
-                <div class="button_panel">
-                    <input id="editButton" class="button" type="submit" value="Product wijzigen" />
+                <h3 class="center">Nieuw product toevoegen</h3>
+                <div>
+                    <label for="product_name_new">Naam:</label>
+                    <input type="text" id="product_name_new" name="name"/>
+                    <div></div>
+                </div>
+                <div>
+                    <label for="product_price_new">Prijs:</label>
+                    <input type="text" id="product_price_new" name="price"/>
+                    <div></div>
+                </div>
+                <div>
+                    <label for="product_stock_new">Voorraad:</label>
+                    <input type="number" id="product_stock_new" name="stock"/>
+                    <div></div>
+                </div>
+                <div>
+                    <label for="product_status_new">Productstatus:</label>
+                    <input type="text" id="product_status_new" name="productStatus"/>
+                    <div></div>
+                </div>
+                <div align="center">
+                    <br/>
+                    <button id="submitNewProduct">Product toevoegen</button>
+                    <button id="cancelNewProduct">Annuleren</button>
                 </div>
             </div>             
         </form>
 
-        <div id="addNewProduct" style="display:none"></div>
+        <form hidden id="editProduct">
+            <div class="formfields">
+                <h3 class="center">Product wijzigen</h3>
+                <div>
+                    <label for="product_name">Naam:</label>
+                    <input type="text" id="product_name" name="name"/>
+                    <div></div>
+                </div>
+                <div>
+                    <label for="product_price">Prijs:</label>
+                    <input type="text" id="product_price" name="price"/>
+                    <div></div>
+                </div>
+                <div>
+                    <label for="product_stock">Voorraad:</label>
+                    <input type="number" id="product_stock" name="stock"/>
+                    <div></div>
+                </div>
+                <div>
+                    <label for="product_status">Productstatus:</label>
+                    <input type="text" id="product_status" name="productStatus"/>
+                    <div></div>
+                </div>
+                <div align="center">
+                    <br/>
+                    <button id="submitEditProduct">Product wijzigen</button>
+                    <button id="cancelEditProduct">Annuleren</button>
+                </div>
+            </div>             
+        </form>
+        
+        <br/>
+        <div hidden class="edit_instruction">Selecteer een product in onderstaande tabel om te wijzigen.</div>
+
+        <div id="content">
+            <h3 class="center">Productoverzicht</h3>
+            <div id="productTable"></div>
+        </div>
+
+
+        <div id="productTable"></div>
 
         <script>
-            $( document ).ajaxStop(function() {
-				$('#header').load('header.html', function() {
-					$('#header').css("display", "initial");
-				});
-			});
+            $(document).ajaxStop(function () {
+                $('#header').load('header.html', function () {
+                    $('#header').css("display", "initial");
+                });
+            });
             $("#footer").load("footer.html");
         </script>       
     </body>

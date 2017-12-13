@@ -3,14 +3,14 @@ var customer = {};
 var availableProducts;
 var selectedRows = [];
 var productsLoaded = false;
+var selectedProductsTable = false;
 
 $(document).ready(function () {
     $("#saveOrderButton").click(function (event) {
         if (selectedRows.length === 0) {
             alert("U dient eerst producten te selecteren voordat een bestelling opgeslagen kan worden.");
             return;
-        }
-        else {
+        } else {
             saveOrder();
         }
     });
@@ -105,7 +105,7 @@ function showAllProducts() {
 
                             $("#selectedProductsTable").show(500);
                             $("#noProductsSelected").hide(500);
-                            
+
                             rowData = cell.getRow().getData();
 
                             if (rowData.amount === undefined) {
@@ -142,7 +142,16 @@ function showAllProducts() {
 }
 
 function addRowToSelected(data) {
+    if (!selectedProductsTable) {
+        console.log("First preparation selectedProductsTable");
+        prepareSelectedProductsTable();
+        selectedProductsTable = true;
+    }
 
+    $("#selectedProductsTable").tabulator("setData", selectedRows);
+}
+
+function prepareSelectedProductsTable() {
     $("#selectedProductsTable").tabulator({
         layout: "fitColumns",
         columns: [
@@ -158,19 +167,19 @@ function addRowToSelected(data) {
                             selectedRows.splice(i, 1);
                         }
                     }
-                    if(selectedRows.length === 0) {
+                    if (selectedRows.length === 0) {
                         $("#selectedProductsTable").hide(500);
                     }
                     rowData.amount = undefined;
                     availableProducts.push(rowData);
 
                     $("#selectedProductsTable").tabulator("deleteRow", cell.getRow());
-                    
+
                     availableProducts.sort(compare);
-                    
+
                     $("#productTable").tabulator("setData", availableProducts);
-                    
-                    if(selectedRows.length === 0) {
+
+                    if (selectedRows.length === 0) {
                         $("#noProductsSelected").show(500);
                     }
                 }
@@ -178,8 +187,6 @@ function addRowToSelected(data) {
 
         ]
     });
-
-    $("#selectedProductsTable").tabulator("setData", selectedRows);
 }
 
 function saveOrder() {
@@ -248,10 +255,10 @@ function hideAll() {
     $("#showSelectedProducts").hide(500);
 }
 
-function compare(a,b) {
-  if (a.name < b.name)
-    return -1;
-  if (a.name > b.name)
-    return 1;
-  return 0;
+function compare(a, b) {
+    if (a.name < b.name)
+        return -1;
+    if (a.name > b.name)
+        return 1;
+    return 0;
 }
