@@ -1,5 +1,6 @@
 var baseURL = "http://localhost:8080/Workshop3/webresources";
 var orderItemTablePrepared = false;
+var selectedOrder;
 
 $(document).ready(function () {
 //    prepareOrderItemTable();
@@ -7,7 +8,25 @@ $(document).ready(function () {
     $("#backToOverview").click(function (event) {
         $("#showOrders").show(500);
         $("#showOneOrder").hide(500);
+        $("#editOrder").hide(500);
+    });
 
+    $("#editOrderButton").click(function (event) {
+        $("#editOrder").show(500);
+    });
+
+    $("#deleteOrderButton").click(function (event) {
+        deleteOrder();
+    });
+
+    $("#submitEditOrder").click(function (event) {
+        event.preventDefault();
+        editOrder();
+    });
+
+    $("#cancelEditOrder").click(function (event) {
+        event.preventDefault();
+        $("#editOrder").hide(500);
     });
 
     showAllOrders();
@@ -35,6 +54,7 @@ function showAllOrders() {
                 rowClick: function (e, row) {
                     $("#showOrders").hide(500);
                     $("#showOneOrder").show(500);
+                    selectedOrder = row.getData();
                     showOneOrder(row.getData());
                 }
             });
@@ -55,12 +75,12 @@ function prepareOrderItemTable() {
 }
 
 function showOneOrder(order) {
-    if(!orderItemTablePrepared) {
+    if (!orderItemTablePrepared) {
         console.log("First preparation orderItemTable");
         prepareOrderItemTable();
         orderItemTablePrepared = true;
     }
-    
+
     $("#showOrder").html("");
     $("#showOrder").append("<table class=\"table\">" +
             "<tr><td>Klant:</td><td>" + order.customer.fullName + "</td></tr>" +
@@ -71,6 +91,55 @@ function showOneOrder(order) {
 
     order.orderItemCollection.sort(compare);
     $("#orderItemTable").tabulator("setData", order.orderItemCollection);
+}
+
+function editOrder() {
+    var order = {};
+    order.id = selectedOrder.id;
+    order.orderStatus = $("#order_status").val();
+
+    var orderJSON = JSON.stringify(order);
+    console.log(orderJSON);
+
+    $.ajax({
+        url: baseURL + "/order1/" + selectedOrder.id,
+        method: "PUT",
+        data: orderJSON,
+        contentType: "application/json",
+        error: function () {
+            console.log("Error in function editOrder");
+        },
+        success: function () {
+            window.location.href = "http://localhost:8080/order.html#";
+            location.reload();
+        }
+    });
+}
+
+function deleteOrder() {
+    console.log("Bestelstatus: " + selectedOrder.orderStatus);
+    console.log("OrderId: " + selectedOrder.id);
+    if (selectedOrder.orderStatus !== "Nieuw") {
+        alert("U kunt alleen bestellingen met de bestelstatus \"Nieuw\" verwijderen.");
+        return;
+    }
+    if (confirm("Klik op \"ok\" als u deze bestelling wilt verwijderen. De bestelling verdwijnt dan definitief uit het systeem!\n" +
+            "Indien u de bestelling wenst te behouden, klik dan op \"Annuleren\".")) {
+        console.log("Bestelling gaat verwijderd worden");
+
+        $.ajax({
+            url: baseURL + "/order1/" + selectedOrder.id,
+            method: "DELETE",
+            contentType: "application/json",
+            error: function () {
+                console.log("Error in function deleteOrder");
+            },
+            success: function () {
+                window.location.href = "http://localhost:8080/order.html#";
+                location.reload();
+            }
+        });
+    }
 }
 
 // method to edit the dates to dd-MM-yyyy, combines the names of the customer into customer.fullName and presents the orderstatus in a non-capitalised form

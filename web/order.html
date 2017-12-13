@@ -35,13 +35,13 @@ and open the template in the editor.
                     <div id="orderTable"></div>
                 </div>
 
-                <p>Klik op een bestelling in de tabel voor de details van deze bestelling.</p>
+                <p>Klik op een bestelling in de tabel voor de details van deze bestelling en voor de opties om de bestelling te bewerken.</p>
                 <p>Om een nieuwe bestelling toe te voegen, klik dan <a href="/new_order.html" id="addNewOrderLink">hier</a>.</p>
 
             </div>
         </div>
 
-        <div id="content" style="width:500px">
+        <div id="content" style="width:800px">
             <div hidden id="showOneOrder">
                 <br/><h3 class='center'>Bestellingdetails:</h3>
                 <div id="showOrder"></div>
@@ -52,8 +52,38 @@ and open the template in the editor.
 
                 <div class='hidden_content'>
                     <br/><br/><button id ="backToOverview">Terug naar overzicht</button>
+                    <button id ="editOrderButton">Bestelstatus wijzigen</button>
+                    <button id ="deleteOrderButton">Bestelling verwijderen</button>
                 </div>
             </div>
+        </div>
+        
+        <br/><br/><br/>
+
+        <div id="content">
+            <form hidden id="editOrder">
+                <div class="formfields">
+                    <h3 class="center">Bestelstatus wijzigen</h3>
+                    <div>
+                        <label for="order_status">Bestelstatus:</label>
+                        <!--<input type="text" id="product_status" name="productStatus"/>-->
+                        <select id="order_status" name="orderStatus">
+                            <option value="NIEUW">Nieuw</option>
+                            <option value="IN_BEHANDELING">In behandeling</option>
+                            <option value="AFGEHANDELD">Afgehandeld</option>
+                        </select>
+                        <div></div>
+                    </div>
+                    <div class='hidden_content'>
+                        <br/>
+                        <button id="submitEditOrder">Bestelstatus wijzigen</button><br/>
+                    </div>
+                    <div class='hidden_content'>
+                        <br/>
+                        <button id="cancelEditOrder">Annuleren</button>
+                    </div>
+                </div>             
+            </form>
         </div>
 
 
