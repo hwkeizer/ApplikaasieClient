@@ -53,6 +53,7 @@ function showAllProducts() {
             console.log("error");
         },
         success: function (data) {
+            editData(data);
             data.sort(compare);
             $("#productTable").tabulator({
                 layout: "fitColumns",
@@ -60,7 +61,7 @@ function showAllProducts() {
                     {title: "Naam", field: "name", headerFilter: "input"},
                     {formatter: "money", title: "Prijs/stuk", field: "price", align: "right"},
                     {title: "Voorraad", field: "stock"},
-                    {title: "Productstatus", field: "productStatus", headerFilter: "input"}
+                    {title: "Productstatus", field: "productStatus2", headerFilter: "input"}
                 ],
                 rowClick: function (e, row) {
                     
@@ -153,6 +154,15 @@ function saveProduct() {
             window.location.href = "http://localhost:8080/product_admin.html";
         }
     });
+}
+
+function editData(data) {
+    for(var i = 0; i < data.length; i++) {
+        if(data[i].productStatus === "BESCHIKBAAR")
+            data[i].productStatus2 = "Beschikbaar";
+        else
+            data[i].productStatus2 = "Niet beschikbaar";
+    }
 }
 
 function hideAll() {
